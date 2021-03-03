@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/03 10:39:03 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/03 16:03:26 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	init_struct(t_settings *set)
 	set->map = 0;
 }
 
-int		main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_settings	set;
 	int			i;
@@ -91,8 +91,7 @@ int		main(int ac, char **av)
 		set.file = av[1];
 	else
 	{
-		printf("Error\n");
-		printf("Invalid name of file\n");
+		printf("Error\nInvalid name of file\n");
 		exit(-1);
 	}
 	get_settings(&set);
@@ -108,7 +107,7 @@ int		main(int ac, char **av)
 	printf("C | %d\n", set.ceiling);
 	while (set.map[j])
 	{
-		printf("%s\n", set.map[j]);
+		printf("|%s|\n", set.map[j]);
 		j++;
 	}
 }

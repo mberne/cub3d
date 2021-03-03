@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 14:23:34 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/03 10:38:47 by mberne           ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -21,7 +9,7 @@
 # include "mlx.h"
 # include "libft/includes/libft.h"
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*img;
 	char	*addr;
@@ -30,7 +18,7 @@ typedef struct	s_data
 	int		endian;
 }				t_data;
 
-typedef struct	s_settings
+typedef struct s_settings
 {
 	char			*file;
 	int				res[2];
@@ -54,7 +42,8 @@ void			get_texture(t_settings *set, char **tab);
 void			get_color(t_settings *set, char **tab);
 unsigned int	get_rgb(int r, int g, int b);
 void			get_map(t_settings *set, char *line, int fd);
-void			check_map(t_settings *set, char *tmpmap);
+void			setup_map(t_settings *set);
+void			check_map(t_settings *set);
 void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 

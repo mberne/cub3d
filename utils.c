@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 09:35:30 by mberne            #+#    #+#             */
-/*   Updated: 2021/02/24 09:55:56 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/03 16:02:37 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@ void	free_split(char **tab, int i)
 	}
 }
 
-int		number_of_split(char **tab)
+int	number_of_split(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (tab)
-	{
 		while (tab[i])
 			i++;
-	}
 	return (i);
 }

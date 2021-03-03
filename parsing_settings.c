@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:47:14 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/03 10:38:00 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/03 16:03:14 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ unsigned int	get_rgb(int r, int g, int b)
 	return (i + j + k);
 }
 
-void			get_color(t_settings *set, char **tab)
+void	get_color(t_settings *set, char **tab)
 {
 	char	**rgb;
 	int		r;
@@ -35,6 +35,13 @@ void			get_color(t_settings *set, char **tab)
 	r = ft_atoi(rgb[0]);
 	g = ft_atoi(rgb[1]);
 	b = ft_atoi(rgb[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	{
+		printf("Error\nInvalid color\n");
+		free_split(tab, number_of_split(tab));
+		free_split(rgb, number_of_split(rgb));
+		exit(-1);
+	}
 	if (!ft_strncmp(tab[0], "F", 1) && set->get_floor == 0)
 	{
 		set->floor = get_rgb(r, g, b);
@@ -47,14 +54,17 @@ void			get_color(t_settings *set, char **tab)
 	}
 	else
 	{
-		printf("Error\n");
-		printf("Invalid color\n");
+		printf("Error\nInvalid color\n");
+		free_split(tab, number_of_split(tab));
+		free_split(rgb, number_of_split(rgb));
 		exit(-1);
 	}
+	free_split(rgb, number_of_split(rgb));
 }
 
-void			get_texture(t_settings *set, char **tab)
+void	get_texture(t_settings *set, char **tab)
 {
+	// verifier seulement tab[0] et tab [1] existent ?
 	if (!ft_strncmp(tab[0], "NO", 2) && set->no == 0)
 		set->no = ft_strdup(tab[1]);
 	else if (!ft_strncmp(tab[0], "SO", 2) && set->so == 0)
@@ -63,34 +73,40 @@ void			get_texture(t_settings *set, char **tab)
 		set->we = ft_strdup(tab[1]);
 	else if (!ft_strncmp(tab[0], "EA", 2) && set->ea == 0)
 		set->ea = ft_strdup(tab[1]);
-	else if (!ft_strncmp(tab[0], "S", 1) && ft_strncmp(tab[0], "SO", 2) &&
-		set->sprite == 0)
+	else if (!ft_strncmp(tab[0], "S", 1) && ft_strncmp(tab[0], "SO", 2)
+		&& set->sprite == 0)
 		set->sprite = ft_strdup(tab[1]);
 	else
 	{
-		printf("Error\n");
-		printf("Invalid textures\n");
+		printf("Error\nInvalid textures\n");
+		free_split(tab, number_of_split(tab));
 		exit(-1);
 	}
 }
 
-void			get_resolution(t_settings *set, char **tab)
+void	get_resolution(t_settings *set, char **tab)
 {
 	if (set->get_res == 0)
 	{
 		set->res[0] = ft_atoi(tab[1]);
 		set->res[1] = ft_atoi(tab[2]);
+		if (set->res[0] == 0 || set->res[1] == 0)
+		{
+			printf("Error\nInvalid resolution\n");
+			free_split(tab, number_of_split(tab));
+			exit(-1);
+		}
 		set->get_res = 1;
 	}
 	else
 	{
-		printf("Error\n");
-		printf("Invalid resolution\n");
+		printf("Error\nInvalid resolution\n");
+		free_split(tab, number_of_split(tab));
 		exit(-1);
 	}
 }
 
-void			get_settings(t_settings *set)
+void	get_settings(t_settings *set)
 {
 	char	*line;
 	int		fd;
@@ -108,18 +124,20 @@ void			get_settings(t_settings *set)
 			tab = ft_split(line, ' ');
 			if (!ft_strncmp(tab[0], "R", 1))
 				get_resolution(set, tab);
-			else if (!ft_strncmp(tab[0], "NO", 2) ||
-				!ft_strncmp(tab[0], "SO", 2) || !ft_strncmp(tab[0], "WE", 2) ||
-				!ft_strncmp(tab[0], "EA", 2) || !ft_strncmp(tab[0], "S", 1))
+			else if (!ft_strncmp(tab[0], "NO", 2)
+				|| !ft_strncmp(tab[0], "SO", 2) || !ft_strncmp(tab[0], "WE", 2)
+				|| !ft_strncmp(tab[0], "EA", 2) || !ft_strncmp(tab[0], "S", 1))
 				get_texture(set, tab);
 			else if (!ft_strncmp(tab[0], "F", 1) || !ft_strncmp(tab[0], "C", 1))
 				get_color(set, tab);
+			// pas jolie l'erreur invalid file alors que c'est erreur de map si elle commence par un 0...
 			else if (!ft_strncmp(tab[0], "1", 1))
 				get_map(set, line, fd);
 			else
 			{
-				printf("Error\n");
-				printf("Invalid file\n");
+				printf("Error\nInvalid file\n");
+				free(line);
+				free_split(tab, number_of_split(tab));
 				exit(-1);
 			}
 			free(line);
