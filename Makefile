@@ -1,26 +1,28 @@
-SRCS		= main.c
+SRCS		= main.c parsing_settings.c parsing_map.c utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
 HEADER		= cub3d.h
 
-NAME		= cub3d.a
-
-CC			= gcc
+NAME		= cub3D
 
 RM			= rm -f
 
 CFLAGS		= -Wall -Wextra -Werror
 
-.c.o:		$(HEADER)
-			$(CC) $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I
+LIBFT		= libft.a
+
+LIBMLX		= libmlx.dylib
+
+%.o:		%.c	$(HEADER)
+			gcc $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I
 
 $(NAME):	$(OBJS)
 			$(MAKE) -C libft
-			cp libft/libft.a $(NAME)
+			ln -sf libft/$(LIBFT) .
 			$(MAKE) -C mlx
-			cp mlx/libmlx.dylib $(NAME)
-			$(CC) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+			ln -sf mlx/$(LIBMLX) .
+			gcc $(CFLAGS) $(OBJS) $(LIBFT) $(LIBMLX) -o $(NAME)
 
 all:		$(NAME)
 
@@ -30,8 +32,9 @@ clean:
 			$(RM) $(OBJS)
 
 fclean:		clean
-			${MAKE} fclean -C libft
 			$(RM) $(NAME)
+			$(RM) $(LIBFT)
+			$(RM) $(LIBMLX)
 
 re:			fclean all
 
