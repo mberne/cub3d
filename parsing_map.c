@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/03 16:03:35 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/03 16:27:51 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,13 @@ void	setup_map(t_settings *set)
 		tmp = ft_strlen(set->map[i]);
 		if (tmp < length)
 		{
-			tmp = length - tmp;
-			while (set->map[i][tmp])
+			while (tmp < length)
 			{
-				set->map[i][tmp] = ' ';
+				set->map[i] = ft_strjoin(set->map[i], " ");
 				tmp++;
 			}
 		}
 		i++;
-	}
-	int	j;
-	j = 0;
-	while (set->map[j])
-	{
-		printf("|%s|\n", set->map[j]);
-		j++;
 	}
 }
 
