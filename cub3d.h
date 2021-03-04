@@ -33,6 +33,8 @@ typedef struct s_settings
 	unsigned int	ceiling;
 	int				get_ceiling;
 	char			**map;
+	int				mapx;
+	int				mapy;
 }				t_settings;
 
 int				main(int ac, char **av);
@@ -40,7 +42,7 @@ void			init_struct(t_settings *set);
 void			get_settings(t_settings *set);
 void			get_texture(t_settings *set, char **tab);
 void			get_color(t_settings *set, char **tab);
-unsigned int	get_rgb(int r, int g, int b);
+unsigned int	get_rgb(unsigned int r, unsigned int g, unsigned int b);
 void			get_map(t_settings *set, char *line, int fd);
 void			setup_map(t_settings *set);
 void			check_map(t_settings *set);

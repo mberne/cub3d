@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/03 16:27:51 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/04 11:27:56 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,26 @@ void	check_map(t_settings *set)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (set->map[i])
+	i = -1;
+	while (set->map[++i])
 	{
-		j = 0;
-		while (set->map[i][j])
+		j = -1;
+		while (set->map[i][++j])
 		{
 			if (set->map[i][j] == '0' || set->map[i][j] == '2'
 				|| set->map[i][j] == 'N' || set->map[i][j] == 'S'
 				|| set->map[i][j] == 'E' || set->map[i][j] == 'W')
 			{
-				if (set->map[i - 1][j] == ' ' || set->map[i + 1][j] == ' '
+				if (i == 0 || i == set->mapy || j == 0 || j == set->mapx
+					|| set->map[i - 1][j] == ' ' || set->map[i + 1][j] == ' '
 					|| set->map[i][j - 1] == ' ' || set->map[i][j + 1] == ' ')
 				{
 					printf("Error\nInvalid map\n");
-					free_split(set->map, number_of_split(set->map));
+					free_split(set->map, set->mapy);
 					exit(-1);
 				}
 			}
-			j++;
 		}
-		i++;
 	}
 }
 
@@ -45,31 +44,30 @@ void	setup_map(t_settings *set)
 {
 	int	i;
 	int	tmp;
-	int	length;
 
-	i = 0;
-	length = 0;
-	while (set->map[i])
+	i = -1;
+	while (set->map[++i])
 	{
 		tmp = ft_strlen(set->map[i]);
-		if (tmp > length)
-			length = tmp;
-		i++;
+		if (tmp > set->mapx)
+			set->mapx = tmp;
 	}
-	i = 0;
-	while (set->map[i])
+	i = -1;
+	while (set->map[++i])
 	{
 		tmp = ft_strlen(set->map[i]);
-		if (tmp < length)
+		if (tmp < set->mapx)
 		{
-			while (tmp < length)
+			while (tmp < set->mapx)
 			{
 				set->map[i] = ft_strjoin(set->map[i], " ");
+				if (!(set->map[i]))
+					exit(-1);
 				tmp++;
 			}
 		}
-		i++;
 	}
+	set->mapx -= 1;
 }
 
 void	get_map(t_settings *set, char *line, int fd)
@@ -98,6 +96,7 @@ void	get_map(t_settings *set, char *line, int fd)
 	tmpmap = ft_strjoin(tmpmap, line);
 	set->map = ft_split(tmpmap, '\n');
 	free(tmpmap);
+	set->mapy = number_of_split(set->map) - 1;
 	setup_map(set);
 	check_map(set);
 }

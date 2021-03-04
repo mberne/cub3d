@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/03 16:03:26 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/04 10:55:41 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	init_struct(t_settings *set)
 	set->ceiling = 0;
 	set->get_ceiling = 0;
 	set->map = 0;
+	set->mapx = 0;
+	set->mapy = 0;
 }
 
 int	main(int ac, char **av)
@@ -110,4 +112,6 @@ int	main(int ac, char **av)
 		printf("|%s|\n", set.map[j]);
 		j++;
 	}
+	printf("mapx | %d\n", set.mapx);
+	printf("mapy | %d\n", set.mapy);
 }
