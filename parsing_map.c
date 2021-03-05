@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/04 11:27:56 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/04 13:28:17 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	setup_map(t_settings *set)
 			while (tmp < set->mapx)
 			{
 				set->map[i] = ft_strjoin(set->map[i], " ");
-				if (!(set->map[i]))
+				if (!set->map[i])
 					exit(-1);
 				tmp++;
 			}

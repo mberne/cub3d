@@ -6,13 +6,13 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 10:56:11 by mberne            #+#    #+#             */
-/*   Updated: 2021/02/17 09:19:59 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 11:38:28 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strchr_gnl(const char *s)
+int	ft_strchr_gnl(const char *s)
 {
 	if (!s)
 		return (0);
@@ -36,6 +36,8 @@ char	*get_buffer(char *str)
 	while (str[i] && str[i] != '\n')
 		i++;
 	buffer = ft_substr(str, i + 1, (ft_strlen(str) - i));
+	if (!buffer)
+		return (0);
 	free(str);
 	return (buffer);
 }
@@ -51,26 +53,33 @@ char	*get_line(char *str)
 	while (str[i] && str[i] != '\n')
 		i++;
 	line = ft_substr(str, 0, i);
+	if (!line)
+		return (0);
 	return (line);
 }
 
-int		fill_buffer(char **buffer, int fd, int *return_read, char **tmp)
+int	fill_buffer(char **buffer, int fd, int *return_read, char **tmp)
 {
 	while (ft_strchr_gnl(*buffer) == 0 && *return_read != 0)
 	{
-		if ((*return_read = read(fd, *tmp, BUFFER_SIZE)) == -1)
+		*return_read = read(fd, *tmp, BUFFER_SIZE);
+		if (*return_read == -1)
 		{
 			free(*tmp);
 			return (-1);
 		}
 		(*tmp)[*return_read] = '\0';
-		if (!(*buffer = ft_strjoin(*buffer, *tmp)))
+		*buffer = ft_strjoin(*buffer, *tmp);
+		if (!*buffer)
+		{
+			free(*tmp);
 			return (-1);
+		}
 	}
 	return (0);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*buffer;
 	char		*tmp;
@@ -79,14 +88,15 @@ int		get_next_line(int fd, char **line)
 	return_read = 1;
 	if (BUFFER_SIZE <= 0 || fd < 0 || !line)
 		return (-1);
-	if (!(tmp = malloc((sizeof(char) * (BUFFER_SIZE + 1)))))
-		return (-1);
-	if (fill_buffer(&buffer, fd, &return_read, &tmp) == -1)
+	tmp = malloc((sizeof(char) * (BUFFER_SIZE + 1)));
+	if (!tmp || fill_buffer(&buffer, fd, &return_read, &tmp) == -1)
 		return (-1);
 	free(tmp);
-	if (!(*line = get_line(buffer)))
+	*line = get_line(buffer);
+	if (!*line)
 		return (-1);
-	if (!(buffer = get_buffer(buffer)))
+	buffer = get_buffer(buffer);
+	if (!buffer)
 		return (-1);
 	if (return_read == 0)
 	{

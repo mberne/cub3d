@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 09:57:34 by mberne            #+#    #+#             */
-/*   Updated: 2020/11/30 10:28:38 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 10:47:08 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	ft_atoi(const char *str)
 {
-	int i;
-	int n;
-	int nb;
-	int len;
+	int	i;
+	int	n;
+	int	nb;
+	int	len;
 
 	i = 0;
 	n = 1;

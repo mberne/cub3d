@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 15:46:42 by mberne            #+#    #+#             */
-/*   Updated: 2020/11/27 11:04:10 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 10:56:18 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_sep(char s, char const *c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (c[i])
@@ -26,7 +26,7 @@ static int	is_sep(char s, char const *c)
 	return (0);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*ns;
 	char	*start;
@@ -46,7 +46,8 @@ char		*ft_strtrim(char const *s1, char const *set)
 		s1--;
 	s1++;
 	stop = (char *)s1;
-	if (!(ns = malloc(sizeof(char) * (stop - start) + 1)))
+	ns = malloc(sizeof(char) * (stop - start) + 1);
+	if (!ns)
 		return (0);
 	ft_strlcpy(ns, start, stop - start + 1);
 	return (ns);

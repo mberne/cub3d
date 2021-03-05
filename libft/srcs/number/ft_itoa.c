@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 08:56:43 by mberne            #+#    #+#             */
-/*   Updated: 2020/12/16 11:15:22 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 10:48:22 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_intlen(long int n)
 {
-	long int i;
+	long int	i;
 
 	i = 0;
 	if (n <= 0)
@@ -30,7 +30,7 @@ static int	ft_intlen(long int n)
 	return (i);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char		*result;
 	long int	i;
@@ -38,7 +38,8 @@ char		*ft_itoa(int n)
 
 	i = n;
 	j = ft_intlen(n) - 1;
-	if (!(result = malloc(sizeof(char) * (ft_intlen(i) + 1))))
+	result = malloc(sizeof(char) * (ft_intlen(i) + 1));
+	if (!result)
 		return (0);
 	if (i < 0)
 	{

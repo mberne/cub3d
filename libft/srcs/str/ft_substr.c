@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:15:29 by mberne            #+#    #+#             */
-/*   Updated: 2021/02/16 15:55:27 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 10:56:39 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	len_str = ft_strlen(str);
 	if (len_str < len)
 		len = len_str;
-	if (!(ns = malloc(sizeof(char) * len + 1)))
+	ns = malloc(sizeof(char) * len + 1);
+	if (!ns)
 		return (0);
 	if (start >= len_str)
 	{

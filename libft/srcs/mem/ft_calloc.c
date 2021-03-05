@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 08:54:58 by mberne            #+#    #+#             */
-/*   Updated: 2020/11/25 10:34:06 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 10:46:40 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
-	if (!(ptr = malloc(count * size)))
+	ptr = malloc(count * size);
+	if (!ptr)
 		return (0);
 	ft_bzero(ptr, count * size);
 	return (ptr);

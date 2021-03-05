@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:50:39 by mberne            #+#    #+#             */
-/*   Updated: 2020/12/01 07:46:02 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 10:57:54 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_sep(char s, char c)
 
 static int	ft_countwords(char const *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*s)
@@ -33,7 +33,7 @@ static int	ft_countwords(char const *s, char c)
 	return (i);
 }
 
-char		**ft_free_split(char **tab, int i)
+char	**ft_free_split(char **tab, int i)
 {
 	while (--i >= 0)
 		free(tab[i]);
@@ -41,14 +41,15 @@ char		**ft_free_split(char **tab, int i)
 	return (0);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**tab;
 	char	*start;
 	int		i;
 
 	i = 0;
-	if (s == 0 || !(tab = malloc(sizeof(char*) * (ft_countwords(s, c) + 1))))
+	tab = malloc(sizeof(char *) * (ft_countwords(s, c) + 1));
+	if (s == 0 || !tab)
 		return (0);
 	while (*s)
 	{
@@ -59,10 +60,10 @@ char		**ft_split(char const *s, char c)
 			s++;
 		if (s != start)
 		{
-			if (!(tab[i] = malloc(sizeof(char) * ((s - start) + 1))))
+			tab[i] = malloc(sizeof(char) * ((s - start) + 1));
+			if (!tab[i])
 				return (ft_free_split(tab, i));
-			ft_strlcpy(tab[i], start, s - start + 1);
-			i++;
+			ft_strlcpy(tab[i++], start, s - start + 1);
 		}
 	}
 	tab[i] = 0;

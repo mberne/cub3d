@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 15:04:28 by mberne            #+#    #+#             */
-/*   Updated: 2021/02/17 09:18:34 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 10:53:40 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	lens2 = ft_strlen(s2);
 	if (!s1 && !s2)
 		return (0);
-	if (!(ns = malloc(sizeof(char) * ((lens1 + lens2 + 1)))))
+	ns = malloc(sizeof(char) * ((lens1 + lens2 + 1)));
+	if (!ns)
 		return (0);
 	while (++i < lens1)
 		ns[i] = s1[i];
