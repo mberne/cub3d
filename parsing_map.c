@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/04 13:28:17 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 15:41:24 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	check_map(t_settings *set)
 					|| set->map[i][j - 1] == ' ' || set->map[i][j + 1] == ' ')
 				{
 					printf("Error\nInvalid map\n");
-					free_split(set->map, set->mapy);
+					free_split(set->map, number_of_split(set->map));
 					exit(-1);
 				}
 			}
@@ -82,7 +82,11 @@ void	get_map(t_settings *set, char *line, int fd)
 		if (*line)
 		{
 			tmpmap = ft_strjoin(tmpmap, line);
+			if (!tmpmap)
+				exit(-1);
 			tmpmap = ft_strjoin(tmpmap, "\n");
+			if (!tmpmap)
+				exit(-1);
 		}
 		else
 		{
@@ -94,6 +98,8 @@ void	get_map(t_settings *set, char *line, int fd)
 		ret = get_next_line(fd, &line);
 	}
 	tmpmap = ft_strjoin(tmpmap, line);
+	if (!tmpmap)
+		exit(-1);
 	set->map = ft_split(tmpmap, '\n');
 	free(tmpmap);
 	set->mapy = number_of_split(set->map) - 1;

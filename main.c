@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/04 10:55:41 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/05 16:00:17 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	affiche_un_carre_stp(t_data *img)
 void	init_struct(t_settings *set)
 {
 	set->file = 0;
+	set->split = 0;
 	set->res[0] = 0;
 	set->res[1] = 0;
 	set->get_res = 0;

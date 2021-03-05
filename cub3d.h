@@ -16,11 +16,12 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
+}	t_data;
 
 typedef struct s_settings
 {
 	char			*file;
+	char			**split;
 	int				res[2];
 	int				get_res;
 	char			*no;
@@ -35,18 +36,21 @@ typedef struct s_settings
 	char			**map;
 	int				mapx;
 	int				mapy;
-}				t_settings;
+}	t_settings;
 
 int				main(int ac, char **av);
 void			init_struct(t_settings *set);
 void			get_settings(t_settings *set);
-void			get_texture(t_settings *set, char **tab);
-void			get_color(t_settings *set, char **tab);
+int				check_arg(t_settings *set, int i);
+void			get_resolution(t_settings *set);
+void			get_texture(t_settings *set);
+void			get_color(t_settings *set);
 unsigned int	get_rgb(unsigned int r, unsigned int g, unsigned int b);
 void			get_map(t_settings *set, char *line, int fd);
 void			setup_map(t_settings *set);
 void			check_map(t_settings *set);
 void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
+void			ft_exit(t_settings *set, char *str);
 
 #endif
