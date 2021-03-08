@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 09:35:30 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/05 16:07:50 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 13:07:19 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_arg(t_settings *set, int i)
 	int	j;
 
 	j = 0;
-	while (set->split[j])
+	while (set->tab[j])
 		j++;
 	if (i == j)
 		return (1);
@@ -48,10 +48,12 @@ int	check_arg(t_settings *set, int i)
 void	ft_exit(t_settings *set, char *str)
 {
 	printf("%s", str);
-	if (set->split)
-		free_split(set->split, number_of_split(set->split));
-	if (set->map)
-		free_split(set->map, number_of_split(set->map));
+	if (set->file)
+		free(set->file);
+	if (set->tab)
+		free_split(set->tab, number_of_split(set->tab));
+	if (set->line)
+		free(set->line);
 	if (set->no)
 		free(set->no);
 	if (set->so)
@@ -62,5 +64,7 @@ void	ft_exit(t_settings *set, char *str)
 		free(set->ea);
 	if (set->sprite)
 		free(set->sprite);
+	if (set->map)
+		free_split(set->map, number_of_split(set->map));
 	exit(-1);
 }

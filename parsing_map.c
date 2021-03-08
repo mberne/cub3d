@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/05 15:41:24 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 14:06:16 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,25 @@ void	check_map(t_settings *set)
 		j = -1;
 		while (set->map[i][++j])
 		{
-			if (set->map[i][j] == '0' || set->map[i][j] == '2'
-				|| set->map[i][j] == 'N' || set->map[i][j] == 'S'
-				|| set->map[i][j] == 'E' || set->map[i][j] == 'W')
+			if (ft_strchr("02NSEW", set->map[i][j]))
 			{
 				if (i == 0 || i == set->mapy || j == 0 || j == set->mapx
 					|| set->map[i - 1][j] == ' ' || set->map[i + 1][j] == ' '
 					|| set->map[i][j - 1] == ' ' || set->map[i][j + 1] == ' ')
-				{
-					printf("Error\nInvalid map\n");
-					free_split(set->map, number_of_split(set->map));
-					exit(-1);
-				}
+					ft_exit(set, "Error\nInvalid map\n");
 			}
+			if (ft_strchr("NSEW", set->map[i][j]) && !set->porientation)
+			{
+				set->pposition[0] = i;
+				set->pposition[1] = j;
+				set->porientation = set->map[i][j];
+			}
+			else if (ft_strchr("NSEW", set->map[i][j]) && set->porientation)
+				ft_exit(set, "Error\nInvalid map\n");
 		}
 	}
+	if (!set->porientation)
+		ft_exit(set, "Error\nInvalid map\n");
 }
 
 void	setup_map(t_settings *set)
@@ -62,7 +66,7 @@ void	setup_map(t_settings *set)
 			{
 				set->map[i] = ft_strjoin(set->map[i], " ");
 				if (!set->map[i])
-					exit(-1);
+					ft_exit(set, "");
 				tmp++;
 			}
 		}
@@ -70,7 +74,7 @@ void	setup_map(t_settings *set)
 	set->mapx -= 1;
 }
 
-void	get_map(t_settings *set, char *line, int fd)
+void	get_map(t_settings *set, int fd)
 {
 	int		ret;
 	char	*tmpmap;
@@ -79,27 +83,34 @@ void	get_map(t_settings *set, char *line, int fd)
 	tmpmap = NULL;
 	while (ret > 0)
 	{
-		if (*line)
+		if (*set->line)
 		{
-			tmpmap = ft_strjoin(tmpmap, line);
+			tmpmap = ft_strjoin(tmpmap, set->line);
 			if (!tmpmap)
-				exit(-1);
+			{
+				free(tmpmap);
+				ft_exit(set, "");
+			}
 			tmpmap = ft_strjoin(tmpmap, "\n");
 			if (!tmpmap)
-				exit(-1);
+			{
+				free(tmpmap);
+				ft_exit(set, "");
+			}
 		}
 		else
 		{
-			printf("Error\nInvalid map\n");
-			free(line);
 			free(tmpmap);
-			exit(-1);
+			ft_exit(set, "Error\nInvalid map\n");
 		}
-		ret = get_next_line(fd, &line);
+		ret = get_next_line(fd, &set->line);
 	}
-	tmpmap = ft_strjoin(tmpmap, line);
+	tmpmap = ft_strjoin(tmpmap, set->line);
 	if (!tmpmap)
-		exit(-1);
+	{
+		free(tmpmap);
+		ft_exit(set, "");
+	}
 	set->map = ft_split(tmpmap, '\n');
 	free(tmpmap);
 	set->mapy = number_of_split(set->map) - 1;

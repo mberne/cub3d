@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/05 16:00:17 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 13:33:33 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,23 @@ void	affiche_un_carre_stp(t_data *img)
 void	init_struct(t_settings *set)
 {
 	set->file = 0;
-	set->split = 0;
-	set->res[0] = 0;
-	set->res[1] = 0;
-	set->get_res = 0;
+	set->tab = 0;
+	set->line = 0;
+	set->res[0] = -1;
+	set->res[1] = -1;
 	set->no = 0;
 	set->so = 0;
 	set->we = 0;
 	set->ea = 0;
 	set->sprite = 0;
-	set->floor = 0;
-	set->get_floor = 0;
-	set->ceiling = 0;
-	set->get_ceiling = 0;
+	set->floor = -1;
+	set->ceiling = -1;
 	set->map = 0;
 	set->mapx = 0;
 	set->mapy = 0;
+	set->pposition[0] = -1;
+	set->pposition[1] = -1;
+	set->porientation = 0;
 }
 
 int	main(int ac, char **av)
@@ -91,12 +92,13 @@ int	main(int ac, char **av)
 	j = 0;
 	if (i > 4 && av[1][--i] == 'b' && av[1][--i] == 'u' && av[1][--i] == 'c'
 		&& av[1][--i] == '.')
-		set.file = av[1];
-	else
 	{
-		printf("Error\nInvalid name of file\n");
-		exit(-1);
+		set.file = ft_strdup(av[1]);
+		if (!set.file)
+			ft_exit(&set, "");
 	}
+	else
+		ft_exit(&set, "Error\nInvalid name of file\n");
 	get_settings(&set);
 	printf("file | %s\n", set.file);
 	printf("res 1 | %d\n", set.res[0]);
@@ -115,4 +117,7 @@ int	main(int ac, char **av)
 	}
 	printf("mapx | %d\n", set.mapx);
 	printf("mapy | %d\n", set.mapy);
+	printf("player position y | %d\n", set.pposition[0]);
+	printf("player position x | %d\n", set.pposition[1]);
+	printf("player orientation | %c\n", set.porientation);
 }

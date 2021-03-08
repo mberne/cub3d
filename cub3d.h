@@ -20,22 +20,22 @@ typedef struct s_data
 
 typedef struct s_settings
 {
-	char			*file;
-	char			**split;
-	int				res[2];
-	int				get_res;
-	char			*no;
-	char			*so;
-	char			*we;
-	char			*ea;
-	char			*sprite;
-	unsigned int	floor;
-	int				get_floor;
-	unsigned int	ceiling;
-	int				get_ceiling;
-	char			**map;
-	int				mapx;
-	int				mapy;
+	char	*file;
+	char	**tab;
+	char	*line;
+	int		res[2];
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*sprite;
+	int		floor;
+	int		ceiling;
+	char	**map;
+	int		mapx;
+	int		mapy;
+	int		pposition[2];
+	char	porientation;
 }	t_settings;
 
 int				main(int ac, char **av);
@@ -46,7 +46,7 @@ void			get_resolution(t_settings *set);
 void			get_texture(t_settings *set);
 void			get_color(t_settings *set);
 unsigned int	get_rgb(unsigned int r, unsigned int g, unsigned int b);
-void			get_map(t_settings *set, char *line, int fd);
+void			get_map(t_settings *set, int fd);
 void			setup_map(t_settings *set);
 void			check_map(t_settings *set);
 void			free_split(char **tab, int i);
