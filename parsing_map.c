@@ -6,11 +6,20 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/08 14:06:16 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 15:54:59 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	check_wall(t_settings *set, int i, int j)
+{
+	if (i == 0 || i == set->mapy || j == 0 || j == set->mapx
+		|| set->map[i - 1][j] == ' ' || set->map[i + 1][j] == ' '
+		|| set->map[i][j - 1] == ' ' || set->map[i][j + 1] == ' ')
+		return (1);
+	return (0);
+}
 
 void	check_map(t_settings *set)
 {
@@ -23,13 +32,8 @@ void	check_map(t_settings *set)
 		j = -1;
 		while (set->map[i][++j])
 		{
-			if (ft_strchr("02NSEW", set->map[i][j]))
-			{
-				if (i == 0 || i == set->mapy || j == 0 || j == set->mapx
-					|| set->map[i - 1][j] == ' ' || set->map[i + 1][j] == ' '
-					|| set->map[i][j - 1] == ' ' || set->map[i][j + 1] == ' ')
-					ft_exit(set, "Error\nInvalid map\n");
-			}
+			if (ft_strchr("02NSEW", set->map[i][j]) && check_wall(set, i, j))
+				ft_exit(set, "Error\nInvalid map\n");
 			if (ft_strchr("NSEW", set->map[i][j]) && !set->porientation)
 			{
 				set->pposition[0] = i;
@@ -71,7 +75,6 @@ void	setup_map(t_settings *set)
 			}
 		}
 	}
-	set->mapx -= 1;
 }
 
 void	get_map(t_settings *set, int fd)
@@ -115,5 +118,6 @@ void	get_map(t_settings *set, int fd)
 	free(tmpmap);
 	set->mapy = number_of_split(set->map) - 1;
 	setup_map(set);
+	set->mapx -= 1;
 	check_map(set);
 }

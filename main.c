@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/08 13:33:33 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 15:28:22 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,26 @@ void	affiche_un_carre_stp(t_data *img)
 	//mlx_destroy_window(mlx, win);
 */
 
+void	get_settings(t_settings *set)
+{
+	int		fd;
+	int		ret;
+
+	fd = open(set->file, O_RDONLY);
+	ret = 1;
+	while (ret > 0)
+	{
+		ret = get_next_line(fd, &set->line);
+		if (*set->line)
+		{
+			set->tab = ft_split(set->line, ' ');
+			parsing(set, fd);
+			free(set->line);
+			free_split(set->tab, number_of_split(set->tab));
+		}
+	}
+}
+
 void	init_struct(t_settings *set)
 {
 	set->file = 0;
@@ -100,6 +120,10 @@ int	main(int ac, char **av)
 	else
 		ft_exit(&set, "Error\nInvalid name of file\n");
 	get_settings(&set);
+	if (set.res[0] == -1 || set.res[1] == -1 || !set.no || !set.so || !set.we
+		|| !set.ea || !set.sprite || set.floor == -1 || set.ceiling == -1
+		|| !set.map)
+		ft_exit(&set, "Error\nInvalid file\n");
 	printf("file | %s\n", set.file);
 	printf("res 1 | %d\n", set.res[0]);
 	printf("res 2 | %d\n", set.res[1]);
