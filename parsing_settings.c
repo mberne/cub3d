@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:47:14 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/08 15:23:27 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/08 16:02:23 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,36 +56,16 @@ void	get_color(t_settings *set)
 void	get_texture(t_settings *set)
 {
 	if (!ft_strncmp(set->tab[0], "NO", 2) && set->no == 0)
-	{
 		set->no = ft_strdup(set->tab[1]);
-		if (!set->no)
-			ft_exit(set, "");
-	}
 	else if (!ft_strncmp(set->tab[0], "SO", 2) && set->so == 0)
-	{
 		set->so = ft_strdup(set->tab[1]);
-		if (!set->so)
-			ft_exit(set, "");
-	}
 	else if (!ft_strncmp(set->tab[0], "WE", 2) && set->we == 0)
-	{
 		set->we = ft_strdup(set->tab[1]);
-		if (!set->we)
-			ft_exit(set, "");
-	}
 	else if (!ft_strncmp(set->tab[0], "EA", 2) && set->ea == 0)
-	{
 		set->ea = ft_strdup(set->tab[1]);
-		if (!set->ea)
-			ft_exit(set, "");
-	}
 	else if (!ft_strncmp(set->tab[0], "S", 1)
 		&& ft_strncmp(set->tab[0], "SO", 2) && set->sprite == 0)
-	{
 		set->sprite = ft_strdup(set->tab[1]);
-		if (!set->sprite)
-			ft_exit(set, "");
-	}
 	else
 		ft_exit(set, "Error\nInvalid textures\n");
 }
