@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/08 15:28:22 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/09 09:32:20 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int ac, char **av)
 	{
 		set.file = ft_strdup(av[1]);
 		if (!set.file)
-			ft_exit(&set, "");
+			ft_exit(&set, "Malloc error");
 	}
 	else
 		ft_exit(&set, "Error\nInvalid name of file\n");

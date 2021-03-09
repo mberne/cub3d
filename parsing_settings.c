@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:47:14 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/08 16:02:23 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/09 09:42:21 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	get_color(t_settings *set)
 
 	rgb = ft_split(set->tab[1], ',');
 	if (!rgb)
-		ft_exit(set, "");
-	if (number_of_split(rgb) != 3)
+		ft_exit(set, "Malloc error");
+	if (number_of_split(rgb) != 3 || !ft_isnumber(rgb[0])
+		|| !ft_isnumber(rgb[1]) || !ft_isnumber(rgb[2]))
 	{
 		free_split(rgb, number_of_split(rgb));
 		ft_exit(set, "Error\nInvalid color\n");
@@ -72,7 +73,8 @@ void	get_texture(t_settings *set)
 
 void	get_resolution(t_settings *set)
 {
-	if (set->res[0] == -1 && set->res[1] == -1)
+	if (set->res[0] == -1 && set->res[1] == -1
+		&& ft_isnumber(set->tab[1]) && ft_isnumber(set->tab[2]))
 	{
 		set->res[0] = ft_atoi(set->tab[1]);
 		set->res[1] = ft_atoi(set->tab[2]);

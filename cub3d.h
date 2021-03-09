@@ -53,6 +53,7 @@ void			check_map(t_settings *set);
 int				check_wall(t_settings *set, int i, int j);
 void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
+int				ft_isnumber(char *s);
 void			ft_exit(t_settings *set, char *str);
 
 #endif

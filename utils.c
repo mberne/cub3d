@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 09:35:30 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/08 15:25:55 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/09 09:25:02 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ int	check_arg(t_settings *set, int i)
 
 	j = 0;
 	while (set->tab[j])
+		j++;
+	if (i == j)
+		return (1);
+	return (0);
+}
+
+int	ft_isnumber(char *s)
+{
+	int	i;
+	int	j;
+
+	i = ft_strlen(s);
+	j = 0;
+	while (ft_isdigit(s[j]))
 		j++;
 	if (i == j)
 		return (1);
