@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:47:14 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/09 09:42:21 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/09 15:42:38 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,28 @@ unsigned int	get_rgb(unsigned int r, unsigned int g, unsigned int b)
 void	get_color(t_settings *set)
 {
 	char			**rgb;
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
+	unsigned int	color[3];
 
 	rgb = ft_split(set->tab[1], ',');
 	if (!rgb)
-		ft_exit(set, "Malloc error");
+		ft_exit(set, "Error\nMalloc error\n");
 	if (number_of_split(rgb) != 3 || !ft_isnumber(rgb[0])
-		|| !ft_isnumber(rgb[1]) || !ft_isnumber(rgb[2]))
+		|| !ft_isnumber(rgb[1]) || !ft_isnumber(rgb[2])
+		|| ft_count(set->tab[1], ',') != 2)
 	{
 		free_split(rgb, number_of_split(rgb));
 		ft_exit(set, "Error\nInvalid color\n");
 	}
-	r = ft_atoi(rgb[0]);
-	g = ft_atoi(rgb[1]);
-	b = ft_atoi(rgb[2]);
+	color[0] = ft_atoi(rgb[0]);
+	color[1] = ft_atoi(rgb[1]);
+	color[2] = ft_atoi(rgb[2]);
 	free_split(rgb, number_of_split(rgb));
-	if (r > 255 || g > 255 || b > 255)
+	if (color[0] > 255 || color[1] > 255 || color[2] > 255)
 		ft_exit(set, "Error\nInvalid color\n");
 	if (!ft_strncmp(set->tab[0], "F", 1) && set->floor == -1)
-		set->floor = get_rgb(r, g, b);
+		set->floor = get_rgb(color[0], color[1], color[2]);
 	else if (!ft_strncmp(set->tab[0], "C", 1) && set->ceiling == -1)
-		set->ceiling = get_rgb(r, g, b);
+		set->ceiling = get_rgb(color[0], color[1], color[2]);
 	else
 		ft_exit(set, "Error\nInvalid color\n");
 }
@@ -73,6 +72,7 @@ void	get_texture(t_settings *set)
 
 void	get_resolution(t_settings *set)
 {
+	// mlx_get_screen_size()
 	if (set->res[0] == -1 && set->res[1] == -1
 		&& ft_isnumber(set->tab[1]) && ft_isnumber(set->tab[2]))
 	{
@@ -102,7 +102,11 @@ void	parsing(t_settings *set, int fd)
 			|| !ft_strncmp(set->tab[0], "C", ft_strlen(set->tab[0]))))
 		get_color(set);
 	else if (!ft_strncmp(set->tab[0], "1", 1))
+	{
 		get_map(set, fd);
+		free_split(set->tab, number_of_split(set->tab));
+		set->tab = 0;
+	}
 	else
 		ft_exit(set, "Error\nInvalid file\n");
 }

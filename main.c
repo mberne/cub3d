@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/09 09:32:20 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/09 15:41:01 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,30 @@ void	affiche_un_carre_stp(t_data *img)
 	//mlx_destroy_window(mlx, win);
 */
 
+void	ft_exit(t_settings *set, char *str)
+{
+	printf("%s", str);
+	if (set->file)
+		free(set->file);
+	if (set->tab)
+		free_split(set->tab, number_of_split(set->tab));
+	if (set->line)
+		free(set->line);
+	if (set->no)
+		free(set->no);
+	if (set->so)
+		free(set->so);
+	if (set->we)
+		free(set->we);
+	if (set->ea)
+		free(set->ea);
+	if (set->sprite)
+		free(set->sprite);
+	if (set->map)
+		free_split(set->map, number_of_split(set->map));
+	exit(-1);
+}
+
 void	get_settings(t_settings *set)
 {
 	int		fd;
@@ -68,12 +92,15 @@ void	get_settings(t_settings *set)
 	while (ret > 0)
 	{
 		ret = get_next_line(fd, &set->line);
+		if (ret == -1)
+			ft_exit(set, "Error\nAn error occured while reading file\n");
 		if (*set->line)
 		{
 			set->tab = ft_split(set->line, ' ');
 			parsing(set, fd);
 			free(set->line);
 			free_split(set->tab, number_of_split(set->tab));
+			set->tab = 0;
 		}
 	}
 }
@@ -115,7 +142,7 @@ int	main(int ac, char **av)
 	{
 		set.file = ft_strdup(av[1]);
 		if (!set.file)
-			ft_exit(&set, "Malloc error");
+			ft_exit(&set, "Error\nMalloc error\n");
 	}
 	else
 		ft_exit(&set, "Error\nInvalid name of file\n");

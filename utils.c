@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 09:35:30 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/09 09:25:02 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/09 15:40:59 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,16 @@ int	ft_isnumber(char *s)
 	return (0);
 }
 
-void	ft_exit(t_settings *set, char *str)
+int	ft_count(char const *s, char c)
 {
-	printf("%s", str);
-	if (set->file)
-		free(set->file);
-	if (set->tab)
-		free_split(set->tab, number_of_split(set->tab));
-	if (set->line)
-		free(set->line);
-	if (set->no)
-		free(set->no);
-	if (set->so)
-		free(set->so);
-	if (set->we)
-		free(set->we);
-	if (set->ea)
-		free(set->ea);
-	if (set->sprite)
-		free(set->sprite);
-	if (set->map)
-		free_split(set->map, number_of_split(set->map));
-	exit(-1);
+	int	i;
+
+	i = 0;
+	while (*s)
+	{
+		if (*s == c)
+			i++;
+		s++;
+	}
+	return (i);
 }

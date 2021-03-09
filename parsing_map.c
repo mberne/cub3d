@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/09 09:32:45 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/09 15:41:06 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	setup_map(t_settings *set)
 			{
 				set->map[i] = ft_strjoin(set->map[i], " ");
 				if (!set->map[i])
-					ft_exit(set, "Malloc error");
+					ft_exit(set, "Error\nMalloc error\n");
 				tmp++;
 			}
 		}
@@ -92,13 +92,13 @@ void	get_map(t_settings *set, int fd)
 			if (!tmpmap)
 			{
 				free(tmpmap);
-				ft_exit(set, "Malloc error");
+				ft_exit(set, "Error\nMalloc error\n");
 			}
 			tmpmap = ft_strjoin(tmpmap, "\n");
 			if (!tmpmap)
 			{
 				free(tmpmap);
-				ft_exit(set, "Malloc error");
+				ft_exit(set, "Error\nMalloc error\n");
 			}
 		}
 		else
@@ -112,7 +112,7 @@ void	get_map(t_settings *set, int fd)
 	if (!tmpmap)
 	{
 		free(tmpmap);
-		ft_exit(set, "Malloc error");
+		ft_exit(set, "Error\nMalloc error\n");
 	}
 	set->map = ft_split(tmpmap, '\n');
 	free(tmpmap);
