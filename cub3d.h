@@ -3,11 +3,16 @@
 
 # include <stdio.h>
 # include <unistd.h>
-# include <string.h>
 # include <fcntl.h>
 # include <math.h>
 # include "mlx.h"
 # include "libft/includes/libft.h"
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+}	t_vars;
 
 typedef struct s_data
 {
@@ -38,23 +43,30 @@ typedef struct s_settings
 	char	porientation;
 }	t_settings;
 
+typedef struct s_struct
+{
+	t_vars		*vars;
+	t_data		*data;
+	t_settings	*set;
+}	t_struct;
+
 int				main(int ac, char **av);
 void			init_struct(t_settings *set);
-void			get_settings(t_settings *set);
-void			parsing(t_settings *set, int fd);
+void			get_settings(t_struct *as);
+void			parsing(t_struct *as, int fd);
 int				check_arg(t_settings *set, int i);
-void			get_resolution(t_settings *set);
-void			get_texture(t_settings *set);
-void			get_color(t_settings *set);
+void			get_resolution(t_struct *as);
+void			get_texture(t_struct *as);
+void			get_color(t_struct *as);
+int				ft_count(char const *s, char c);
 unsigned int	get_rgb(unsigned int r, unsigned int g, unsigned int b);
-void			get_map(t_settings *set, int fd);
-void			setup_map(t_settings *set);
-void			check_map(t_settings *set);
-int				check_wall(t_settings *set, int i, int j);
+void			map(t_struct *as, int fd);
+void			setup_map(t_struct *as);
+void			check_map(t_struct *as);
+int				check_wall(t_struct *as, int i, int j);
 void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
-int				ft_count(char const *s, char c);
-void			ft_exit(t_settings *set, char *str);
+void			ft_exit(t_struct *as, char *str);
 
 #endif
