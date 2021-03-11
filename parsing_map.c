@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 08:52:15 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/11 13:06:37 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/03/11 14:31:49 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,9 @@ void	map(t_struct *as, int fd)
 	tmpmap = create_map(as, tmpmap, fd);
 	while (tmpmap[i])
 	{
-		if (tmpmap[i] == '\n' && tmpmap[i + 1] == '\n'
-			&& !(tmpmap[i + 2] == '\n' || tmpmap[i + 2] == '\0'))
+		if ((tmpmap[i] == '\n' && tmpmap[i + 1] == '\n'
+				&& !(tmpmap[i + 2] == '\n' || tmpmap[i + 2] == '\0'))
+			|| !ft_strchr(" 012NSWE\n", tmpmap[i]))
 			ft_exit(as, "Error\nInvalid map\n");
 		i++;
 	}
