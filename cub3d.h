@@ -68,5 +68,6 @@ void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
+int				close_win(int keycode, t_vars *vars);
 
 #endif

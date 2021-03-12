@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/05 09:32:42 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/11 11:24:30 by mberne           ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
 void	my_mlx_pixel_put(t_struct *as, int x, int y, int color)
@@ -114,32 +102,11 @@ int	main(int ac, char **av)
 		|| !as.set->so || !as.set->we || !as.set->ea || !as.set->sprite
 		|| as.set->floor == -1 || as.set->ceiling == -1 || !as.set->map)
 		ft_exit(&as, "Error\nInvalid file\n");
-	printf("file | %s\n", as.set->file);
-	printf("res 1 | %d\n", as.set->res[0]);
-	printf("res 2 | %d\n", as.set->res[1]);
-	printf("NO | %s\n", as.set->no);
-	printf("SO | %s\n", as.set->so);
-	printf("WE | %s\n", as.set->we);
-	printf("EA | %s\n", as.set->ea);
-	printf("S | %s\n", as.set->sprite);
-	printf("F | %d\n", as.set->floor);
-	printf("C | %d\n", as.set->ceiling);
-	while (as.set->map[j])
-	{
-		printf("|%s|\n", as.set->map[j]);
-		j++;
-	}
-	printf("mapx | %d\n", as.set->mapx);
-	printf("mapy | %d\n", as.set->mapy);
-	printf("player position y | %d\n", as.set->pposition[0]);
-	printf("player position x | %d\n", as.set->pposition[1]);
-	printf("player orientation | %c\n", as.set->porientation);
 	as.vars->win = mlx_new_window(as.vars->mlx, as.set->res[0], as.set->res[1], "Cub3D");
-	as.data->img = mlx_new_image(as.vars->mlx, 920, 600);
+	as.data->img = mlx_new_image(as.vars->mlx, as.set->res[0], as.set->res[1]);
 	as.data->addr = mlx_get_data_addr(as.data->img, &as.data->bits_per_pixel,
 			&as.data->line_length, &as.data->endian);
 	// mlx_put_image_to_window(as.vars->mlx, as.vars->win, as.data->img, 0, 0);
-	// mlx_loop(as.vars->mlx);
-	// mlx_key_hook() || mlx_mouse_hook()
-	// mlx_destroy_window(mlx, win);
+	mlx_hook(as.vars->win, 2, 1L<<0, close_win, &as.vars);
+	mlx_loop(as.vars->mlx);
 }
