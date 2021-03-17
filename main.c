@@ -106,7 +106,8 @@ int	main(int ac, char **av)
 	as.data->img = mlx_new_image(as.vars->mlx, as.set->res[0], as.set->res[1]);
 	as.data->addr = mlx_get_data_addr(as.data->img, &as.data->bits_per_pixel,
 			&as.data->line_length, &as.data->endian);
+	mlx_hook(as.vars->win, 2, 1L << 0, key_events, &as.vars);
+	mlx_hook(as.vars->win, 17, 1L << 2, destroy_win, &as.vars);
 	// mlx_put_image_to_window(as.vars->mlx, as.vars->win, as.data->img, 0, 0);
-	mlx_hook(as.vars->win, 2, 1L<<0, close_win, &as.vars);
 	mlx_loop(as.vars->mlx);
 }

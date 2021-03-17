@@ -46,8 +46,7 @@ void	setup_map(t_struct *as)
 	while (as->set->map[++i])
 	{
 		tmp = ft_strlen(as->set->map[i]);
-		if (tmp > as->set->mapx)
-			as->set->mapx = tmp;
+		as->set->mapx = fmaxf(tmp, as->set->mapx);
 	}
 	i = -1;
 	while (as->set->map[++i])

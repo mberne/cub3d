@@ -8,6 +8,14 @@
 # include "mlx.h"
 # include "libft/includes/libft.h"
 
+# define W 13
+# define S 1
+# define A 0
+# define D 2
+# define LEFT_ARROW 123
+# define RIGHT_ARROW 124
+# define ESC 53
+
 typedef struct s_vars
 {
 	void	*mlx;
@@ -68,6 +76,7 @@ void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
-int				close_win(int keycode, t_vars *vars);
+int				key_events(int keycode, t_vars *vars);
+int				destroy_win(t_vars *vars);
 
 #endif
