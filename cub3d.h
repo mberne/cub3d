@@ -53,9 +53,9 @@ typedef struct s_settings
 
 typedef struct s_struct
 {
-	t_vars		*vars;
-	t_data		*data;
-	t_settings	*set;
+	t_vars		vars;
+	t_data		data;
+	t_settings	set;
 }	t_struct;
 
 int				main(int ac, char **av);
@@ -76,7 +76,10 @@ void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
-int				key_events(int keycode, t_vars *vars);
-int				destroy_win(t_vars *vars);
+int				key_events(int keycode, t_struct *as);
+int				destroy_win(t_struct *as);
+void			draw_minimap(t_struct *as);
+void			square(t_struct *as);
+void			my_mlx_pixel_put(t_struct *as, int x, int y, int color);
 
 #endif

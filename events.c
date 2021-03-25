@@ -1,9 +1,12 @@
 #include "cub3d.h"
 
-int	key_events(int keycode, t_vars *vars)
+int	key_events(int keycode, t_struct *as)
 {
 	if (keycode == ESC)
-		mlx_destroy_window(vars->mlx, vars->win);
+	{
+		mlx_destroy_window(as->vars.mlx, as->vars.win);
+		ft_exit(as, "");
+	}
 	/*
 	if (keycode == LEFT_ARROW)
 		// camera left rotate
@@ -21,8 +24,9 @@ int	key_events(int keycode, t_vars *vars)
 	return (0);
 }
 
-int	destroy_win(t_vars *vars)
+int	destroy_win(t_struct *as)
 {
-	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_window(as->vars.mlx, as->vars.win);
+	ft_exit(as, "");
 	return (0);
 }

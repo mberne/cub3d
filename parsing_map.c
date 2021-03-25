@@ -2,9 +2,9 @@
 
 int	check_wall(t_struct *as, int i, int j)
 {
-	if (i == 0 || i == as->set->mapy || j == 0 || j == as->set->mapx
-		|| as->set->map[i - 1][j] == ' ' || as->set->map[i + 1][j] == ' '
-		|| as->set->map[i][j - 1] == ' ' || as->set->map[i][j + 1] == ' ')
+	if (i == 0 || i == as->set.mapy || j == 0 || j == as->set.mapx
+		|| as->set.map[i - 1][j] == ' ' || as->set.map[i + 1][j] == ' '
+		|| as->set.map[i][j - 1] == ' ' || as->set.map[i][j + 1] == ' ')
 		return (1);
 	return (0);
 }
@@ -15,25 +15,25 @@ void	check_map(t_struct *as)
 	int	j;
 
 	i = -1;
-	while (as->set->map[++i])
+	while (as->set.map[++i])
 	{
 		j = -1;
-		while (as->set->map[i][++j])
+		while (as->set.map[i][++j])
 		{
-			if (ft_strchr("02NSEW", as->set->map[i][j]) && check_wall(as, i, j))
+			if (ft_strchr("02NSEW", as->set.map[i][j]) && check_wall(as, i, j))
 				ft_exit(as, "Error\nInvalid map\n");
-			if (ft_strchr("NSEW", as->set->map[i][j]) && !as->set->porientation)
+			if (ft_strchr("NSEW", as->set.map[i][j]) && !as->set.porientation)
 			{
-				as->set->pposition[0] = i;
-				as->set->pposition[1] = j;
-				as->set->porientation = as->set->map[i][j];
+				as->set.pposition[0] = i;
+				as->set.pposition[1] = j;
+				as->set.porientation = as->set.map[i][j];
 			}
-			else if (ft_strchr("NSEW", as->set->map[i][j])
-				&& as->set->porientation)
+			else if (ft_strchr("NSEW", as->set.map[i][j])
+				&& as->set.porientation)
 				ft_exit(as, "Error\nInvalid map\n");
 		}
 	}
-	if (!as->set->porientation)
+	if (!as->set.porientation)
 		ft_exit(as, "Error\nInvalid map\n");
 }
 
@@ -43,26 +43,26 @@ void	setup_map(t_struct *as)
 	int	tmp;
 
 	i = -1;
-	while (as->set->map[++i])
+	while (as->set.map[++i])
 	{
-		tmp = ft_strlen(as->set->map[i]);
-		as->set->mapx = fmaxf(tmp, as->set->mapx);
+		tmp = ft_strlen(as->set.map[i]);
+		as->set.mapx = fmaxf(tmp, as->set.mapx);
 	}
 	i = -1;
-	while (as->set->map[++i])
+	while (as->set.map[++i])
 	{
-		tmp = ft_strlen(as->set->map[i]);
-		if (tmp < as->set->mapx)
+		tmp = ft_strlen(as->set.map[i]);
+		if (tmp < as->set.mapx)
 		{
-			while (tmp++ < as->set->mapx)
+			while (tmp++ < as->set.mapx)
 			{
-				as->set->map[i] = ft_strjoin(as->set->map[i], " ");
-				if (!as->set->map[i])
+				as->set.map[i] = ft_strjoin(as->set.map[i], " ");
+				if (!as->set.map[i])
 					ft_exit(as, "Error\nMalloc error\n");
 			}
 		}
 	}
-	as->set->mapx -= 1;
+	as->set.mapx -= 1;
 }
 
 char	*create_map(t_struct *as, char *tmpmap, int fd)
@@ -72,7 +72,7 @@ char	*create_map(t_struct *as, char *tmpmap, int fd)
 	ret = 1;
 	while (ret > 0)
 	{
-		tmpmap = ft_strjoin(tmpmap, as->set->line);
+		tmpmap = ft_strjoin(tmpmap, as->set.line);
 		if (!tmpmap)
 		{
 			free(tmpmap);
@@ -84,9 +84,9 @@ char	*create_map(t_struct *as, char *tmpmap, int fd)
 			free(tmpmap);
 			ft_exit(as, "Error\nMalloc error\n");
 		}
-		ret = get_next_line(fd, &as->set->line);
+		ret = get_next_line(fd, &as->set.line);
 	}
-	tmpmap = ft_strjoin(tmpmap, as->set->line);
+	tmpmap = ft_strjoin(tmpmap, as->set.line);
 	if (tmpmap)
 		return (tmpmap);
 	free(tmpmap);
@@ -110,9 +110,9 @@ void	map(t_struct *as, int fd)
 			ft_exit(as, "Error\nInvalid map\n");
 		i++;
 	}
-	as->set->map = ft_split(tmpmap, '\n');
+	as->set.map = ft_split(tmpmap, '\n');
 	free(tmpmap);
-	as->set->mapy = number_of_split(as->set->map) - 1;
+	as->set.mapy = number_of_split(as->set.map) - 1;
 	setup_map(as);
 	check_map(as);
 }

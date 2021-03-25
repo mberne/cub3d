@@ -1,4 +1,4 @@
-SRCS		= main.c parsing_settings.c parsing_map.c utils.c events.c
+SRCS		= main.c parsing_settings.c parsing_map.c utils.c events.c draw.c
 
 OBJS		= $(SRCS:.c=.o)
 
