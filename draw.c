@@ -9,23 +9,23 @@ void	my_mlx_pixel_put(t_struct *as, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	find_wall(t_struct *as)
-{
-	int	i;
-	int	d;
+// void	find_wall(t_struct *as)
+// {
+// 	int	i;
+// 	int	d;
 
-	i = 0;
-	while (as->ray.ray[i])
-	{
-		d = 0;
-		while (d <= ?)
-		{
-			//as->ray.t[i] = - ((0 * 0 + 1 * 0 + 0 * 0 + d) / (0 * as->ray.ray[i][0] + 1 * as->ray.ray[i][1] + 0 * as->ray.ray[i][2]));
-			d++;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (as->ray.ray[i])
+// 	{
+// 		d = 0;
+// 		while (d <= ?)
+// 		{
+// 			as->ray.t[i] = - ((0 * 0 + 1 * 0 + 0 * 0 + d) / (0 * as->ray.ray[i][0] + 1 * as->ray.ray[i][1] + 0 * as->ray.ray[i][2]));
+// 			d++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	ray(t_struct *as)
 {

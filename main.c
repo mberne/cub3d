@@ -12,7 +12,7 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.ea);
 	free(as->set.sprite);
 	free_split(as->set.map, number_of_split(as->set.map));
-	// free_split(as->ray.ray, number_of_split(as->ray.ray));
+	// free as->ray.ray
 	exit(-1);
 }
 
@@ -103,7 +103,6 @@ int	main(int ac, char **av)
 	printf("plus grand rayon | %f\n", as.ray.ray[2076600][0]);
 	printf("plus grand rayon | %f\n", as.ray.ray[2076600][1]);
 	printf("plus grand rayon | %f\n", as.ray.ray[2076600][2]);
-	find_wall(&as);
-	//mlx_put_image_to_window(as.vars.mlx, as.vars.win, as.data.img, 0, 0);
+	mlx_put_image_to_window(as.vars.mlx, as.vars.win, as.data.img, 0, 0);
 	mlx_loop(as.vars.mlx);
 }
