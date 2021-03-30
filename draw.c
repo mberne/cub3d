@@ -9,39 +9,49 @@ void	my_mlx_pixel_put(t_struct *as, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-// void	draw_minimap(t_struct *as)
-// {
-// 	int	x;
-// 	int	y;
+void	find_wall(t_struct *as)
+{
+	int	i;
+	int	d;
 
-// 	y = -1;
-// 	while (++y <= as->set.mapy)
-// 	{
-// 		x = -1;
-// 		while (++x <= as->set.mapx)
-// 		{
-// 			if (as->set.map[y][x] == '1')
-// 				draw_square(as, 0);
-// 			else
-// 				draw_square(as, 10000000);
-// 		}
-// 	}
-// }
+	i = 0;
+	while (as->ray.ray[i])
+	{
+		d = 0;
+		while (d <= ?)
+		{
+			//as->ray.t[i] = - ((0 * 0 + 1 * 0 + 0 * 0 + d) / (0 * as->ray.ray[i][0] + 1 * as->ray.ray[i][1] + 0 * as->ray.ray[i][2]));
+			d++;
+		}
+		i++;
+	}
+}
 
-// void	square(t_struct *as)
-// {
-// 	int	x;
-// 	int	y;
+void	ray(t_struct *as)
+{
+	int	i;
+	int	j;
+	int	k;
 
-// 	x = 0;
-// 	while (x <= 20)
-// 	{
-// 		y = 0;
-// 		while (y <= 20)
-// 		{
-// 			my_mlx_pixel_put(as, x, y, 100000);
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// }
+	k = 0;
+	as->ray.d = tan(FOV / 2) * 2;
+	as->ray.rh = as->ray.d / as->set.res[0];
+	as->ray.rv = (as->ray.rh * as->set.res[1]) / as->set.res[0];
+	as->ray.ray = malloc(sizeof(float *)
+			* ((as->set.res[0] + 1) * (as->set.res[1] + 1)));
+	if (!as->ray.ray)
+		ft_exit(as, "Error\nMalloc error\n");
+	i = -1;
+	while (++i <= as->set.res[0])
+	{
+		j = -1;
+		while (++j <= as->set.res[1])
+		{
+			as->ray.ray[k] = malloc(sizeof(float) * 3);
+			as->ray.ray[k][0] = (i - as->set.res[0] / 2) * as->ray.rh;
+			as->ray.ray[k][1] = -1;
+			as->ray.ray[k][2] = -(j - as->set.res[1] / 2) * as->ray.rv;
+			k++;
+		}
+	}
+}

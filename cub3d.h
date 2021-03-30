@@ -15,6 +15,7 @@
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
 # define ESC 53
+# define FOV 60
 
 typedef struct s_vars
 {
@@ -51,11 +52,20 @@ typedef struct s_settings
 	char	porientation;
 }	t_settings;
 
+typedef struct s_ray
+{
+	float	d;
+	float	rh;
+	float	rv;
+	float	**ray;
+}	t_ray;
+
 typedef struct s_struct
 {
 	t_vars		vars;
 	t_data		data;
 	t_settings	set;
+	t_ray		ray;
 }	t_struct;
 
 int				main(int ac, char **av);
@@ -77,9 +87,9 @@ int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
 int				key_events(int keycode, t_struct *as);
+void			ray(t_struct *as);
+void			find_wall(t_struct *as);
 int				destroy_win(t_struct *as);
-void			draw_minimap(t_struct *as);
-void			square(t_struct *as);
 void			my_mlx_pixel_put(t_struct *as, int x, int y, int color);
 
 #endif

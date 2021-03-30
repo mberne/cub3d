@@ -12,6 +12,7 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.ea);
 	free(as->set.sprite);
 	free_split(as->set.map, number_of_split(as->set.map));
+	// free_split(as->ray.ray, number_of_split(as->ray.ray));
 	exit(-1);
 }
 
@@ -85,13 +86,24 @@ int	main(int ac, char **av)
 		|| !as.set.so || !as.set.we || !as.set.ea || !as.set.sprite
 		|| as.set.floor == -1 || as.set.ceiling == -1 || !as.set.map)
 		ft_exit(&as, "Error\nInvalid file\n");
-	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1], "Cub3D");
+	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
+			"Cub3D");
 	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
 	as.data.addr = mlx_get_data_addr(as.data.img, &as.data.bits_per_pixel,
 			&as.data.line_length, &as.data.endian);
 	mlx_hook(as.vars.win, 2, 1L << 0, key_events, &as.vars);
 	mlx_hook(as.vars.win, 17, 1L << 2, destroy_win, &as.vars);
-	//draw_minimap(&as);
+	ray(&as);
+	printf("d | %f\n", as.ray.d);
+	printf("rh | %f\n", as.ray.rh);
+	printf("rv | %f\n", as.ray.rv);
+	printf("plus petit rayon | %f\n", as.ray.ray[0][0]);
+	printf("plus petit rayon | %f\n", as.ray.ray[0][1]);
+	printf("plus petit rayon | %f\n", as.ray.ray[0][2]);
+	printf("plus grand rayon | %f\n", as.ray.ray[2076600][0]);
+	printf("plus grand rayon | %f\n", as.ray.ray[2076600][1]);
+	printf("plus grand rayon | %f\n", as.ray.ray[2076600][2]);
+	find_wall(&as);
 	//mlx_put_image_to_window(as.vars.mlx, as.vars.win, as.data.img, 0, 0);
 	mlx_loop(as.vars.mlx);
 }
