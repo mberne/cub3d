@@ -52,9 +52,13 @@ typedef struct s_settings
 	char	porientation;
 }	t_settings;
 
+typedef struct s_plane
+{
+	int	plane[4][4];
+}	t_plane;
+
 typedef struct s_ray
 {
-	float	d;
 	float	rh;
 	float	rv;
 	float	**ray;
@@ -66,6 +70,7 @@ typedef struct s_struct
 	t_data		data;
 	t_settings	set;
 	t_ray		ray;
+	t_plane		plane;
 }	t_struct;
 
 int				main(int ac, char **av);
@@ -90,6 +95,6 @@ int				key_events(int keycode, t_struct *as);
 void			ray(t_struct *as);
 void			find_wall(t_struct *as);
 int				destroy_win(t_struct *as);
-void			my_mlx_pixel_put(t_struct *as, int x, int y, int color);
+void			my_mlx_px_put(t_struct *as, int x, int y, int color);
 
 #endif

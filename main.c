@@ -65,12 +65,10 @@ int	main(int ac, char **av)
 {
 	t_struct	as;
 	int			i;
-	int			j;
 
 	(void)ac;
 	init_struct(&as.set);
 	i = ft_strlen(av[1]);
-	j = 0;
 	if (i > 4 && av[1][--i] == 'b' && av[1][--i] == 'u' && av[1][--i] == 'c'
 		&& av[1][--i] == '.')
 	{
@@ -86,6 +84,7 @@ int	main(int ac, char **av)
 		|| !as.set.so || !as.set.we || !as.set.ea || !as.set.sprite
 		|| as.set.floor == -1 || as.set.ceiling == -1 || !as.set.map)
 		ft_exit(&as, "Error\nInvalid file\n");
+	ray(&as);
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");
 	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
@@ -93,16 +92,7 @@ int	main(int ac, char **av)
 			&as.data.line_length, &as.data.endian);
 	mlx_hook(as.vars.win, 2, 1L << 0, key_events, &as.vars);
 	mlx_hook(as.vars.win, 17, 1L << 2, destroy_win, &as.vars);
-	ray(&as);
-	printf("d | %f\n", as.ray.d);
-	printf("rh | %f\n", as.ray.rh);
-	printf("rv | %f\n", as.ray.rv);
-	printf("plus petit rayon | %f\n", as.ray.ray[0][0]);
-	printf("plus petit rayon | %f\n", as.ray.ray[0][1]);
-	printf("plus petit rayon | %f\n", as.ray.ray[0][2]);
-	printf("plus grand rayon | %f\n", as.ray.ray[2076600][0]);
-	printf("plus grand rayon | %f\n", as.ray.ray[2076600][1]);
-	printf("plus grand rayon | %f\n", as.ray.ray[2076600][2]);
+	find_wall(&as);
 	mlx_put_image_to_window(as.vars.mlx, as.vars.win, as.data.img, 0, 0);
 	mlx_loop(as.vars.mlx);
 }

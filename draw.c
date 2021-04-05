@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	my_mlx_pixel_put(t_struct *as, int x, int y, int color)
+void	my_mlx_px_put(t_struct *as, int x, int y, int color)
 {
 	char	*dst;
 
@@ -9,34 +9,67 @@ void	my_mlx_pixel_put(t_struct *as, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-// void	find_wall(t_struct *as)
-// {
-// 	int	i;
-// 	int	d;
+void	find_wall(t_struct *as)
+{
+	int		i;
+	int		j;
+	float	t;
+	float	px[3];
 
-// 	i = 0;
-// 	while (as->ray.ray[i])
-// 	{
-// 		d = 0;
-// 		while (d <= ?)
-// 		{
-// 			as->ray.t[i] = - ((0 * 0 + 1 * 0 + 0 * 0 + d) / (0 * as->ray.ray[i][0] + 1 * as->ray.ray[i][1] + 0 * as->ray.ray[i][2]));
-// 			d++;
-// 		}
-// 		i++;
-// 	}
-// }
+	i = -1;
+	as->plane.plane[0][0] = 0;
+	as->plane.plane[0][1] = 1;
+	as->plane.plane[0][2] = 0;
+	as->plane.plane[0][3] = 2;
+	as->plane.plane[1][0] = 0;
+	as->plane.plane[1][1] = 1;
+	as->plane.plane[1][2] = 0;
+	as->plane.plane[1][3] = -2;
+	as->plane.plane[2][0] = 1;
+	as->plane.plane[2][1] = 0;
+	as->plane.plane[2][2] = 0;
+	as->plane.plane[2][3] = 2;
+	as->plane.plane[3][0] = 1;
+	as->plane.plane[3][1] = 0;
+	as->plane.plane[3][2] = 0;
+	as->plane.plane[3][3] = -2;
+	while (++i < (as->set.res[0] * as->set.res[1]))
+	{
+		j = -1;
+		while (++j < 4)
+		{
+			t = - (as->plane.plane[j][0] * 0 + as->plane.plane[j][1] * 0
+					+ as->plane.plane[j][2] * 0 + as->plane.plane[j][3])
+				/ (as->plane.plane[j][0] * as->ray.ray[i][0]
+					+ as->plane.plane[j][1] * as->ray.ray[i][1]
+					+ as->plane.plane[j][2] * as->ray.ray[i][2]);
+			if (t > 0)
+			{
+				px[0] = 0 + as->ray.ray[i][0] * t;
+				px[1] = 0 + as->ray.ray[i][1] * t;
+				px[2] = 0 + as->ray.ray[i][2] * t;
+				// if (px[2] > 1)
+				// 	my_mlx_px_put(as, px[2], px[0], as->set.ceiling);
+				// else if (px[2] < 0)
+				// 	my_mlx_px_put(as, px[2], px[0], as->set.floor);
+				// else
+					my_mlx_px_put(as, px[2], px[0], 16777215);
+			}
+		}
+	}
+}
 
 void	ray(t_struct *as)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	int		j;
+	int		k;
+	float	d;
 
 	k = 0;
-	as->ray.d = tan(FOV / 2) * 2;
-	as->ray.rh = as->ray.d / as->set.res[0];
-	as->ray.rv = (as->ray.rh * as->set.res[1]) / as->set.res[0];
+	d = tan(FOV / 2) * 2;
+	as->ray.rh = d / as->set.res[0];
+	as->ray.rv = as->ray.rh * as->set.res[1] / as->set.res[0];
 	as->ray.ray = malloc(sizeof(float *)
 			* ((as->set.res[0] + 1) * (as->set.res[1] + 1)));
 	if (!as->ray.ray)
