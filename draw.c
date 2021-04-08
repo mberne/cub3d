@@ -35,7 +35,6 @@ void	find_wall(t_struct *as)
 	as->plane.plane[3][2] = 0;
 	as->plane.plane[3][3] = -2;
 	k = 0;
-	t = INFINITY;
 	i = -1;
 	while (++i < as->set.res[1])
 	{
@@ -43,6 +42,7 @@ void	find_wall(t_struct *as)
 		while (++j < as->set.res[0])
 		{
 			l = -1;
+			t = INFINITY;
 			while (++l < 4)
 			{
 				tmp = - (as->plane.plane[l][0] * 0 + as->plane.plane[l][1] * 0
@@ -89,7 +89,7 @@ void	ray(t_struct *as)
 			as->ray.ray[k] = malloc(sizeof(float) * 3);
 			as->ray.ray[k][0] = (j - as->set.res[0] / 2) * as->ray.rh;
 			as->ray.ray[k][1] = -1;
-			as->ray.ray[k][2] = -(i - as->set.res[1] / 2) * as->ray.rv;
+			as->ray.ray[k][2] = - (i - as->set.res[1] / 2) * as->ray.rv;
 			k++;
 		}
 	}
