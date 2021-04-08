@@ -13,10 +13,11 @@ void	find_wall(t_struct *as)
 {
 	int		i;
 	int		j;
+	int		k;
+	int		l;
 	float	t;
-	float	px[3];
+	float	tmp;
 
-	i = -1;
 	as->plane.plane[0][0] = 0;
 	as->plane.plane[0][1] = 1;
 	as->plane.plane[0][2] = 0;
@@ -33,28 +34,33 @@ void	find_wall(t_struct *as)
 	as->plane.plane[3][1] = 0;
 	as->plane.plane[3][2] = 0;
 	as->plane.plane[3][3] = -2;
-	while (++i < (as->set.res[0] * as->set.res[1]))
+	k = 0;
+	t = INFINITY;
+	i = -1;
+	while (++i < as->set.res[1])
 	{
 		j = -1;
-		while (++j < 4)
+		while (++j < as->set.res[0])
 		{
-			t = - (as->plane.plane[j][0] * 0 + as->plane.plane[j][1] * 0
-					+ as->plane.plane[j][2] * 0 + as->plane.plane[j][3])
-				/ (as->plane.plane[j][0] * as->ray.ray[i][0]
-					+ as->plane.plane[j][1] * as->ray.ray[i][1]
-					+ as->plane.plane[j][2] * as->ray.ray[i][2]);
-			if (t > 0)
+			l = -1;
+			while (++l < 4)
 			{
-				px[0] = 0 + as->ray.ray[i][0] * t;
-				px[1] = 0 + as->ray.ray[i][1] * t;
-				px[2] = 0 + as->ray.ray[i][2] * t;
-				// if (px[2] > 1)
-				// 	my_mlx_px_put(as, px[2], px[0], as->set.ceiling);
-				// else if (px[2] < 0)
-				// 	my_mlx_px_put(as, px[2], px[0], as->set.floor);
-				// else
-					my_mlx_px_put(as, px[2], px[0], 16777215);
+				tmp = - (as->plane.plane[l][0] * 0 + as->plane.plane[l][1] * 0
+						+ as->plane.plane[l][2] * 2 + as->plane.plane[l][3])
+					/ (as->plane.plane[l][0] * as->ray.ray[k][0]
+						+ as->plane.plane[l][1] * as->ray.ray[k][1]
+						+ as->plane.plane[l][2] * as->ray.ray[k][2]);
+				if (tmp > 0 && tmp < t)
+					t = tmp;
 			}
+			t = 2 + as->ray.ray[k][2] * t;
+			if (t < 0)
+				my_mlx_px_put(as, j, i, as->set.floor);
+			else if (t > 4)
+				my_mlx_px_put(as, j, i, as->set.ceiling);
+			else if (t >= 0 && t <= 4)
+				my_mlx_px_put(as, j, i, 16777215);
+			k++;
 		}
 	}
 }
@@ -75,15 +81,15 @@ void	ray(t_struct *as)
 	if (!as->ray.ray)
 		ft_exit(as, "Error\nMalloc error\n");
 	i = -1;
-	while (++i <= as->set.res[0])
+	while (++i < as->set.res[1])
 	{
 		j = -1;
-		while (++j <= as->set.res[1])
+		while (++j < as->set.res[0])
 		{
 			as->ray.ray[k] = malloc(sizeof(float) * 3);
-			as->ray.ray[k][0] = (i - as->set.res[0] / 2) * as->ray.rh;
+			as->ray.ray[k][0] = (j - as->set.res[0] / 2) * as->ray.rh;
 			as->ray.ray[k][1] = -1;
-			as->ray.ray[k][2] = -(j - as->set.res[1] / 2) * as->ray.rv;
+			as->ray.ray[k][2] = -(i - as->set.res[1] / 2) * as->ray.rv;
 			k++;
 		}
 	}
