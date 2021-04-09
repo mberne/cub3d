@@ -55,6 +55,7 @@ typedef struct s_settings
 typedef struct s_plane
 {
 	int	plane[4][4];
+	int	num_plane;
 }	t_plane;
 
 typedef struct s_ray
@@ -62,7 +63,16 @@ typedef struct s_ray
 	float	rh;
 	float	rv;
 	float	**ray;
+	int		num_r;
 }	t_ray;
+
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	z;
+	float	rad;
+}	t_player;
 
 typedef struct s_struct
 {
@@ -71,6 +81,7 @@ typedef struct s_struct
 	t_settings	set;
 	t_ray		ray;
 	t_plane		plane;
+	t_player	player;
 }	t_struct;
 
 int				main(int ac, char **av);
@@ -93,8 +104,10 @@ int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
 int				key_events(int keycode, t_struct *as);
 void			ray(t_struct *as);
-void			find_wall(t_struct *as);
+int				find_wall(t_struct *as);
+void			matrix(t_struct *as);
 int				destroy_win(t_struct *as);
 void			my_mlx_px_put(t_struct *as, int x, int y, int color);
+void			player_spawn(t_struct *as);
 
 #endif

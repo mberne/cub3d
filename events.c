@@ -7,20 +7,18 @@ int	key_events(int keycode, t_struct *as)
 		mlx_destroy_window(as->vars.mlx, as->vars.win);
 		ft_exit(as, "");
 	}
-	/*
 	if (keycode == LEFT_ARROW)
-		// camera left rotate
+		as->player.rad = as->player.rad + 0.01;
 	if (keycode == RIGHT_ARROW)
-		// camera right rotate
+		as->player.rad = as->player.rad - 0.01;
 	if (keycode == W)
-		// déplacement perso' devant
+		as->player.y = as->player.y - 0.1;
 	if (keycode == S)
-		// déplacement perso' derriere
+		as->player.y = as->player.y + 0.1;
 	if (keycode == A)
-		// déplacement perso' gauche
+		as->player.x = as->player.x + 0.1;
 	if (keycode == D)
-		// déplacement perso' droite
-	*/
+		as->player.x = as->player.x - 0.1;
 	return (0);
 }
 

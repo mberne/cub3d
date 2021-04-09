@@ -84,7 +84,6 @@ int	main(int ac, char **av)
 		|| !as.set.so || !as.set.we || !as.set.ea || !as.set.sprite
 		|| as.set.floor == -1 || as.set.ceiling == -1 || !as.set.map)
 		ft_exit(&as, "Error\nInvalid file\n");
-	ray(&as);
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");
 	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
@@ -92,7 +91,10 @@ int	main(int ac, char **av)
 			&as.data.line_length, &as.data.endian);
 	mlx_hook(as.vars.win, 2, 1L << 0, key_events, &as.vars);
 	mlx_hook(as.vars.win, 17, 1L << 2, destroy_win, &as.vars);
+	player_spawn(&as);
+	ray(&as);
 	find_wall(&as);
-	mlx_put_image_to_window(as.vars.mlx, as.vars.win, as.data.img, 0, 0);
+	mlx_loop_hook(as.vars.mlx, find_wall, &as);
+	// mlx_put_image_to_window(as.vars.mlx, as.vars.win, as.data.img, 0, 0);
 	mlx_loop(as.vars.mlx);
 }
