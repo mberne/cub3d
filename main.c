@@ -22,6 +22,8 @@ void	get_settings(t_struct *as)
 	int		ret;
 
 	fd = open(as->set.file, O_RDONLY);
+	if (fd == -1)
+		ft_exit(as, "Error\nFile failed to open\n");
 	ret = 1;
 	while (ret > 0)
 	{
@@ -37,6 +39,8 @@ void	get_settings(t_struct *as)
 			as->set.tab = 0;
 		}
 	}
+	if (close(fd) == -1)
+		ft_exit(as, "Error\nFile failed to close\n");
 }
 
 void	init_struct(t_settings *set)
@@ -95,6 +99,5 @@ int	main(int ac, char **av)
 	ray(&as);
 	find_wall(&as);
 	mlx_loop_hook(as.vars.mlx, find_wall, &as);
-	// mlx_put_image_to_window(as.vars.mlx, as.vars.win, as.data.img, 0, 0);
 	mlx_loop(as.vars.mlx);
 }

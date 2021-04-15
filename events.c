@@ -8,9 +8,9 @@ int	key_events(int keycode, t_struct *as)
 		ft_exit(as, "");
 	}
 	if (keycode == LEFT_ARROW)
-		as->player.rad = as->player.rad + 0.01;
+		as->player.rad = as->player.rad + 0.1;
 	if (keycode == RIGHT_ARROW)
-		as->player.rad = as->player.rad - 0.01;
+		as->player.rad = as->player.rad - 0.1;
 	if (keycode == W)
 		as->player.y = as->player.y - 0.1;
 	if (keycode == S)

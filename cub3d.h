@@ -63,6 +63,7 @@ typedef struct s_ray
 	float	rh;
 	float	rv;
 	float	**ray;
+	float	new_ray[3];
 	int		num_r;
 }	t_ray;
 
@@ -105,7 +106,7 @@ void			ft_exit(t_struct *as, char *str);
 int				key_events(int keycode, t_struct *as);
 void			ray(t_struct *as);
 int				find_wall(t_struct *as);
-void			matrix(t_struct *as);
+void			matrix(t_struct *as, int i);
 int				destroy_win(t_struct *as);
 void			my_mlx_px_put(t_struct *as, int x, int y, int color);
 void			player_spawn(t_struct *as);

@@ -1,17 +1,12 @@
 #include "cub3d.h"
 
-void	matrix(t_struct *as)
+void	matrix(t_struct *as, int i)
 {
-	int	i;
-
-	i = -1;
-	while (++i < as->ray.num_r)
-	{
-		as->ray.ray[i][0] = as->ray.ray[i][0] * cosf(as->player.rad)
-			+ as->ray.ray[i][1] * (-sinf(as->player.rad));
-		as->ray.ray[i][1] = as->ray.ray[i][0] * sinf(as->player.rad)
-			+ as->ray.ray[i][1] * cosf(as->player.rad);
-	}
+	as->ray.new_ray[0] = as->ray.ray[i][0] * cosf(as->player.rad)
+		+ as->ray.ray[i][1] * (-sinf(as->player.rad));
+	as->ray.new_ray[1] = as->ray.ray[i][0] * sinf(as->player.rad)
+		+ as->ray.ray[i][1] * cosf(as->player.rad);
+	as->ray.new_ray[2] = as->ray.ray[i][2];
 }
 
 void	ray(t_struct *as)
@@ -21,7 +16,7 @@ void	ray(t_struct *as)
 	float	d;
 
 	as->ray.num_r = 0;
-	d = tan(FOV / 2) * 2;
+	d = tan((FOV * M_PI / 180) / 2) * 2;
 	as->ray.rh = d / as->set.res[0];
 	as->ray.rv = as->ray.rh * as->set.res[1] / as->set.res[0];
 	as->ray.ray = malloc(sizeof(float *)
