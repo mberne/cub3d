@@ -13,9 +13,6 @@ int	find_wall(t_struct *as)
 {
 	int		i;
 	int		j;
-	int		k;
-	int		l;
-	int		index;
 	float	t;
 	float	tmp;
 	float	z;
@@ -37,51 +34,33 @@ int	find_wall(t_struct *as)
 	as->plane.plane[3][2] = 0;
 	as->plane.plane[3][3] = -4;
 	as->plane.num_plane = 4;
-	l = 0;
+	player_move(as);
 	i = 0;
-	while (i < as->set.res[1])
+	while (i < as->ray.num_r)
 	{
+		matrix(as, i);
 		j = 0;
-		while (j < as->set.res[0])
+		t = INFINITY;
+		while (j < as->plane.num_plane)
 		{
-			matrix(as, l);
-			k = 0;
-			t = INFINITY;
-			while (k < as->plane.num_plane)
-			{
-				tmp = - (as->plane.plane[k][0] * as->player.x
-						+ as->plane.plane[k][1] * as->player.y
-						+ as->plane.plane[k][2] * as->player.z
-						+ as->plane.plane[k][3])
-					/ (as->plane.plane[k][0] * as->ray.new_ray[0]
-						+ as->plane.plane[k][1] * as->ray.new_ray[1]
-						+ as->plane.plane[k][2] * as->ray.new_ray[2]);
-				if (tmp > 0 && tmp < t)
-				{
-					t = tmp;
-					index = k;
-				}
-				k++;
-			}
-			z = as->player.z + as->ray.new_ray[2] * -t;
-			if (z < 0)
-				my_mlx_px_put(as, j, i, as->set.floor);
-			else if (z > 1)
-				my_mlx_px_put(as, j, i, as->set.ceiling);
-			else if (z >= 0 && z <= 1)
-			{
-				if (index == 0)
-					my_mlx_px_put(as, j, i, 16777215);
-				else if (index == 1)
-					my_mlx_px_put(as, j, i, 167772);
-				else if (index == 2)
-					my_mlx_px_put(as, j, i, 1677);
-				else if (index == 3)
-					my_mlx_px_put(as, j, i, 16);
-			}
+			tmp = - (as->plane.plane[j][0] * as->player.x
+					+ as->plane.plane[j][1] * as->player.y
+					+ as->plane.plane[j][2] * as->player.z
+					+ as->plane.plane[j][3])
+				/ (as->plane.plane[j][0] * as->ray.new_ray[0]
+					+ as->plane.plane[j][1] * as->ray.new_ray[1]
+					+ as->plane.plane[j][2] * as->ray.new_ray[2]);
+			if (tmp > 0 && tmp < t)
+				t = tmp;
 			j++;
-			l++;
 		}
+		z = as->player.z + as->ray.new_ray[2] * t;
+		if (z < 0)
+			my_mlx_px_put(as, (i % as->set.res[0]), (i / as->set.res[0]), as->set.floor);
+		else if (z > 1)
+			my_mlx_px_put(as, (i % as->set.res[0]), (i / as->set.res[0]), as->set.ceiling);
+		else if (z >= 0 && z <= 1)
+			my_mlx_px_put(as, (i % as->set.res[0]), (i / as->set.res[0]), 16777215);
 		i++;
 	}
 	mlx_put_image_to_window(as->vars.mlx, as->vars.win, as->data.img, 0, 0);

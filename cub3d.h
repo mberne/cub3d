@@ -75,6 +75,16 @@ typedef struct s_player
 	float	rad;
 }	t_player;
 
+typedef struct s_key
+{
+	int	t_left;
+	int	t_right;
+	int	front;
+	int	back;
+	int	left;
+	int	right;
+}	t_key;
+
 typedef struct s_struct
 {
 	t_vars		vars;
@@ -83,6 +93,7 @@ typedef struct s_struct
 	t_ray		ray;
 	t_plane		plane;
 	t_player	player;
+	t_key		key;
 }	t_struct;
 
 int				main(int ac, char **av);
@@ -103,7 +114,9 @@ void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
-int				key_events(int keycode, t_struct *as);
+int				key_press(int keycode, t_struct *as);
+int				key_release(int keycode, t_struct *as);
+int				player_move(t_struct *as);
 void			ray(t_struct *as);
 int				find_wall(t_struct *as);
 void			matrix(t_struct *as, int i);

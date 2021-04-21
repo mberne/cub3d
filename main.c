@@ -12,7 +12,6 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.ea);
 	free(as->set.sprite);
 	free_split(as->set.map, number_of_split(as->set.map));
-	// free as->ray.ray
 	exit(-1);
 }
 
@@ -93,7 +92,8 @@ int	main(int ac, char **av)
 	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
 	as.data.addr = mlx_get_data_addr(as.data.img, &as.data.bits_per_pixel,
 			&as.data.line_length, &as.data.endian);
-	mlx_hook(as.vars.win, 2, 1L << 0, key_events, &as.vars);
+	mlx_hook(as.vars.win, 2, 1L << 0, key_press, &as.vars);
+	mlx_hook(as.vars.win, 3, 1L << 1, key_release, &as.vars);
 	mlx_hook(as.vars.win, 17, 1L << 2, destroy_win, &as.vars);
 	player_spawn(&as);
 	ray(&as);
