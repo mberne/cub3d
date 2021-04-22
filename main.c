@@ -12,6 +12,8 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.ea);
 	free(as->set.sprite);
 	free_split(as->set.map, number_of_split(as->set.map));
+	// free ray
+	// free plane
 	exit(-1);
 }
 
@@ -42,6 +44,27 @@ void	get_settings(t_struct *as)
 		ft_exit(as, "Error\nFile failed to close\n");
 }
 
+void	parse_cub(t_struct *as, char *file_name)
+{
+	int	i;
+
+	i = ft_strlen(file_name);
+	if (i > 4 && file_name[--i] == 'b' && file_name[--i] == 'u'
+		&& file_name[--i] == 'c' && file_name[--i] == '.')
+	{
+		as->set.file = ft_strdup(file_name);
+		if (!as->set.file)
+			ft_exit(as, "Error\nMalloc error\n");
+	}
+	else
+		ft_exit(as, "Error\nInvalid name of file\n");
+	get_settings(as);
+	if (as->set.res[0] == -1 || as->set.res[1] == -1 || !as->set.no
+		|| !as->set.so || !as->set.we || !as->set.ea || !as->set.sprite
+		|| as->set.floor == -1 || as->set.ceiling == -1 || !as->set.map)
+		ft_exit(as, "Error\nInvalid file\n");
+}
+
 void	init_struct(t_settings *set)
 {
 	set->file = 0;
@@ -67,26 +90,15 @@ void	init_struct(t_settings *set)
 int	main(int ac, char **av)
 {
 	t_struct	as;
-	int			i;
 
 	(void)ac;
 	init_struct(&as.set);
-	i = ft_strlen(av[1]);
-	if (i > 4 && av[1][--i] == 'b' && av[1][--i] == 'u' && av[1][--i] == 'c'
-		&& av[1][--i] == '.')
-	{
-		as.set.file = ft_strdup(av[1]);
-		if (!as.set.file)
-			ft_exit(&as, "Error\nMalloc error\n");
-	}
-	else
-		ft_exit(&as, "Error\nInvalid name of file\n");
+	parse_cub(&as, av[1]);
+	player_spawn(&as);
+	ray(&as);
+	//init_plane(&as);
+	//make_plane(&as);
 	as.vars.mlx = mlx_init();
-	get_settings(&as);
-	if (as.set.res[0] == -1 || as.set.res[1] == -1 || !as.set.no
-		|| !as.set.so || !as.set.we || !as.set.ea || !as.set.sprite
-		|| as.set.floor == -1 || as.set.ceiling == -1 || !as.set.map)
-		ft_exit(&as, "Error\nInvalid file\n");
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");
 	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
@@ -95,8 +107,6 @@ int	main(int ac, char **av)
 	mlx_hook(as.vars.win, 2, 1L << 0, key_press, &as.vars);
 	mlx_hook(as.vars.win, 3, 1L << 1, key_release, &as.vars);
 	mlx_hook(as.vars.win, 17, 1L << 2, destroy_win, &as.vars);
-	player_spawn(&as);
-	ray(&as);
 	find_wall(&as);
 	mlx_loop_hook(as.vars.mlx, find_wall, &as);
 	mlx_loop(as.vars.mlx);

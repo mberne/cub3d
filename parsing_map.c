@@ -24,8 +24,8 @@ void	check_map(t_struct *as)
 				ft_exit(as, "Error\nInvalid map\n");
 			if (ft_strchr("NSEW", as->set.map[i][j]) && !as->set.porientation)
 			{
-				as->set.pposition[0] = i;
-				as->set.pposition[1] = j;
+				as->set.pposition[0] = j;
+				as->set.pposition[1] = i;
 				as->set.porientation = as->set.map[i][j];
 			}
 			else if (ft_strchr("NSEW", as->set.map[i][j])

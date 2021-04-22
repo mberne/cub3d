@@ -55,13 +55,12 @@ typedef struct s_settings
 typedef struct s_plane
 {
 	int	plane[4][4];
+	int	num_wall;
 	int	num_plane;
 }	t_plane;
 
 typedef struct s_ray
 {
-	float	rh;
-	float	rv;
 	float	**ray;
 	float	new_ray[3];
 	int		num_r;
@@ -98,6 +97,7 @@ typedef struct s_struct
 
 int				main(int ac, char **av);
 void			init_struct(t_settings *set);
+void			parse_cub(t_struct *as, char *file_name);
 void			get_settings(t_struct *as);
 void			parsing(t_struct *as, int fd);
 int				check_arg(t_settings *set, int i);
@@ -118,6 +118,9 @@ int				key_press(int keycode, t_struct *as);
 int				key_release(int keycode, t_struct *as);
 int				player_move(t_struct *as);
 void			ray(t_struct *as);
+void			calc_ray(t_struct *as, float rh, float rv);
+void			init_plane(t_struct *as);
+void			make_plane(t_struct *as);
 int				find_wall(t_struct *as);
 void			matrix(t_struct *as, int i);
 int				destroy_win(t_struct *as);

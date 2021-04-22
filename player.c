@@ -2,10 +2,8 @@
 
 void	player_spawn(t_struct *as)
 {
-	as->set.pposition[0] = 0;
-	as->set.pposition[1] = 0;
-	as->player.x = as->set.pposition[0];
-	as->player.y = as->set.pposition[1];
+	as->player.x = as->set.pposition[0] + 0.5;
+	as->player.y = as->set.pposition[1] + 0.5;
 	as->player.z = 0.5;
 	if (as->set.porientation == 'N')
 		as->player.rad = 0;
