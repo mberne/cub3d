@@ -90,14 +90,28 @@ void	init_struct(t_settings *set)
 int	main(int ac, char **av)
 {
 	t_struct	as;
+	int i;
+	int j;
 
 	(void)ac;
 	init_struct(&as.set);
 	parse_cub(&as, av[1]);
 	player_spawn(&as);
 	ray(&as);
-	//init_plane(&as);
-	//make_plane(&as);
+	init_plane(&as);
+	make_plane(&as);
+	i = 0;
+	while(i <= as.set.mapy)
+	{
+		j = 0;
+		while(j <= as.set.mapx)
+		{
+			printf("%c", as.set.map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
 	as.vars.mlx = mlx_init();
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");

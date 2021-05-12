@@ -54,9 +54,10 @@ typedef struct s_settings
 
 typedef struct s_plane
 {
-	int	plane[4][4];
-	int	num_wall;
-	int	num_plane;
+	int		**plane;
+	int		num_wall;
+	int		num_plane;
+	float	inter[3];
 }	t_plane;
 
 typedef struct s_ray

@@ -1,5 +1,5 @@
 #include "cub3d.h"
-/*
+
 void	init_plane(t_struct *as)
 {
 	int	i;
@@ -23,14 +23,40 @@ void	init_plane(t_struct *as)
 		ft_exit(as, "Error\nMalloc error\n");
 }
 
+void	fill_plane(t_struct *as, char wall, int i)
+{
+	as->plane.plane[as->plane.num_plane] = malloc(sizeof(int) * 4);
+	if (!as->plane.plane[as->plane.num_plane])
+		ft_exit(as, "Error\nMalloc error\n");
+	if (wall == 'N' || wall == 'S')
+	{
+		as->plane.plane[as->plane.num_plane][0] = 0;
+		as->plane.plane[as->plane.num_plane][1] = 1;
+	}
+	else
+	{
+		as->plane.plane[as->plane.num_plane][0] = 1;
+		as->plane.plane[as->plane.num_plane][1] = 0;
+	}
+	as->plane.plane[as->plane.num_plane][2] = 0;
+	if (wall == 'N')
+		as->plane.plane[as->plane.num_plane][3] = -i;
+	else if (wall == 'E')
+		as->plane.plane[as->plane.num_plane][3] = -(i + 1);
+	else if (wall == 'S')
+		as->plane.plane[as->plane.num_plane][3] = -(i + 1);
+	else if (wall == 'W')
+		as->plane.plane[as->plane.num_plane][3] = -i;
+	as->plane.num_plane++;
+}
+
 void	make_plane(t_struct *as)
 {
 	int	i;
 	int	j;
-	int	k;
 
 	i = 0;
-	k = 0;
+	as->plane.num_plane = 0;
 	while (i < as->set.mapy)
 	{
 		j = 0;
@@ -38,43 +64,13 @@ void	make_plane(t_struct *as)
 		{
 			if (as->set.map[i][j] == '1')
 			{
-				as->plane.plane[k] = malloc(sizeof(int) * 4);
-				if (!as->plane.plane[k])
-					ft_exit(as, "Error\nMalloc error\n");
-				as->plane.plane[k][0] = 0;
-				as->plane.plane[k][1] = 1;
-				as->plane.plane[k][2] = 0;
-				as->plane.plane[k][3] = i;
-				k++;
-				as->plane.plane[k] = malloc(sizeof(int) * 4);
-				if (!as->plane.plane[k])
-					ft_exit(as, "Error\nMalloc error\n");
-				as->plane.plane[k][0] = 1;
-				as->plane.plane[k][1] = 0;
-				as->plane.plane[k][2] = 0;
-				as->plane.plane[k][3] = j + 1;
-				k++;
-				as->plane.plane[k] = malloc(sizeof(int) * 4);
-				if (!as->plane.plane[k])
-					ft_exit(as, "Error\nMalloc error\n");
-				as->plane.plane[k][0] = 0;
-				as->plane.plane[k][1] = 1;
-				as->plane.plane[k][2] = 0;
-				as->plane.plane[k][3] = i + 1;
-				k++;
-				as->plane.plane[k] = malloc(sizeof(int) * 4);
-				if (!as->plane.plane[k])
-					ft_exit(as, "Error\nMalloc error\n");
-				as->plane.plane[k][0] = 1;
-				as->plane.plane[k][1] = 0;
-				as->plane.plane[k][2] = 0;
-				as->plane.plane[k][3] = j;
-				k++;
+				fill_plane(as, 'N', i);
+				fill_plane(as, 'E', j);
+				fill_plane(as, 'S', i);
+				fill_plane(as, 'W', j);
 			}
 			j++;
 		}
 		i++;
 	}
-	as->plane.num_plane = k;
 }
-*/
