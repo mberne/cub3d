@@ -57,10 +57,10 @@ void	make_plane(t_struct *as)
 
 	i = 0;
 	as->plane.num_plane = 0;
-	while (i < as->set.mapy)
+	while (i <= as->set.mapy)
 	{
 		j = 0;
-		while (j < as->set.mapx)
+		while (j <= as->set.mapx)
 		{
 			if (as->set.map[i][j] == '1')
 			{
