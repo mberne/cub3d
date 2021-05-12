@@ -12,8 +12,6 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.ea);
 	free(as->set.sprite);
 	free_split(as->set.map, number_of_split(as->set.map));
-	// free ray
-	// free plane
 	exit(-1);
 }
 
@@ -90,8 +88,6 @@ void	init_struct(t_settings *set)
 int	main(int ac, char **av)
 {
 	t_struct	as;
-	int i;
-	int j;
 
 	(void)ac;
 	init_struct(&as.set);
@@ -100,18 +96,6 @@ int	main(int ac, char **av)
 	ray(&as);
 	init_plane(&as);
 	make_plane(&as);
-	i = 0;
-	while(i <= as.set.mapy)
-	{
-		j = 0;
-		while(j <= as.set.mapx)
-		{
-			printf("%c", as.set.map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
 	as.vars.mlx = mlx_init();
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");
