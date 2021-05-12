@@ -15,67 +15,64 @@ int	find_wall(t_struct *as)
 	int		j;
 	float	t;
 	float	tmp;
-	int		plane;
+	int		target_plane;
 
 	player_move(as);
 	i = 0;
-	while (i < as->ray.num_r)
+	while (i < as->rays.num_r)
 	{
-		matrix(as, i);
 		j = 0;
+		matrix(as, i);
+		float	*newray = as->rays.new_ray;
 		t = INFINITY;
-		plane = 0;
+		target_plane = 0;
 		while (j < as->plane.num_plane)
 		{
-			tmp = - (as->plane.plane[j][0] * as->player.x
-					+ as->plane.plane[j][1] * as->player.y
-					+ as->plane.plane[j][2] * as->player.z
-					+ as->plane.plane[j][3])
-				/ (as->plane.plane[j][0] * as->ray.new_ray[0]
-					+ as->plane.plane[j][1] * as->ray.new_ray[1]
-					+ as->plane.plane[j][2] * as->ray.new_ray[2]);
-			as->plane.inter[0] = as->player.x + as->ray.new_ray[0] * tmp;
-			as->plane.inter[1] = as->player.y + as->ray.new_ray[1] * tmp;
-			if (tmp > 0 && as->plane.inter[1] > 0
-				&& as->plane.inter[1] <= as->set.mapy
-				&& as->plane.inter[0] > 0 && as->plane.inter[0] <= as->set.mapx
-				&& (((j % 4 == 0 || j % 4 == 3)
-						&& as->set.map[(int)(as->plane.inter[1])]
-					[(int)(as->plane.inter[0])] == '1')
-					|| (j % 4 == 1 && as->set.map[(int)(as->plane.inter[1])]
-					[(int)(as->plane.inter[0]) - 1] == '1')
-					|| (j % 4 == 2 && as->set.map[(int)(as->plane.inter[1]) - 1]
-					[(int)(as->plane.inter[0])] == '1')))
+			t_plane	plane = as->plane.plane[j];
+			tmp = -(plane.a * as->player.x
+					+ plane.b * as->player.y
+					+ plane.c * as->player.z
+					+ plane.d)
+				/ (plane.a * newray[0]
+					+ plane.b * newray[1]
+					+ plane.c * newray[2]);
+			if (tmp > 0 && tmp < t)
 			{
-				if (tmp < t)
+				int blockx = (int)(as->player.x + newray[0] * tmp);
+				int blocky = (int)(as->player.y + newray[1] * tmp);
+				if (blocky > 0
+					&& blocky <= as->set.mapy
+					&& blockx > 0 && blockx <= as->set.mapx
+					&& (
+					((plane.direction == 0 || plane.direction == 3) && as->set.map[blocky][blockx] == '1')
+						|| (plane.direction == 1 && as->set.map[blocky][blockx - 1] == '1')
+						|| (plane.direction == 2 && as->set.map[blocky - 1][blockx] == '1')))
 				{
 					t = tmp;
-					plane = j;
+					target_plane = j;
 				}
 			}
 			j++;
 		}
-		as->plane.inter[0] = as->player.x + as->ray.new_ray[0] * t;
-		as->plane.inter[1] = as->player.y + as->ray.new_ray[1] * t;
-		as->plane.inter[2] = as->player.z + as->ray.new_ray[2] * t;
-		if (as->plane.inter[2] < 0)
+		float z = as->player.z + newray[2] * t;
+		if (z < 0)
 			my_mlx_px_put(as, (i % as->set.res[0]),
 				(i / as->set.res[0]), as->set.floor);
-		else if (as->plane.inter[2] > 0.2)
+		else if (z > 0.2)
 			my_mlx_px_put(as, (i % as->set.res[0]),
 				(i / as->set.res[0]), as->set.ceiling);
-		else if (as->plane.inter[2] >= 0 && as->plane.inter[2] <= 0.2)
+		else if (z >= 0 && z <= 0.2)
 		{
-			if (plane % 4 == 0)
+			if (target_plane % 4 == 0)
 				my_mlx_px_put(as, (i % as->set.res[0]),
 					(i / as->set.res[0]), 16777215);
-			else if (plane % 4 == 1)
+			else if (target_plane % 4 == 1)
 				my_mlx_px_put(as, (i % as->set.res[0]),
 					(i / as->set.res[0]), 167772);
-			else if (plane % 4 == 2)
+			else if (target_plane % 4 == 2)
 				my_mlx_px_put(as, (i % as->set.res[0]),
 					(i / as->set.res[0]), 1677);
-			else if (plane % 4 == 3)
+			else if (target_plane % 4 == 3)
 				my_mlx_px_put(as, (i % as->set.res[0]),
 					(i / as->set.res[0]), 16);
 		}

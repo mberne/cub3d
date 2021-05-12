@@ -54,18 +54,34 @@ typedef struct s_settings
 
 typedef struct s_plane
 {
-	int		**plane;
+	float	a;
+	float	b;
+	float	c;
+	float	d;
+	int		direction;
+}	t_plane;
+
+typedef struct s_planes
+{
+	t_plane	*plane;
 	int		num_wall;
 	int		num_plane;
 	float	inter[3];
-}	t_plane;
+}	t_planes;
 
-typedef struct s_ray
+typedef struct s_vector
 {
-	float	**ray;
-	float	new_ray[3];
-	int		num_r;
-}	t_ray;
+	float	x;
+	float	y;
+	float	z;
+}	t_vector;
+
+typedef struct s_rays
+{
+	t_vector	*ray;
+	float		new_ray[3];
+	int			num_r;
+}	t_rays;
 
 typedef struct s_player
 {
@@ -90,8 +106,8 @@ typedef struct s_struct
 	t_vars		vars;
 	t_data		data;
 	t_settings	set;
-	t_ray		ray;
-	t_plane		plane;
+	t_rays		rays;
+	t_planes		plane;
 	t_player	player;
 	t_key		key;
 }	t_struct;
