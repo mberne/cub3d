@@ -66,7 +66,6 @@ typedef struct s_planes
 	t_plane	*plane;
 	int		num_wall;
 	int		num_plane;
-	float	inter[3];
 }	t_planes;
 
 typedef struct s_vector
@@ -76,11 +75,18 @@ typedef struct s_vector
 	float	z;
 }	t_vector;
 
+typedef struct s_intersection
+{
+	float	t;
+	int		target_plane;
+}	t_intersection;
+
 typedef struct s_rays
 {
-	t_vector	*ray;
-	float		new_ray[3];
-	int			num_r;
+	t_vector		*ray;
+	float			new_ray[3];
+	t_intersection	*inter;
+	int				num_r;
 }	t_rays;
 
 typedef struct s_player
@@ -107,7 +113,7 @@ typedef struct s_struct
 	t_data		data;
 	t_settings	set;
 	t_rays		rays;
-	t_planes		plane;
+	t_planes	plane;
 	t_player	player;
 	t_key		key;
 }	t_struct;
@@ -131,6 +137,7 @@ void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
+void			player_spawn(t_struct *as);
 int				key_press(int keycode, t_struct *as);
 int				key_release(int keycode, t_struct *as);
 int				player_move(t_struct *as);
@@ -138,10 +145,13 @@ void			ray(t_struct *as);
 void			calc_ray(t_struct *as, float rh, float rv);
 void			init_plane(t_struct *as);
 void			make_plane(t_struct *as);
+void			fill_plane(t_struct *as, char wall, int i);
 int				find_wall(t_struct *as);
+void			put_floor_and_ceiling(t_struct *as);
+void			find_inter(t_struct *as);
+void			find_t(t_struct *as, int i, int j);
 void			matrix(t_struct *as, int i);
 int				destroy_win(t_struct *as);
 void			my_mlx_px_put(t_struct *as, int x, int y, int color);
-void			player_spawn(t_struct *as);
 
 #endif

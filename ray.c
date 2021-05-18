@@ -6,7 +6,6 @@ void	matrix(t_struct *as, int i)
 		+ as->rays.ray[i].y * (-sinf(as->player.rad));
 	as->rays.new_ray[1] = as->rays.ray[i].x * sinf(as->player.rad)
 		+ as->rays.ray[i].y * cosf(as->player.rad);
-	as->rays.new_ray[2] = as->rays.ray[i].z;
 }
 
 void	calc_ray(t_struct *as, float rh, float rv)

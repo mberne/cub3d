@@ -90,13 +90,13 @@ int	main(int ac, char **av)
 	t_struct	as;
 
 	(void)ac;
+	as.vars.mlx = mlx_init();
 	init_struct(&as.set);
 	parse_cub(&as, av[1]);
 	player_spawn(&as);
 	ray(&as);
 	init_plane(&as);
 	make_plane(&as);
-	as.vars.mlx = mlx_init();
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");
 	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
