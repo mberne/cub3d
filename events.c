@@ -42,28 +42,28 @@ int	key_release(int keycode, t_struct *as)
 int	player_move(t_struct *as)
 {
 	if (as->key.t_left)
-		as->player.rad = as->player.rad - M_PI * 0.01;
+		as->player.rad = as->player.rad - M_PI * 0.0075;
 	if (as->key.t_right)
-		as->player.rad = as->player.rad + M_PI * 0.01;
+		as->player.rad = as->player.rad + M_PI * 0.0075;
 	if (as->key.front)
 	{
-		as->player.x = as->player.x + sinf(as->player.rad) * 0.02;
-		as->player.y = as->player.y - cosf(as->player.rad) * 0.02;
+		as->player.x = as->player.x + sinf(as->player.rad) * 0.03;
+		as->player.y = as->player.y - cosf(as->player.rad) * 0.03;
 	}
 	if (as->key.back)
 	{
-		as->player.x = as->player.x - sinf(as->player.rad) * 0.02;
-		as->player.y = as->player.y + cosf(as->player.rad) * 0.02;
+		as->player.x = as->player.x - sinf(as->player.rad) * 0.03;
+		as->player.y = as->player.y + cosf(as->player.rad) * 0.03;
 	}
 	if (as->key.left)
 	{
-		as->player.x = as->player.x - cosf(as->player.rad) * 0.02;
-		as->player.y = as->player.y - sinf(as->player.rad) * 0.02;
+		as->player.x = as->player.x - cosf(as->player.rad) * 0.03;
+		as->player.y = as->player.y - sinf(as->player.rad) * 0.03;
 	}
 	if (as->key.right)
 	{
-		as->player.x = as->player.x + cosf(as->player.rad) * 0.02;
-		as->player.y = as->player.y + sinf(as->player.rad) * 0.02;
+		as->player.x = as->player.x + cosf(as->player.rad) * 0.03;
+		as->player.y = as->player.y + sinf(as->player.rad) * 0.03;
 	}
 	return (0);
 }

@@ -106,7 +106,7 @@ int	find_wall(t_struct *as)
 		ratio.x = inter.x - (int)inter.x;
 		ratio.y = inter.y - (int)inter.y;
 		ratio.z = 1 - (inter.z - (int)inter.z);
-		if (inter.z >= 0 && inter.z <= 0.2)
+		if (inter.z >= 0 && inter.z <= 0.4)
 		{
 			if (as->rays.inter[px].target_plane % 4 == 0)
 			{

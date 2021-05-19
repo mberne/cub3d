@@ -130,6 +130,7 @@ typedef struct s_struct
 
 int				main(int ac, char **av);
 void			init_struct(t_settings *set);
+
 void			parse_cub(t_struct *as, char *file_name);
 void			get_settings(t_struct *as);
 void			parsing(t_struct *as, int fd);
@@ -143,26 +144,32 @@ void			map(t_struct *as, int fd);
 void			setup_map(t_struct *as);
 void			check_map(t_struct *as);
 int				check_wall(t_struct *as, int i, int j);
+
 void			free_split(char **tab, int i);
 int				number_of_split(char **tab);
 int				ft_isnumber(char *s);
 void			ft_exit(t_struct *as, char *str);
+int				destroy_win(t_struct *as);
+
 void			player_spawn(t_struct *as);
 int				key_press(int keycode, t_struct *as);
 int				key_release(int keycode, t_struct *as);
 int				player_move(t_struct *as);
+
 void			ray(t_struct *as);
 void			calc_ray(t_struct *as, float rh, float rv);
+void			matrix(t_struct *as, int i);
+
 void			init_plane(t_struct *as);
 void			make_plane(t_struct *as);
 void			fill_plane(t_struct *as, char wall, int i);
+
 void			create_textures(t_struct *as);
 int				find_wall(t_struct *as);
 void			put_floor_and_ceiling(t_struct *as);
 void			find_inter(t_struct *as);
 void			find_t(t_struct *as, int i, int j);
-void			matrix(t_struct *as, int i);
-int				destroy_win(t_struct *as);
+
 int				my_mlx_px_get(t_struct *as, int x, int y, int wall);
 void			my_mlx_px_put(t_struct *as, int x, int y, int color);
 
