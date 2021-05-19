@@ -77,16 +77,17 @@ typedef struct s_vector
 
 typedef struct s_intersection
 {
-	float	t;
-	int		target_plane;
+	float		t;
+	int			target_plane;
+	t_vector	new_ray;
 }	t_intersection;
 
 typedef struct s_rays
 {
 	t_vector		*ray;
-	float			new_ray[3];
 	t_intersection	*inter;
 	int				num_r;
+	float			rv;
 }	t_rays;
 
 typedef struct s_player
@@ -107,6 +108,14 @@ typedef struct s_key
 	int	right;
 }	t_key;
 
+typedef struct s_textures
+{
+	t_data	data;
+	int		width;
+	int		height;
+}	t_textures;
+
+
 typedef struct s_struct
 {
 	t_vars		vars;
@@ -116,6 +125,7 @@ typedef struct s_struct
 	t_planes	plane;
 	t_player	player;
 	t_key		key;
+	t_textures	*texture;
 }	t_struct;
 
 int				main(int ac, char **av);
@@ -146,6 +156,7 @@ void			calc_ray(t_struct *as, float rh, float rv);
 void			init_plane(t_struct *as);
 void			make_plane(t_struct *as);
 void			fill_plane(t_struct *as, char wall, int i);
+void			create_textures(t_struct *as);
 int				find_wall(t_struct *as);
 void			put_floor_and_ceiling(t_struct *as);
 void			find_inter(t_struct *as);

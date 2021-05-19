@@ -12,6 +12,7 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.ea);
 	free(as->set.sprite);
 	free_split(as->set.map, number_of_split(as->set.map));
+	// détruis tes images de textures conasse
 	exit(-1);
 }
 
@@ -97,11 +98,13 @@ int	main(int ac, char **av)
 	ray(&as);
 	init_plane(&as);
 	make_plane(&as);
+	create_textures(&as);
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");
 	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
 	as.data.addr = mlx_get_data_addr(as.data.img, &as.data.bits_per_pixel,
 			&as.data.line_length, &as.data.endian);
+	// protection adresse et image bonjour
 	mlx_hook(as.vars.win, 2, 1L << 0, key_press, &as.vars);
 	mlx_hook(as.vars.win, 3, 1L << 1, key_release, &as.vars);
 	mlx_hook(as.vars.win, 17, 1L << 2, destroy_win, &as.vars);

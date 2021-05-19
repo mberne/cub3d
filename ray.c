@@ -2,10 +2,11 @@
 
 void	matrix(t_struct *as, int i)
 {
-	as->rays.new_ray[0] = as->rays.ray[i].x * cosf(as->player.rad)
+	as->rays.inter[i].new_ray.x = as->rays.ray[i].x * cosf(as->player.rad)
 		+ as->rays.ray[i].y * (-sinf(as->player.rad));
-	as->rays.new_ray[1] = as->rays.ray[i].x * sinf(as->player.rad)
+	as->rays.inter[i].new_ray.y = as->rays.ray[i].x * sinf(as->player.rad)
 		+ as->rays.ray[i].y * cosf(as->player.rad);
+	as->rays.inter[i].new_ray.z = as->rays.ray[i].z;
 }
 
 void	calc_ray(t_struct *as, float rh, float rv)
@@ -33,15 +34,14 @@ void	ray(t_struct *as)
 {
 	float	d;
 	float	rh;
-	float	rv;
 
-	as->rays.num_r = 0;
-	d = tan((FOV * M_PI / 180) / 2) * 2;
-	rh = d / as->set.res[0];
-	rv = rh * as->set.res[1] / as->set.res[0];
 	as->rays.ray = malloc(sizeof(t_vector)
 			* ((as->set.res[0] + 1) * (as->set.res[1] + 1)));
 	if (!as->rays.ray)
 		ft_exit(as, "Error\nMalloc error\n");
-	calc_ray(as, rh, rv);
+	as->rays.num_r = 0;
+	d = tan((FOV * M_PI / 180) / 2) * 2;
+	rh = d / as->set.res[0];
+	as->rays.rv = rh * as->set.res[1] / as->set.res[0];
+	calc_ray(as, rh, as->rays.rv);
 }

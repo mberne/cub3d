@@ -11,20 +11,20 @@ void	my_mlx_px_put(t_struct *as, int x, int y, int color)
 
 void	find_t(t_struct *as, int i, int j)
 {
-	t_plane	plane;
-	float	*newray;
-	float	tmp;
-	int		x;
-	int		y;
+	t_plane		plane;
+	t_vector	newray;
+	float		tmp;
+	int			x;
+	int			y;
 
-	newray = as->rays.new_ray;
+	newray = as->rays.inter[i].new_ray;
 	plane = as->plane.plane[j];
 	tmp = -(plane.a * as->player.x + plane.b * as->player.y + plane.d)
-		/ (plane.a * newray[0] + plane.b * newray[1]);
+		/ (plane.a * newray.x + plane.b * newray.y);
 	if (tmp > 0 && tmp < as->rays.inter[i].t)
 	{
-		x = (int)(as->player.x + newray[0] * tmp);
-		y = (int)(as->player.y + newray[1] * tmp);
+		x = (int)(as->player.x + newray.x * tmp);
+		y = (int)(as->player.y + newray.y * tmp);
 		if (y > 0 && y <= as->set.mapy && x > 0 && x <= as->set.mapx
 			&& (((plane.direction == 0 || plane.direction == 3)
 					&& as->set.map[y][x] == '1')
@@ -93,10 +93,11 @@ void	put_floor_and_ceiling(t_struct *as)
 
 int	find_wall(t_struct *as)
 {
-	int		res;
-	int		i;
-	float	z;
-	int		pixel;
+	int			res;
+	int			i;
+	t_vector	inter;
+	t_vector	ratio;
+	int			pixel;
 
 	player_move(as);
 	find_inter(as);
@@ -106,8 +107,13 @@ int	find_wall(t_struct *as)
 	while (i < as->rays.num_r)
 	{
 		pixel = i % as->set.res[0];
-		z = as->player.z + as->rays.ray[i].z * as->rays.inter[pixel].t;
-		if (z >= 0 && z <= 0.2)
+		inter.x = as->player.x + as->rays.inter[pixel].new_ray.x * as->rays.inter[pixel].t;
+		inter.y = as->player.y + as->rays.inter[pixel].new_ray.y * as->rays.inter[pixel].t;
+		inter.z = as->player.z + (as->rays.inter[pixel].new_ray.z - (as->rays.rv * (i / as->set.res[0]))) * as->rays.inter[pixel].t;
+		ratio.x = inter.x - (int)inter.x;
+		ratio.y = inter.y - (int)inter.y;
+		ratio.z = inter.z - (int)inter.z;
+		if (inter.z >= 0 && inter.z <= 0.2)
 		{
 			if (as->rays.inter[pixel].target_plane % 4 == 0)
 				my_mlx_px_put(as, (i % res), (i / res), 16777215);
@@ -121,5 +127,6 @@ int	find_wall(t_struct *as)
 		i++;
 	}	
 	mlx_put_image_to_window(as->vars.mlx, as->vars.win, as->data.img, 0, 0);
+	mlx_do_sync(as->vars.mlx);
 	return (0);
 }
