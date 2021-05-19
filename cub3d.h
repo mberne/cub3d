@@ -163,6 +163,7 @@ void			find_inter(t_struct *as);
 void			find_t(t_struct *as, int i, int j);
 void			matrix(t_struct *as, int i);
 int				destroy_win(t_struct *as);
+int				my_mlx_px_get(t_struct *as, int x, int y, int wall);
 void			my_mlx_px_put(t_struct *as, int x, int y, int color);
 
 #endif

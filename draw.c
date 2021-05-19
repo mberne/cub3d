@@ -4,9 +4,17 @@ void	my_mlx_px_put(t_struct *as, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = as->data.addr + (y * as->data.line_length + x
-			*(as->data.bits_per_pixel / 8));
+	dst = as->data.addr + (y * as->data.line_length + x * 4);
 	*(unsigned int *)dst = color;
+}
+
+int	my_mlx_px_get(t_struct *as, int x, int y, int wall)
+{
+	char	*dst;
+
+	dst = as->texture[wall].data.addr + (y * as->texture[wall].data.line_length
+			+ x * 4);
+	return (*(int *)dst);
 }
 
 void	find_t(t_struct *as, int i, int j)
@@ -23,8 +31,8 @@ void	find_t(t_struct *as, int i, int j)
 		/ (plane.a * newray.x + plane.b * newray.y);
 	if (tmp > 0 && tmp < as->rays.inter[i].t)
 	{
-		x = (int)(as->player.x + newray.x * tmp);
-		y = (int)(as->player.y + newray.y * tmp);
+		x = as->player.x + newray.x * tmp;
+		y = as->player.y + newray.y * tmp;
 		if (y > 0 && y <= as->set.mapy && x > 0 && x <= as->set.mapx
 			&& (((plane.direction == 0 || plane.direction == 3)
 					&& as->set.map[y][x] == '1')
@@ -98,6 +106,8 @@ int	find_wall(t_struct *as)
 	t_vector	inter;
 	t_vector	ratio;
 	int			pixel;
+	int			t_x;
+	int			t_y;
 
 	player_move(as);
 	find_inter(as);
@@ -112,17 +122,33 @@ int	find_wall(t_struct *as)
 		inter.z = as->player.z + (as->rays.inter[pixel].new_ray.z - (as->rays.rv * (i / as->set.res[0]))) * as->rays.inter[pixel].t;
 		ratio.x = inter.x - (int)inter.x;
 		ratio.y = inter.y - (int)inter.y;
-		ratio.z = inter.z - (int)inter.z;
+		ratio.z = 1 - (inter.z - (int)inter.z);
 		if (inter.z >= 0 && inter.z <= 0.2)
 		{
 			if (as->rays.inter[pixel].target_plane % 4 == 0)
-				my_mlx_px_put(as, (i % res), (i / res), 16777215);
+			{
+				t_x = ratio.x * as->texture[0].width;
+				t_y = ratio.z * as->texture[0].height;
+				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 0));
+			}
 			else if (as->rays.inter[pixel].target_plane % 4 == 1)
-				my_mlx_px_put(as, (i % res), (i / res), 167772);
+			{
+				t_x = ratio.y * as->texture[1].width;
+				t_y = ratio.z * as->texture[1].height;
+				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 1));
+			}
 			else if (as->rays.inter[pixel].target_plane % 4 == 2)
-				my_mlx_px_put(as, (i % res), (i / res), 1677);
+			{
+				t_x = ratio.x * as->texture[2].width;
+				t_y = ratio.z * as->texture[2].height;
+				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 2));
+			}
 			else if (as->rays.inter[pixel].target_plane % 4 == 3)
-				my_mlx_px_put(as, (i % res), (i / res), 16);
+			{
+				t_x = ratio.y * as->texture[3].width;
+				t_y = ratio.z * as->texture[3].height;
+				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 3));
+			}
 		}
 		i++;
 	}	
