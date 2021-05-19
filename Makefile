@@ -1,4 +1,4 @@
-SRCS		= main.c parsing_settings.c parsing_map.c utils.c events.c draw.c player.c ray.c plane.c texture.c
+SRCS		= main.c parsing_settings.c parsing_map.c utils.c events.c draw.c player.c ray.c plane.c texture.c my_mlx_functions.c
 
 OBJS		= $(SRCS:.c=.o)
 
