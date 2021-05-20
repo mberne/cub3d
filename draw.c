@@ -14,8 +14,16 @@ void	find_t(t_struct *as, int i, int j)
 		/ (plane.a * newray.x + plane.b * newray.y);
 	if (tmp > 0 && tmp < as->rays.inter[i].t)
 	{
-		x = as->player.x + newray.x * tmp;
-		y = as->player.y + newray.y * tmp;
+		if (plane.direction == 1 || plane.direction == 3)
+		{
+			x = roundf(as->player.x + newray.x * tmp);
+			y = as->player.y + newray.y * tmp;
+		}	
+		else
+		{
+			x = as->player.x + newray.x * tmp;
+			y = roundf(as->player.y + newray.y * tmp);
+		}
 		if (y > 0 && y <= as->set.mapy && x > 0 && x <= as->set.mapx
 			&& (((plane.direction == 0 || plane.direction == 3)
 					&& as->set.map[y][x] == '1')
