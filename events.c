@@ -49,29 +49,47 @@ int	key_release(int keycode, t_struct *as)
 
 int	player_move(t_struct *as)
 {
+	t_player	next_pos;
+
 	if (as->key.t_left)
 		as->player.rad = as->player.rad - M_PI * 0.0075;
 	if (as->key.t_right)
 		as->player.rad = as->player.rad + M_PI * 0.0075;
 	if (as->key.front)
 	{
-		as->player.x = as->player.x + sinf(as->player.rad) * 0.03;
-		as->player.y = as->player.y - cosf(as->player.rad) * 0.03;
+		next_pos.x = as->player.x + sinf(as->player.rad) * 0.03;
+		next_pos.y = as->player.y - cosf(as->player.rad) * 0.03;
+		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
+			as->player.x = next_pos.x;
+		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
+			as->player.y = next_pos.y;
 	}
 	if (as->key.back)
 	{
-		as->player.x = as->player.x - sinf(as->player.rad) * 0.03;
-		as->player.y = as->player.y + cosf(as->player.rad) * 0.03;
+		next_pos.x = as->player.x - sinf(as->player.rad) * 0.03;
+		next_pos.y = as->player.y + cosf(as->player.rad) * 0.03;
+		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
+			as->player.x = next_pos.x;
+		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
+			as->player.y = next_pos.y;
 	}
 	if (as->key.left)
 	{
-		as->player.x = as->player.x - cosf(as->player.rad) * 0.03;
-		as->player.y = as->player.y - sinf(as->player.rad) * 0.03;
+		next_pos.x = as->player.x - cosf(as->player.rad) * 0.03;
+		next_pos.y = as->player.y - sinf(as->player.rad) * 0.03;
+		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
+			as->player.x = next_pos.x;
+		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
+			as->player.y = next_pos.y;
 	}
 	if (as->key.right)
 	{
-		as->player.x = as->player.x + cosf(as->player.rad) * 0.03;
-		as->player.y = as->player.y + sinf(as->player.rad) * 0.03;
+		next_pos.x = as->player.x + cosf(as->player.rad) * 0.03;
+		next_pos.y = as->player.y + sinf(as->player.rad) * 0.03;
+		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
+			as->player.x = next_pos.x;
+		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
+			as->player.y = next_pos.y;
 	}
 	if (as->key.space && as->player.z < 0.3)
 		as->player.z += 0.1;
