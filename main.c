@@ -108,9 +108,15 @@ int	main(int ac, char **av)
 			&as.data.line_length, &as.data.endian);
 	if (!as.vars.win || !as.data.img || !as.data.addr)
 		ft_exit(&as, "Error\nMalloc error\n");
-	mlx_hook(as.vars.win, 2, 1L << 0, key_press, &as.vars);
-	mlx_hook(as.vars.win, 3, 1L << 1, key_release, &as.vars);
-	mlx_hook(as.vars.win, 17, 1L << 2, destroy_win, &as.vars);
+	printf("\nAvancer avec W | Reculer avec S\n");
+	printf("Se déplacer à gauche avec A | Se déplacer à droite avec D\n");
+	printf("Tourner vers la gauche et la droite avec les flèches\n");
+	printf("Sauter avec la barre d'espace | S'accroupir avec alt\n");
+	printf("Voler en maintenant la barre d'espace\n");
+	printf("Sortir du jeu avec ESC\n\n");
+	mlx_hook(as.vars.win, 2, 0L, key_press, &as.vars);
+	mlx_hook(as.vars.win, 3, 0L, key_release, &as.vars);
+	mlx_hook(as.vars.win, 17, 0L, destroy_win, &as.vars);
 	find_wall(&as);
 	mlx_loop_hook(as.vars.mlx, find_wall, &as);
 	mlx_loop(as.vars.mlx);

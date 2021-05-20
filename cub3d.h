@@ -14,6 +14,8 @@
 # define D 2
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
+# define SPACE 49
+# define CROUCH 261
 # define ESC 53
 # define FOV 60
 
@@ -106,6 +108,8 @@ typedef struct s_key
 	int	back;
 	int	left;
 	int	right;
+	int	space;
+	int	crouch;
 }	t_key;
 
 typedef struct s_textures

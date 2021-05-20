@@ -145,5 +145,6 @@ int	find_wall(t_struct *as)
 	}	
 	mlx_put_image_to_window(as->vars.mlx, as->vars.win, as->data.img, 0, 0);
 	mlx_do_sync(as->vars.mlx);
+	as->player.z = 0.2;
 	return (0);
 }

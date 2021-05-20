@@ -19,6 +19,10 @@ int	key_press(int keycode, t_struct *as)
 		as->key.left = 1;
 	if (keycode == D)
 		as->key.right = 1;
+	if (keycode == SPACE)
+		as->key.space = 1;
+	if (keycode == CROUCH)
+		as->key.crouch = 1;
 	return (0);
 }
 
@@ -36,6 +40,10 @@ int	key_release(int keycode, t_struct *as)
 		as->key.left = 0;
 	if (keycode == D)
 		as->key.right = 0;
+	if (keycode == SPACE)
+		as->key.space = 0;
+	if (keycode == CROUCH)
+		as->key.crouch = 0;
 	return (0);
 }
 
@@ -65,6 +73,10 @@ int	player_move(t_struct *as)
 		as->player.x = as->player.x + cosf(as->player.rad) * 0.03;
 		as->player.y = as->player.y + sinf(as->player.rad) * 0.03;
 	}
+	if (as->key.space && as->player.z < 0.3)
+		as->player.z += 0.1;
+	if (as->key.crouch && as->player.z > 0.1)
+		as->player.z -= 0.1;
 	return (0);
 }
 
