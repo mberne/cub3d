@@ -169,10 +169,12 @@ void			make_plane(t_struct *as);
 void			fill_plane(t_struct *as, char wall, int i);
 
 void			create_textures(t_struct *as);
-int				find_wall(t_struct *as);
+int				draw(t_struct *as);
 void			put_floor_and_ceiling(t_struct *as);
+void			draw_wall(t_struct *as);
 void			find_inter(t_struct *as);
 void			find_t(t_struct *as, int i, int j);
+void			draw_sprite(t_struct *as);
 
 int				my_mlx_px_get(t_struct *as, int x, int y, int wall);
 void			my_mlx_px_put(t_struct *as, int x, int y, int color);

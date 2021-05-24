@@ -117,7 +117,7 @@ int	main(int ac, char **av)
 	mlx_hook(as.vars.win, 2, 0L, key_press, &as.vars);
 	mlx_hook(as.vars.win, 3, 0L, key_release, &as.vars);
 	mlx_hook(as.vars.win, 17, 0L, destroy_win, &as.vars);
-	find_wall(&as);
-	mlx_loop_hook(as.vars.mlx, find_wall, &as);
+	draw(&as);
+	mlx_loop_hook(as.vars.mlx, draw, &as);
 	mlx_loop(as.vars.mlx);
 }
