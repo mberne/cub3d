@@ -64,7 +64,23 @@ void	parse_cub(t_struct *as, char *file_name)
 		ft_exit(as, "Error\nInvalid file\n");
 }
 
-void	init_struct(t_settings *set)
+void	init_struct(t_struct *as)
+{
+	as->plane.num_plane = 0;
+	as->plane.num_wall = 0;
+	as->rays.num_r = 0;
+	as->key.t_left = 0;
+	as->key.t_right = 0;
+	as->key.front = 0;
+	as->key.back = 0;
+	as->key.left = 0;
+	as->key.right = 0;
+	as->key.space = 0;
+	as->key.crouch = 0;
+	as->sprites.num_sprite = 0;
+}
+
+void	init_struct_set(t_settings *set)
 {
 	set->file = 0;
 	set->tab = 0;
@@ -94,12 +110,15 @@ int	main(int ac, char **av)
 	as.vars.mlx = mlx_init();
 	if (!as.vars.mlx)
 		ft_exit(&as, "Error\nMalloc error\n");
-	init_struct(&as.set);
+	init_struct_set(&as.set);
 	parse_cub(&as, av[1]);
+	init_struct(&as);
 	player_spawn(&as);
 	ray(&as);
 	init_plane(&as);
 	make_plane(&as);
+	init_sprite(&as);
+	make_sprite(&as);
 	create_textures(&as);
 	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
 			"Cub3D");

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	find_t(t_struct *as, int i, int j)
+void	find_t_wall(t_struct *as, int i, int j)
 {
 	t_plane		plane;
 	t_vector	newray;
@@ -53,7 +53,7 @@ void	find_inter(t_struct *as)
 		as->rays.inter[i].target_plane = -1;
 		while (j < as->plane.num_plane)
 		{
-			find_t(as, i, j);
+			find_t_wall(as, i, j);
 			j++;
 		}
 		i++;

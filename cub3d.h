@@ -119,6 +119,19 @@ typedef struct s_textures
 	int		height;
 }	t_textures;
 
+typedef struct s_sprite
+{
+	float		center_x;
+	float		center_y;
+	t_plane		plane;
+	t_vector	v;
+}	t_sprite;
+
+typedef struct s_sprites
+{
+	t_sprite	*sprite;
+	int			num_sprite;
+}	t_sprites;
 
 typedef struct s_struct
 {
@@ -130,10 +143,12 @@ typedef struct s_struct
 	t_player	player;
 	t_key		key;
 	t_textures	*texture;
+	t_sprites	sprites;
 }	t_struct;
 
 int				main(int ac, char **av);
-void			init_struct(t_settings *set);
+void			init_struct_set(t_settings *set);
+void			init_struct(t_struct *as);
 
 void			parse_cub(t_struct *as, char *file_name);
 void			get_settings(t_struct *as);
@@ -167,14 +182,17 @@ void			matrix(t_struct *as, int i);
 void			init_plane(t_struct *as);
 void			make_plane(t_struct *as);
 void			fill_plane(t_struct *as, char wall, int i);
+void			init_sprite(t_struct *as);
+void			make_sprite(t_struct *as);
 
 void			create_textures(t_struct *as);
 int				draw(t_struct *as);
 void			put_floor_and_ceiling(t_struct *as);
 void			draw_wall(t_struct *as);
 void			find_inter(t_struct *as);
-void			find_t(t_struct *as, int i, int j);
+void			find_t_wall(t_struct *as, int i, int j);
 void			draw_sprite(t_struct *as);
+void			find_t_sprite(t_struct *as, int i, int j);
 
 int				my_mlx_px_get(t_struct *as, int x, int y, int wall);
 void			my_mlx_px_put(t_struct *as, int x, int y, int color);

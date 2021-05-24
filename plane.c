@@ -6,7 +6,6 @@ void	init_plane(t_struct *as)
 	int	j;
 
 	i = 0;
-	as->plane.num_wall = 0;
 	while (as->set.map[i])
 	{
 		j = 0;
@@ -68,7 +67,6 @@ void	make_plane(t_struct *as)
 	int	j;
 
 	i = 0;
-	as->plane.num_plane = 0;
 	while (i <= as->set.mapy)
 	{
 		j = 0;

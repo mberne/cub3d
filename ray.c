@@ -39,7 +39,6 @@ void	ray(t_struct *as)
 			* ((as->set.res[0] + 1) * (as->set.res[1] + 1)));
 	if (!as->rays.ray)
 		ft_exit(as, "Error\nMalloc error\n");
-	as->rays.num_r = 0;
 	d = tan((FOV * M_PI / 180) / 2) * 2;
 	rh = d / as->set.res[0];
 	as->rays.rv = rh * as->set.res[1] / as->set.res[0];
