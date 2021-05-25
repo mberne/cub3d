@@ -42,7 +42,7 @@ void	find_inter(t_struct *as)
 	int		j;
 
 	i = 0;
-	as->rays.inter = malloc(sizeof(t_intersection) * (as->set.res[0] + 1));
+	as->rays.inter = malloc(sizeof(t_intersection) * as->set.res[0]);
 	if (!as->rays.inter)
 		ft_exit(as, "Error\nMalloc error\n");
 	while (i <= as->set.res[0])

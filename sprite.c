@@ -27,7 +27,6 @@ void	make_sprite(t_struct *as)
 	int			i;
 	int			j;
 	int			k;
-	t_sprite	sprite;
 
 	i = 0;
 	k = 0;
@@ -38,13 +37,8 @@ void	make_sprite(t_struct *as)
 		{
 			if (as->set.map[i][j] == '2')
 			{
-				sprite.center_x = j + 0.5;
-				sprite.center_y = i + 0.5;
-				sprite.plane.a = sprite.center_x - as->player.x;
-				sprite.plane.b = sprite.center_y - as->player.y;
-				sprite.plane.d = -(sprite.plane.a * sprite.center_x)
-					- (sprite.plane.b * sprite.center_y);
-				as->sprites.sprite[k] = sprite;
+				as->sprites.sprite[k].center_x = j + 0.5;
+				as->sprites.sprite[k].center_y = i + 0.5;
 				k++;
 			}
 			j++;
@@ -58,8 +52,7 @@ void	find_t_sprite(t_struct *as, int i, int j)
 	t_plane		plane;
 	t_vector	newray;
 	float		tmp;
-	int			x;
-	int			y;
+	float		size_vector;
 
 	newray = as->rays.inter[i].new_ray;
 	plane = as->sprites.sprite[j].plane;
@@ -67,23 +60,30 @@ void	find_t_sprite(t_struct *as, int i, int j)
 		/ (plane.a * newray.x + plane.b * newray.y);
 	if (tmp > 0 && tmp < as->rays.inter[i].t)
 	{
-		as->sprites.sprite[j].v.x = as->sprites.sprite[j].plane.b;
-		as->sprites.sprite[j].v.y = as->sprites.sprite[j].plane.a;
+		as->rays.inter[i].t = tmp;
+		size_vector = hypotf(plane.b, -plane.a);
+		as->sprites.sprite[j].v_norm.x = plane.b / size_vector;
+		as->sprites.sprite[j].v_norm.y = -plane.a / size_vector;
 	}
 }
 
 void	draw_sprite(t_struct *as)
 {
-	int	i;
-	int	j;
+	int			i;
+	int			j;
+	t_sprite	sprite;
 
 	i = 0;
 	while (i <= as->set.res[0])
 	{
 		j = 0;
-		as->rays.inter[i].t = INFINITY;
 		while (j < as->sprites.num_sprite)
 		{
+			sprite.plane.a = sprite.center_x - as->player.x;
+			sprite.plane.b = sprite.center_y - as->player.y;
+			sprite.plane.d = -(sprite.plane.a * sprite.center_x)
+				- (sprite.plane.b * sprite.center_y);
+			as->sprites.sprite[j] = sprite;
 			find_t_sprite(as, i, j);
 			j++;
 		}

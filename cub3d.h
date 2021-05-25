@@ -124,7 +124,7 @@ typedef struct s_sprite
 	float		center_x;
 	float		center_y;
 	t_plane		plane;
-	t_vector	v;
+	t_vector	v_norm;
 }	t_sprite;
 
 typedef struct s_sprites
