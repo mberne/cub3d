@@ -36,7 +36,7 @@ void	find_t_wall(t_struct *as, int i, int j)
 	}
 }
 
-void	find_inter(t_struct *as)
+void	find_inter_wall(t_struct *as)
 {
 	int		i;
 	int		j;
@@ -62,50 +62,50 @@ void	find_inter(t_struct *as)
 
 void	draw_wall(t_struct *as)
 {
-	int			res;
 	int			i;
 	t_vector	inter;
 	t_vector	ratio;
-	int			px;
+	int			px_x;
+	int			px_y;
 	int			t_x;
 	int			t_y;
 
-	res = as->set.res[0];
 	i = 0;
 	while (i < as->rays.num_r)
 	{
-		px = i % as->set.res[0];
-		inter.x = as->player.x + as->rays.inter[px].new_ray.x * as->rays.inter[px].t;
-		inter.y = as->player.y + as->rays.inter[px].new_ray.y * as->rays.inter[px].t;
-		inter.z = as->player.z + (as->rays.inter[px].new_ray.z - (as->rays.rv * (i / as->set.res[0]))) * as->rays.inter[px].t;
+		px_x = i % as->set.res[0];
+		px_y = i / as->set.res[0];
+		inter.x = as->player.x + as->rays.inter[px_x].new_ray.x * as->rays.inter[px_x].t;
+		inter.y = as->player.y + as->rays.inter[px_x].new_ray.y * as->rays.inter[px_x].t;
+		inter.z = as->player.z + (as->rays.inter[px_x].new_ray.z - (as->rays.rv * (px_y))) * as->rays.inter[px_x].t;
 		ratio.x = inter.x - (int)inter.x;
 		ratio.y = inter.y - (int)inter.y;
 		ratio.z = 1 - (inter.z - (int)inter.z);
 		if (inter.z >= 0 && inter.z <= 0.4)
 		{
-			if (as->rays.inter[px].target_plane % 4 == 0)
+			if (as->rays.inter[px_x].target_plane % 4 == 0)
 			{
 				t_x = ratio.x * as->texture[0].width;
 				t_y = ratio.z * as->texture[0].height;
-				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 0));
+				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 0));
 			}
-			else if (as->rays.inter[px].target_plane % 4 == 1)
+			else if (as->rays.inter[px_x].target_plane % 4 == 1)
 			{
 				t_x = ratio.y * as->texture[1].width;
 				t_y = ratio.z * as->texture[1].height;
-				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 1));
+				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 1));
 			}
-			else if (as->rays.inter[px].target_plane % 4 == 2)
+			else if (as->rays.inter[px_x].target_plane % 4 == 2)
 			{
 				t_x = ratio.x * as->texture[2].width;
 				t_y = ratio.z * as->texture[2].height;
-				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 2));
+				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 2));
 			}
-			else if (as->rays.inter[px].target_plane % 4 == 3)
+			else if (as->rays.inter[px_x].target_plane % 4 == 3)
 			{
 				t_x = ratio.y * as->texture[3].width;
 				t_y = ratio.z * as->texture[3].height;
-				my_mlx_px_put(as, (i % res), (i / res), my_mlx_px_get(as, t_x, t_y, 3));
+				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 3));
 			}
 		}
 		i++;

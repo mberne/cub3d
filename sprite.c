@@ -51,6 +51,7 @@ void	find_t_sprite(t_struct *as, int i, int j)
 {
 	t_plane		plane;
 	t_vector	newray;
+	t_sprite	sprite;
 	float		tmp;
 	float		size_vector;
 
@@ -60,14 +61,18 @@ void	find_t_sprite(t_struct *as, int i, int j)
 		/ (plane.a * newray.x + plane.b * newray.y);
 	if (tmp > 0 && tmp < as->rays.inter[i].t)
 	{
-		as->rays.inter[i].t = tmp;
 		size_vector = hypotf(plane.b, -plane.a);
-		as->sprites.sprite[j].v_norm.x = plane.b / size_vector;
-		as->sprites.sprite[j].v_norm.y = -plane.a / size_vector;
+		sprite.v_norm.x = plane.b / size_vector;
+		sprite.v_norm.y = -plane.a / size_vector;
+		sprite.r = ((as->player.x + newray.x * tmp) - sprite.center_x)
+			* sprite.v_norm.x + ((as->player.y + newray.y * tmp)
+				- sprite.center_y) * sprite.v_norm.y + 0.5;
+		if (sprite.r >= 0 && sprite.r < 1)
+			as->rays.inter[i].t = tmp;
 	}
 }
 
-void	draw_sprite(t_struct *as)
+void	find_inter_sprite(t_struct *as)
 {
 	int			i;
 	int			j;
@@ -86,6 +91,33 @@ void	draw_sprite(t_struct *as)
 			as->sprites.sprite[j] = sprite;
 			find_t_sprite(as, i, j);
 			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_sprite(t_struct *as)
+{
+	int			i;
+	t_vector	inter;
+	t_vector	ratio;
+	int			px_x;
+	int			px_y;
+	int			t_x;
+	int			t_y;
+
+	i = 0;
+	while (i < as->rays.num_r)
+	{
+		px_x = i % as->set.res[0];
+		px_y = i / as->set.res[0];
+		inter.z = as->player.z + (as->rays.inter[px_x].new_ray.z - (as->rays.rv * (px_y))) * as->rays.inter[px_x].t;
+		ratio.z = 1 - (inter.z - (int)inter.z);
+		if (inter.z >= 0 && inter.z <= 0.4)
+		{
+			t_x = as->sprites.sprite[px_x].r;
+			t_y = ratio.z * as->texture[4].height;
+			my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 4));
 		}
 		i++;
 	}

@@ -32,9 +32,10 @@ int	draw(t_struct *as)
 {
 	put_floor_and_ceiling(as);
 	player_move(as);
-	find_inter(as);
+	find_inter_wall(as);
 	draw_wall(as);
-	draw_sprite(as);
+	find_inter_sprite(as);
+	// draw_sprite(as);
 	mlx_put_image_to_window(as->vars.mlx, as->vars.win, as->data.img, 0, 0);
 	mlx_do_sync(as->vars.mlx);
 	as->player.z = 0.2;

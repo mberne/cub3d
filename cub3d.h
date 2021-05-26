@@ -125,6 +125,7 @@ typedef struct s_sprite
 	float		center_y;
 	t_plane		plane;
 	t_vector	v_norm;
+	float		r;
 }	t_sprite;
 
 typedef struct s_sprites
@@ -189,9 +190,10 @@ void			create_textures(t_struct *as);
 int				draw(t_struct *as);
 void			put_floor_and_ceiling(t_struct *as);
 void			draw_wall(t_struct *as);
-void			find_inter(t_struct *as);
+void			find_inter_wall(t_struct *as);
 void			find_t_wall(t_struct *as, int i, int j);
 void			draw_sprite(t_struct *as);
+void			find_inter_sprite(t_struct *as);
 void			find_t_sprite(t_struct *as, int i, int j);
 
 int				my_mlx_px_get(t_struct *as, int x, int y, int wall);
