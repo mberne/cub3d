@@ -15,14 +15,14 @@ void	calc_ray(t_struct *as, float rh, float rv)
 	int	j;
 
 	i = 0;
-	while (i < as->set.res[1])
+	while (i < V_RES)
 	{
 		j = 0;
-		while (j < as->set.res[0])
+		while (j < H_RES)
 		{
-			as->rays.ray[as->rays.num_r].x = (j - as->set.res[0] * 0.5) * rh;
+			as->rays.ray[as->rays.num_r].x = (j - H_RES * 0.5) * rh;
 			as->rays.ray[as->rays.num_r].y = -1;
-			as->rays.ray[as->rays.num_r].z = (as->set.res[1] * 0.5 - i) * rv;
+			as->rays.ray[as->rays.num_r].z = (V_RES * 0.5 - i) * rv;
 			as->rays.num_r++;
 			j++;
 		}
@@ -36,11 +36,11 @@ void	ray(t_struct *as)
 	float	rh;
 
 	as->rays.ray = malloc(sizeof(t_vector)
-			* ((as->set.res[0] + 1) * (as->set.res[1] + 1)));
+			* ((H_RES + 1) * (V_RES + 1)));
 	if (!as->rays.ray)
 		ft_exit(as, "Error\nMalloc error\n");
 	d = tan((FOV * M_PI / 180) / 2) * 2;
-	rh = d / as->set.res[0];
-	as->rays.rv = rh * as->set.res[1] / as->set.res[0];
+	rh = d / H_RES;
+	as->rays.rv = rh * V_RES / H_RES;
 	calc_ray(as, rh, as->rays.rv);
 }

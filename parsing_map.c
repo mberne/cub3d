@@ -20,7 +20,7 @@ void	check_map(t_struct *as)
 		j = -1;
 		while (as->set.map[i][++j])
 		{
-			if (ft_strchr("02NSEW", as->set.map[i][j]) && check_wall(as, i, j))
+			if (ft_strchr("0NSEW", as->set.map[i][j]) && check_wall(as, i, j))
 				ft_exit(as, "Error\nInvalid map\n");
 			if (ft_strchr("NSEW", as->set.map[i][j]) && !as->set.porientation)
 			{
@@ -106,7 +106,7 @@ void	map(t_struct *as, int fd)
 	{
 		if ((tmpmap[i] == '\n' && tmpmap[i + 1] == '\n'
 				&& !(tmpmap[i + 2] == '\n' || tmpmap[i + 2] == '\0'))
-			|| !ft_strchr(" 012NSWE\n", tmpmap[i]))
+			|| !ft_strchr(" 01NSWE\n", tmpmap[i]))
 			ft_exit(as, "Error\nInvalid map\n");
 		i++;
 	}

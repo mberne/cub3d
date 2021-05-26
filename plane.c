@@ -22,42 +22,44 @@ void	init_plane(t_struct *as)
 		ft_exit(as, "Error\nMalloc error\n");
 }
 
-void	fill_plane(t_struct *as, char wall, int i)
+void	fill_plane_d(t_struct *as, char wall, int i)
 {
-	t_plane	plane;
-
-	if (wall == 'N' || wall == 'S')
-	{
-		plane.a = 0;
-		plane.b = 1;
-	}
-	else
-	{
-		plane.a = 1;
-		plane.b = 0;
-	}
-	plane.c = 0;
 	if (wall == 'N')
 	{
-		plane.direction = 0;
-		plane.d = -i;
+		as->plane.plane[as->plane.num_plane].direction = 0;
+		as->plane.plane[as->plane.num_plane].d = -i;
 	}
 	else if (wall == 'E')
 	{
-		plane.direction = 1;
-		plane.d = -(i + 1);
+		as->plane.plane[as->plane.num_plane].direction = 1;
+		as->plane.plane[as->plane.num_plane].d = -(i + 1);
 	}
 	else if (wall == 'S')
 	{
-		plane.direction = 2;
-		plane.d = -(i + 1);
+		as->plane.plane[as->plane.num_plane].direction = 2;
+		as->plane.plane[as->plane.num_plane].d = -(i + 1);
 	}
-	else if (wall == 'W')
+	else
 	{
-		plane.direction = 3;
-		plane.d = -i;
+		as->plane.plane[as->plane.num_plane].direction = 3;
+		as->plane.plane[as->plane.num_plane].d = -i;
 	}
-	as->plane.plane[as->plane.num_plane] = plane;
+}
+
+void	fill_plane(t_struct *as, char wall, int i)
+{
+	if (wall == 'N' || wall == 'S')
+	{
+		as->plane.plane[as->plane.num_plane].a = 0;
+		as->plane.plane[as->plane.num_plane].b = 1;
+	}
+	else
+	{
+		as->plane.plane[as->plane.num_plane].a = 1;
+		as->plane.plane[as->plane.num_plane].b = 0;
+	}
+	as->plane.plane[as->plane.num_plane].c = 0;
+	fill_plane_d(as, wall, i);
 	as->plane.num_plane++;
 }
 

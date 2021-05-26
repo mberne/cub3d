@@ -10,37 +10,9 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.so);
 	free(as->set.we);
 	free(as->set.ea);
-	free(as->set.sprite);
 	free_split(as->set.map, number_of_split(as->set.map));
 	// détruis tes images de textures connasse
 	exit(-1);
-}
-
-void	get_settings(t_struct *as)
-{
-	int		fd;
-	int		ret;
-
-	fd = open(as->set.file, O_RDONLY);
-	if (fd == -1)
-		ft_exit(as, "Error\nFile failed to open\n");
-	ret = 1;
-	while (ret > 0)
-	{
-		ret = get_next_line(fd, &as->set.line);
-		if (ret == -1)
-			ft_exit(as, "Error\nAn error occured while reading file\n");
-		if (*as->set.line)
-		{
-			as->set.tab = ft_split(as->set.line, ' ');
-			parsing(as, fd);
-			free(as->set.line);
-			free_split(as->set.tab, number_of_split(as->set.tab));
-			as->set.tab = 0;
-		}
-	}
-	if (close(fd) == -1)
-		ft_exit(as, "Error\nFile failed to close\n");
 }
 
 void	parse_cub(t_struct *as, char *file_name)
@@ -58,8 +30,7 @@ void	parse_cub(t_struct *as, char *file_name)
 	else
 		ft_exit(as, "Error\nInvalid name of file\n");
 	get_settings(as);
-	if (as->set.res[0] == -1 || as->set.res[1] == -1 || !as->set.no
-		|| !as->set.so || !as->set.we || !as->set.ea || !as->set.sprite
+	if (!as->set.no || !as->set.so || !as->set.we || !as->set.ea
 		|| as->set.floor == -1 || as->set.ceiling == -1 || !as->set.map)
 		ft_exit(as, "Error\nInvalid file\n");
 }
@@ -75,9 +46,6 @@ void	init_struct(t_struct *as)
 	as->key.back = 0;
 	as->key.left = 0;
 	as->key.right = 0;
-	as->key.space = 0;
-	as->key.crouch = 0;
-	as->sprites.num_sprite = 0;
 }
 
 void	init_struct_set(t_settings *set)
@@ -85,13 +53,10 @@ void	init_struct_set(t_settings *set)
 	set->file = 0;
 	set->tab = 0;
 	set->line = 0;
-	set->res[0] = -1;
-	set->res[1] = -1;
 	set->no = 0;
 	set->so = 0;
 	set->we = 0;
 	set->ea = 0;
-	set->sprite = 0;
 	set->floor = -1;
 	set->ceiling = -1;
 	set->map = 0;
@@ -117,26 +82,16 @@ int	main(int ac, char **av)
 	ray(&as);
 	init_plane(&as);
 	make_plane(&as);
-	init_sprite(&as);
-	make_sprite(&as);
 	create_textures(&as);
-	as.vars.win = mlx_new_window(as.vars.mlx, as.set.res[0], as.set.res[1],
-			"Cub3D");
-	as.data.img = mlx_new_image(as.vars.mlx, as.set.res[0], as.set.res[1]);
+	as.vars.win = mlx_new_window(as.vars.mlx, H_RES, V_RES, "Cub3D");
+	as.data.img = mlx_new_image(as.vars.mlx, H_RES, V_RES);
 	as.data.addr = mlx_get_data_addr(as.data.img, &as.data.bits_per_pixel,
 			&as.data.line_length, &as.data.endian);
 	if (!as.vars.win || !as.data.img || !as.data.addr)
 		ft_exit(&as, "Error\nMalloc error\n");
-	printf("\nAvancer avec W | Reculer avec S\n");
-	printf("Se déplacer à gauche avec A | Se déplacer à droite avec D\n");
-	printf("Tourner vers la gauche et la droite avec les flèches\n");
-	printf("Sauter avec la barre d'espace | S'accroupir avec alt\n");
-	printf("Voler en maintenant la barre d'espace\n");
-	printf("Sortir du jeu avec ESC\n\n");
 	mlx_hook(as.vars.win, 2, 0L, key_press, &as.vars);
 	mlx_hook(as.vars.win, 3, 0L, key_release, &as.vars);
 	mlx_hook(as.vars.win, 17, 0L, destroy_win, &as.vars);
-	draw(&as);
 	mlx_loop_hook(as.vars.mlx, draw, &as);
 	mlx_loop(as.vars.mlx);
 }

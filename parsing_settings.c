@@ -51,41 +51,16 @@ void	get_texture(t_struct *as)
 		as->set.we = ft_strdup(as->set.tab[1]);
 	else if (!ft_strncmp(as->set.tab[0], "EA", 2) && as->set.ea == 0)
 		as->set.ea = ft_strdup(as->set.tab[1]);
-	else if (!ft_strncmp(as->set.tab[0], "S", 1)
-		&& ft_strncmp(as->set.tab[0], "SO", 2) && as->set.sprite == 0)
-		as->set.sprite = ft_strdup(as->set.tab[1]);
 	else
 		ft_exit(as, "Error\nInvalid textures\n");
 }
 
-void	get_resolution(t_struct *as)
-{
-	int	screenx;
-	int	screeny;
-
-	mlx_get_screen_size(as->vars.mlx, &screenx, &screeny);
-	if (as->set.res[0] == -1 && as->set.res[1] == -1
-		&& ft_isnumber(as->set.tab[1]) && ft_isnumber(as->set.tab[2]))
-	{
-		as->set.res[0] = fminf(ft_atoi(as->set.tab[1]), screenx);
-		as->set.res[1] = fminf(ft_atoi(as->set.tab[2]), screeny);
-		if (as->set.res[0] <= 0 || as->set.res[1] <= 0)
-			ft_exit(as, "Error\nInvalid resolution\n");
-	}
-	else
-		ft_exit(as, "Error\nInvalid resolution\n");
-}
-
 void	parsing(t_struct *as, int fd)
 {
-	if (!ft_strncmp(as->set.tab[0], "R", ft_strlen(as->set.tab[0]))
-		&& check_arg(&as->set, 3))
-		get_resolution(as);
-	else if ((!ft_strncmp(as->set.tab[0], "NO", ft_strlen(as->set.tab[0]))
+	if ((!ft_strncmp(as->set.tab[0], "NO", ft_strlen(as->set.tab[0]))
 			|| !ft_strncmp(as->set.tab[0], "SO", ft_strlen(as->set.tab[0]))
 			|| !ft_strncmp(as->set.tab[0], "WE", ft_strlen(as->set.tab[0]))
-			|| !ft_strncmp(as->set.tab[0], "EA", ft_strlen(as->set.tab[0]))
-			|| !ft_strncmp(as->set.tab[0], "S", ft_strlen(as->set.tab[0])))
+			|| !ft_strncmp(as->set.tab[0], "EA", ft_strlen(as->set.tab[0])))
 		&& check_arg(&as->set, 2))
 		get_texture(as);
 	else if (check_arg(&as->set, 2)
@@ -100,4 +75,31 @@ void	parsing(t_struct *as, int fd)
 	}
 	else
 		ft_exit(as, "Error\nInvalid file\n");
+}
+
+void	get_settings(t_struct *as)
+{
+	int		fd;
+	int		ret;
+
+	fd = open(as->set.file, O_RDONLY);
+	if (fd == -1)
+		ft_exit(as, "Error\nFile failed to open\n");
+	ret = 1;
+	while (ret > 0)
+	{
+		ret = get_next_line(fd, &as->set.line);
+		if (ret == -1)
+			ft_exit(as, "Error\nAn error occured while reading file\n");
+		if (*as->set.line)
+		{
+			as->set.tab = ft_split(as->set.line, ' ');
+			parsing(as, fd);
+			free(as->set.line);
+			free_split(as->set.tab, number_of_split(as->set.tab));
+			as->set.tab = 0;
+		}
+	}
+	if (close(fd) == -1)
+		ft_exit(as, "Error\nFile failed to close\n");
 }
