@@ -39,6 +39,21 @@ int	key_release(int keycode, t_struct *as)
 	return (0);
 }
 
+void	ft_exit(t_struct *as, char *str)
+{
+	printf("%s", str);
+	free(as->set.file);
+	free_split(as->set.tab, number_of_split(as->set.tab));
+	free(as->set.line);
+	free(as->set.no);
+	free(as->set.so);
+	free(as->set.we);
+	free(as->set.ea);
+	free_split(as->set.map, number_of_split(as->set.map));
+	// détruis tes images de textures connasse
+	exit(-1);
+}
+
 int	destroy_win(t_struct *as)
 {
 	mlx_destroy_window(as->vars.mlx, as->vars.win);

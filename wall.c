@@ -1,5 +1,21 @@
 #include "cub3d.h"
 
+int	cast_float_y(t_struct *as, int i, int j, float tmp)
+{
+	if (as->plane.plane[j].direction == 1 || as->plane.plane[j].direction == 3)
+		return (as->player.y + as->rays.inter[i].new_ray.y * tmp);
+	else
+		return (roundf(as->player.y + as->rays.inter[i].new_ray.y * tmp));
+}
+
+int	cast_float_x(t_struct *as, int i, int j, float tmp)
+{
+	if (as->plane.plane[j].direction == 1 || as->plane.plane[j].direction == 3)
+		return (roundf(as->player.x + as->rays.inter[i].new_ray.x * tmp));
+	else
+		return (as->player.x + as->rays.inter[i].new_ray.x * tmp);
+}
+
 void	find_t_wall(t_struct *as, int i, int j)
 {
 	t_plane		plane;
@@ -14,16 +30,8 @@ void	find_t_wall(t_struct *as, int i, int j)
 		/ (plane.a * newray.x + plane.b * newray.y);
 	if (tmp > 0 && tmp < as->rays.inter[i].t)
 	{
-		if (plane.direction == 1 || plane.direction == 3)
-		{
-			x = roundf(as->player.x + newray.x * tmp);
-			y = as->player.y + newray.y * tmp;
-		}	
-		else
-		{
-			x = as->player.x + newray.x * tmp;
-			y = roundf(as->player.y + newray.y * tmp);
-		}
+		x = cast_float_x(as, i, j, tmp);
+		y = cast_float_y(as, i, j, tmp);
 		if (y > 0 && y <= as->set.mapy && x > 0 && x <= as->set.mapx
 			&& (((plane.direction == 0 || plane.direction == 3)
 					&& as->set.map[y][x] == '1')
@@ -65,47 +73,48 @@ void	draw_wall(t_struct *as)
 	int			i;
 	t_vector	inter;
 	t_vector	ratio;
-	int			px_x;
-	int			px_y;
-	int			t_x;
-	int			t_y;
+	int			px[2];
+	int			t[2];
 
 	i = 0;
 	while (i < as->rays.num_r)
 	{
-		px_x = i % H_RES;
-		px_y = i / H_RES;
-		inter.x = as->player.x + as->rays.inter[px_x].new_ray.x * as->rays.inter[px_x].t;
-		inter.y = as->player.y + as->rays.inter[px_x].new_ray.y * as->rays.inter[px_x].t;
-		inter.z = as->player.z + (as->rays.inter[px_x].new_ray.z - (as->rays.rv * (px_y))) * as->rays.inter[px_x].t;
+		px[0] = i % H_RES;
+		px[1] = i / H_RES;
+		inter.x = as->player.x + as->rays.inter[px[0]].new_ray.x
+			* as->rays.inter[px[0]].t;
+		inter.y = as->player.y + as->rays.inter[px[0]].new_ray.y
+			* as->rays.inter[px[0]].t;
+		inter.z = as->player.z + (as->rays.inter[px[0]].new_ray.z
+				- (as->rays.rv * (px[1]))) * as->rays.inter[px[0]].t;
 		ratio.x = inter.x - (int)inter.x;
 		ratio.y = inter.y - (int)inter.y;
 		ratio.z = 1 - (inter.z - (int)inter.z);
 		if (inter.z >= 0 && inter.z <= 0.4)
 		{
-			if (as->rays.inter[px_x].target_plane == 0)
+			if (as->rays.inter[px[0]].target_plane == 0)
 			{
-				t_x = ratio.x * as->texture[0].width;
-				t_y = ratio.z * as->texture[0].height;
-				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 0));
+				t[0] = ratio.x * as->texture[0].width;
+				t[1] = ratio.z * as->texture[0].height;
+				my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 0));
 			}
-			else if (as->rays.inter[px_x].target_plane == 1)
+			else if (as->rays.inter[px[0]].target_plane == 1)
 			{
-				t_x = ratio.y * as->texture[1].width;
-				t_y = ratio.z * as->texture[1].height;
-				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 1));
+				t[0] = ratio.y * as->texture[1].width;
+				t[1] = ratio.z * as->texture[1].height;
+				my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 1));
 			}
-			else if (as->rays.inter[px_x].target_plane  == 2)
+			else if (as->rays.inter[px[0]].target_plane == 2)
 			{
-				t_x = ratio.x * as->texture[2].width;
-				t_y = ratio.z * as->texture[2].height;
-				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 2));
+				t[0] = ratio.x * as->texture[2].width;
+				t[1] = ratio.z * as->texture[2].height;
+				my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 2));
 			}
-			else if (as->rays.inter[px_x].target_plane == 3)
+			else if (as->rays.inter[px[0]].target_plane == 3)
 			{
-				t_x = ratio.y * as->texture[3].width;
-				t_y = ratio.z * as->texture[3].height;
-				my_mlx_px_put(as, (px_x), (px_y), my_mlx_px_get(as, t_x, t_y, 3));
+				t[0] = ratio.y * as->texture[3].width;
+				t[1] = ratio.z * as->texture[3].height;
+				my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 3));
 			}
 		}
 		i++;

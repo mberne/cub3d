@@ -128,7 +128,7 @@ typedef struct s_struct
 }	t_struct;
 
 int				main(int ac, char **av);
-void			init_struct_set(t_settings *set);
+void			init_struct_set(t_struct *as);
 void			init_struct(t_struct *as);
 int				destroy_win(t_struct *as);
 void			ft_exit(t_struct *as, char *str);
@@ -169,9 +169,11 @@ int				draw(t_struct *as);
 void			put_floor_and_ceiling(t_struct *as);
 void			find_inter_wall(t_struct *as);
 void			find_t_wall(t_struct *as, int i, int j);
+int				cast_float_x(t_struct *as, int i, int j, float tmp);
+int				cast_float_y(t_struct *as, int i, int j, float tmp);
 void			draw_wall(t_struct *as);
 
-int				my_mlx_px_get(t_struct *as, int x, int y, int wall);
-void			my_mlx_px_put(t_struct *as, int x, int y, int color);
+int				my_px_get(t_struct *as, int x, int y, int wall);
+void			my_px_put(t_struct *as, int x, int y, int color);
 
 #endif

@@ -11,7 +11,7 @@ void	put_floor_and_ceiling(t_struct *as)
 		j = 0;
 		while (j < H_RES)
 		{
-			my_mlx_px_put(as, j, i, as->set.ceiling);
+			my_px_put(as, j, i, as->set.ceiling);
 			j++;
 		}
 		i++;
@@ -21,7 +21,7 @@ void	put_floor_and_ceiling(t_struct *as)
 		j = 0;
 		while (j < H_RES)
 		{
-			my_mlx_px_put(as, j, i, as->set.floor);
+			my_px_put(as, j, i, as->set.floor);
 			j++;
 		}
 		i++;

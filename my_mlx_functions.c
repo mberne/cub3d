@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	my_mlx_px_put(t_struct *as, int x, int y, int color)
+void	my_px_put(t_struct *as, int x, int y, int color)
 {
 	char	*dst;
 
@@ -8,7 +8,7 @@ void	my_mlx_px_put(t_struct *as, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	my_mlx_px_get(t_struct *as, int x, int y, int wall)
+int	my_px_get(t_struct *as, int x, int y, int wall)
 {
 	char	*dst;
 

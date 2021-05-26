@@ -1,20 +1,5 @@
 #include "cub3d.h"
 
-void	ft_exit(t_struct *as, char *str)
-{
-	printf("%s", str);
-	free(as->set.file);
-	free_split(as->set.tab, number_of_split(as->set.tab));
-	free(as->set.line);
-	free(as->set.no);
-	free(as->set.so);
-	free(as->set.we);
-	free(as->set.ea);
-	free_split(as->set.map, number_of_split(as->set.map));
-	// détruis tes images de textures connasse
-	exit(-1);
-}
-
 void	parse_cub(t_struct *as, char *file_name)
 {
 	int	i;
@@ -48,41 +33,47 @@ void	init_struct(t_struct *as)
 	as->key.right = 0;
 }
 
-void	init_struct_set(t_settings *set)
+void	init_struct_set(t_struct *as)
 {
-	set->file = 0;
-	set->tab = 0;
-	set->line = 0;
-	set->no = 0;
-	set->so = 0;
-	set->we = 0;
-	set->ea = 0;
-	set->floor = -1;
-	set->ceiling = -1;
-	set->map = 0;
-	set->mapx = 0;
-	set->mapy = 0;
-	set->pposition[0] = -1;
-	set->pposition[1] = -1;
-	set->porientation = 0;
+	as->set.file = 0;
+	as->set.tab = 0;
+	as->set.line = 0;
+	as->set.no = 0;
+	as->set.so = 0;
+	as->set.we = 0;
+	as->set.ea = 0;
+	as->set.floor = -1;
+	as->set.ceiling = -1;
+	as->set.map = 0;
+	as->set.mapx = 0;
+	as->set.mapy = 0;
+	as->set.pposition[0] = -1;
+	as->set.pposition[1] = -1;
+	as->set.porientation = 0;
+}
+
+void	before_drawing(t_struct *as, int ac, char **av)
+{
+	if (ac != 2)
+		ft_exit(as, "Error\nInvalid number of argument\n");
+	as->vars.mlx = mlx_init();
+	if (!as->vars.mlx)
+		ft_exit(as, "Error\nMalloc error\n");
+	init_struct_set(as);
+	parse_cub(as, av[1]);
+	init_struct(as);
+	player_spawn(as);
+	ray(as);
+	init_plane(as);
+	make_plane(as);
+	create_textures(as);
 }
 
 int	main(int ac, char **av)
 {
 	t_struct	as;
 
-	(void)ac;
-	as.vars.mlx = mlx_init();
-	if (!as.vars.mlx)
-		ft_exit(&as, "Error\nMalloc error\n");
-	init_struct_set(&as.set);
-	parse_cub(&as, av[1]);
-	init_struct(&as);
-	player_spawn(&as);
-	ray(&as);
-	init_plane(&as);
-	make_plane(&as);
-	create_textures(&as);
+	before_drawing(&as, ac, av);
 	as.vars.win = mlx_new_window(as.vars.mlx, H_RES, V_RES, "Cub3D");
 	as.data.img = mlx_new_image(as.vars.mlx, H_RES, V_RES);
 	as.data.addr = mlx_get_data_addr(as.data.img, &as.data.bits_per_pixel,
