@@ -173,6 +173,7 @@ void			find_t_wall(t_struct *as, int i, int j);
 int				cast_float_x(t_struct *as, int i, int j, float tmp);
 int				cast_float_y(t_struct *as, int i, int j, float tmp);
 void			draw_wall(t_struct *as);
+void			put_texture(t_struct *as, int *px, t_vector ratio, int *t);
 
 int				my_px_get(t_struct *as, int x, int y, int wall);
 void			my_px_put(t_struct *as, int x, int y, int color);

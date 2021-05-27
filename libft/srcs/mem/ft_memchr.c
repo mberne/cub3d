@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 14:14:15 by mberne            #+#    #+#             */
-/*   Updated: 2020/11/25 11:18:40 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/05/27 13:29:38 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	while (i < n)
 	{
 		if (str[i] == value)
-			return ((void*)&str[i]);
+			return ((void *)&str[i]);
 		i++;
 	}
 	return (0);

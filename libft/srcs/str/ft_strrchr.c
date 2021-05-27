@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 16:20:08 by mberne            #+#    #+#             */
-/*   Updated: 2020/11/25 13:01:46 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/05/27 13:30:08 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*ft_strrchr(const char *s, int c)
 	i = ft_strlen(s);
 	value = (char)c;
 	if (s[i] == value)
-		return ((char*)&s[i]);
+		return ((char *)&s[i]);
 	while (--i >= 0)
 		if (s[i] == value)
-			return ((char*)&s[i]);
+			return ((char *)&s[i]);
 	return (0);
 }

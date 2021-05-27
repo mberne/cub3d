@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 16:18:58 by mberne            #+#    #+#             */
-/*   Updated: 2020/11/25 11:39:35 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/05/27 13:29:57 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strchr(const char *s, int c)
 	while (i <= len)
 	{
 		if (s[i] == value)
-			return ((char*)&s[i]);
+			return ((char *)&s[i]);
 		i++;
 	}
 	return (0);
