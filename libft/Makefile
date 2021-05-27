@@ -32,9 +32,9 @@ RM			=	rm -f
 			gcc $(CFLAGS) -c $< -o ${<:.c=.o} -I$(PATH_INC)
 
 $(NAME):	$(OBJS)
-			ar rcs $(NAME) $(OBJS)
+			ar rcs $(NAME) $?
 
-all:		$(NAME)
+all bonus :	$(NAME)
 
 clean:
 			$(RM) $(OBJS)

@@ -14,28 +14,31 @@ LIBFT		= libft.a
 
 LIBMLX		= libmlx.dylib
 
-%.o:		%.c	$(HEADER)
-			gcc $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I
+all bonus:	libs $(NAME)
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
+			gcc $(CFLAGS) $(OBJS) $(LIBFT) $(LIBMLX) -o $(NAME) -I $(HEADER)
+
+libs:
 			$(MAKE) -C libft
 			ln -sf libft/$(LIBFT) .
 			$(MAKE) -C mlx
 			ln -sf mlx/$(LIBMLX) .
-			gcc $(CFLAGS) $(OBJS) $(LIBFT) $(LIBMLX) -o $(NAME)
 
-all:		$(NAME)
+%.o:		%.c	$(HEADER)
+			gcc $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I $(HEADER)
+
 
 clean:
 			${MAKE} clean -C libft
 			${MAKE} clean -C mlx
 			$(RM) $(OBJS)
 
-fclean:		clean
-			$(RM) $(NAME)
-			$(RM) $(LIBFT)
-			$(RM) $(LIBMLX)
+fclean:		
+			${MAKE} fclean -C libft
+			${MAKE} clean -C mlx
+			$(RM) $(OBJS) $(NAME) $(LIBFT) $(LIBMLX)
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re libs
