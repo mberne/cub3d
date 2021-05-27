@@ -74,24 +74,17 @@ char	*create_map(t_struct *as, char *tmpmap, int fd)
 	{
 		tmpmap = ft_strjoin(tmpmap, as->set.line);
 		if (!tmpmap)
-		{
-			free(tmpmap);
 			ft_exit(as, "Error\nMalloc error\n");
-		}
+		free(as->set.line);
 		tmpmap = ft_strjoin(tmpmap, "\n");
 		if (!tmpmap)
-		{
-			free(tmpmap);
 			ft_exit(as, "Error\nMalloc error\n");
-		}
 		ret = get_next_line(fd, &as->set.line);
 	}
 	tmpmap = ft_strjoin(tmpmap, as->set.line);
-	if (tmpmap)
-		return (tmpmap);
-	free(tmpmap);
-	ft_exit(as, "Error\nMalloc error\n");
-	return (NULL);
+	if (!tmpmap)
+		ft_exit(as, "Error\nMalloc error\n");
+	return (tmpmap);
 }
 
 void	map(t_struct *as, int fd)

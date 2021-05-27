@@ -92,5 +92,6 @@ int	draw(t_struct *as)
 	draw_wall(as);
 	mlx_put_image_to_window(as->vars.mlx, as->vars.win, as->data.img, 0, 0);
 	mlx_do_sync(as->vars.mlx);
+	free(as->rays.inter);
 	return (0);
 }
