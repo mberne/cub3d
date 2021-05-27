@@ -6,7 +6,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include "mlx.h"
-# include "libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 
 # define W 13
 # define S 1
@@ -128,6 +128,7 @@ typedef struct s_struct
 }	t_struct;
 
 int				main(int ac, char **av);
+void			before_drawing(t_struct *as, int ac, char **av);
 void			init_struct_set(t_struct *as);
 void			init_struct(t_struct *as);
 int				destroy_win(t_struct *as);

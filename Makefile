@@ -1,23 +1,26 @@
-SRCS		= main.c parsing_settings.c parsing_map.c utils.c events.c draw.c player.c ray.c plane.c wall.c texture.c my_mlx_functions.c
-
-OBJS		= $(SRCS:.c=.o)
-
-HEADER		= cub3d.h
-
 NAME		= cub3D
 
-RM			= rm -f
+#Sources
+PATH_SRCS	= srcs/
+SRCS		= $(addprefix $(PATH_SRCS), main.c parsing_settings.c parsing_map.c utils.c events.c draw.c player.c ray.c plane.c wall.c texture.c my_mlx_functions.c)
 
-CFLAGS		= -Wall -Wextra -Werror
+#Includes
+PATH_INC	= includes/
+HEADER		= $(addprefix $(PATH_INC), cub3d.h)
 
+#Lib
 LIBFT		= libft.a
-
 LIBMLX		= libmlx.dylib
+
+#Other
+OBJS		= $(SRCS:.c=.o)
+CFLAGS		= -Wall -Wextra -Werror
+RM			= rm -f
 
 all bonus:	libs $(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT) $(LIBMLX)
-			gcc $(CFLAGS) $(OBJS) $(LIBFT) $(LIBMLX) -o $(NAME) -I $(HEADER)
+			gcc $(CFLAGS) $(OBJS) $(LIBFT) $(LIBMLX) -o $(NAME) -I $(PATH_INC)
 
 libs:
 			$(MAKE) -C libft
@@ -26,8 +29,7 @@ libs:
 			ln -sf mlx/$(LIBMLX) .
 
 %.o:		%.c	$(HEADER)
-			gcc $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I $(HEADER)
-
+			gcc $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I $(PATH_INC)
 
 clean:
 			${MAKE} clean -C libft

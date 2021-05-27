@@ -29,7 +29,7 @@ CFLAGS		=	-Wall -Wextra -Werror
 RM			=	rm -f
 
 %.o:		%.c $(HEADER)
-			gcc $(CFLAGS) -c $< -o ${<:.c=.o} -I$(PATH_INC)
+			gcc $(CFLAGS) -c $< -o ${<:.c=.o} -I $(PATH_INC)
 
 $(NAME):	$(OBJS)
 			ar rcs $(NAME) $?
