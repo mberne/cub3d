@@ -73,15 +73,11 @@ void	parsing(t_struct *as, int fd)
 		ft_exit(as, "Error\nInvalid file\n");
 }
 
-void	get_settings(t_struct *as)
+void	get_settings(t_struct *as, int fd, int ret)
 {
-	int		fd;
-	int		ret;
-
 	fd = open(as->set.file, O_RDONLY);
 	if (fd == -1)
 		ft_exit(as, "Error\nFile failed to open\n");
-	ret = 1;
 	while (ret > 0)
 	{
 		ret = get_next_line(fd, &as->set.line);
@@ -93,11 +89,11 @@ void	get_settings(t_struct *as)
 			if (!as->set.tab)
 				ft_exit(as, "Error\nMalloc error\n");
 			parsing(as, fd);
-			free_split(as->set.tab, number_of_split(as->set.tab));
-			as->set.tab = 0;
 		}
 		free(as->set.line);
 		as->set.line = 0;
+		free_split(as->set.tab, number_of_split(as->set.tab));
+		as->set.tab = 0;
 	}
 	if (close(fd) == -1)
 		ft_exit(as, "Error\nFile failed to close\n");

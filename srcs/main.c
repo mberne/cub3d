@@ -14,7 +14,7 @@ void	parse_cub(t_struct *as, char *file_name)
 	}
 	else
 		ft_exit(as, "Error\nInvalid name of file\n");
-	get_settings(as);
+	get_settings(as, 0, 1);
 	if (!as->set.no || !as->set.so || !as->set.we || !as->set.ea
 		|| as->set.floor == -1 || as->set.ceiling == -1 || !as->set.map)
 		ft_exit(as, "Error\nInvalid file\n");

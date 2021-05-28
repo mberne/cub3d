@@ -135,7 +135,7 @@ int				destroy_win(t_struct *as);
 void			ft_exit(t_struct *as, char *str);
 
 void			parse_cub(t_struct *as, char *file_name);
-void			get_settings(t_struct *as);
+void			get_settings(t_struct *as, int fd, int ret);
 void			parsing(t_struct *as, int fd);
 void			get_texture(t_struct *as);
 void			get_color(t_struct *as);
