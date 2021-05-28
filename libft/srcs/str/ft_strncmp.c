@@ -6,7 +6,7 @@
 /*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 16:20:26 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/05 10:55:33 by mberne           ###   ########lyon.fr   */
+/*   Updated: 2021/05/28 15:26:54 by mberne           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
+	if (!s1)
+		return (-1);
 	i = 0;
 	if (n == 0)
 		return (0);

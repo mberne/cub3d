@@ -5,8 +5,7 @@ void	parse_cub(t_struct *as, char *file_name)
 	int	i;
 
 	i = ft_strlen(file_name);
-	if (i > 4 && file_name[--i] == 'b' && file_name[--i] == 'u'
-		&& file_name[--i] == 'c' && file_name[--i] == '.')
+	if (i > 4 && ft_strncmp(&file_name[i - 3], ".cub", 10))
 	{
 		as->set.file = ft_strdup(file_name);
 		if (!as->set.file)

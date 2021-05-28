@@ -2,29 +2,29 @@
 
 void	put_texture(t_struct *as, int *px, t_vector ratio, int *t)
 {
-	if (as->rays.inter[px[0]].target_plane == 0)
+	int	i;
+
+	i = -1;
+	while (++i < 3)
 	{
-		t[0] = ratio.x * as->texture[0].width;
-		t[1] = ratio.z * as->texture[0].height;
-		my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 0));
+		if (as->rays.inter[px[0]].target_plane == i && i != 1)
+		{
+			t[0] = ratio.x * as->texture[i].width;
+			t[1] = ratio.z * as->texture[i].height;
+			if (t[0] < as->texture->height && t[1] < as->texture->width)
+				my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], i));
+		}
 	}
-	else if (as->rays.inter[px[0]].target_plane == 1)
+	i = 0;
+	while (++i < 4)
 	{
-		t[0] = ratio.y * as->texture[1].width;
-		t[1] = ratio.z * as->texture[1].height;
-		my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 1));
-	}
-	else if (as->rays.inter[px[0]].target_plane == 2)
-	{
-		t[0] = ratio.x * as->texture[2].width;
-		t[1] = ratio.z * as->texture[2].height;
-		my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 2));
-	}
-	else if (as->rays.inter[px[0]].target_plane == 3)
-	{
-		t[0] = ratio.y * as->texture[3].width;
-		t[1] = ratio.z * as->texture[3].height;
-		my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], 3));
+		if (as->rays.inter[px[0]].target_plane == i && i != 2)
+		{
+			t[0] = ratio.y * as->texture[i].width;
+			t[1] = ratio.z * as->texture[i].height;
+			if (t[0] < as->texture->height && t[1] < as->texture->width)
+				my_px_put(as, (px[0]), (px[1]), my_px_get(as, t[0], t[1], i));
+		}
 	}
 }
 
@@ -49,8 +49,8 @@ void	draw_wall(t_struct *as)
 				- (as->rays.rv * (px[1]))) * as->rays.inter[px[0]].t;
 		ratio.x = inter.x - (int)inter.x;
 		ratio.y = inter.y - (int)inter.y;
-		ratio.z = 1 - (inter.z - (int)inter.z);
-		if (inter.z >= 0 && inter.z <= 0.4)
+		ratio.z = 1 - inter.z;
+		if (inter.z > 0 && inter.z < 1)
 			put_texture(as, px, ratio, t);
 		i++;
 	}

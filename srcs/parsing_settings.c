@@ -67,7 +67,7 @@ void	parsing(t_struct *as, int fd)
 		&& (!ft_strncmp(as->set.tab[0], "F", ft_strlen(as->set.tab[0]))
 			|| !ft_strncmp(as->set.tab[0], "C", ft_strlen(as->set.tab[0]))))
 		get_color(as);
-	else if (!ft_strncmp(as->set.tab[0], "1", 1))
+	else if (!ft_strncmp(as->set.tab[0], "1", 1) || as->set.line[0] == ' ')
 		map(as, fd);
 	else
 		ft_exit(as, "Error\nInvalid file\n");

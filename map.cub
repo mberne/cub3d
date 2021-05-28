@@ -1,7 +1,7 @@
-NO ./textures/north_texture.xpm
-SO ./textures/south_texture.xpm
-WE ./textures/west_texture.xpm
-EA ./textures/east_texture.xpm
+NO ./textures/eagle.xpm
+SO ./textures/greystone.xpm
+WE ./textures/purplestone.xpm
+EA ./textures/red.xpm
 
 F 125,125,125
 C 0,200,255
