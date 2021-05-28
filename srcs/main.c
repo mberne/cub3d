@@ -15,8 +15,9 @@ void	parse_cub(t_struct *as, char *file_name)
 	else
 		ft_exit(as, "Error\nInvalid name of file\n");
 	get_settings(as, 0, 1);
-	if (!as->set.no || !as->set.so || !as->set.we || !as->set.ea
-		|| as->set.floor == -1 || as->set.ceiling == -1 || !as->set.map)
+	if (!as->set.text[0] || !as->set.text[1] || !as->set.text[2]
+		|| !as->set.text[3] || as->set.floor == -1 || as->set.ceiling == -1
+		|| !as->set.map)
 		ft_exit(as, "Error\nInvalid file\n");
 }
 
@@ -47,10 +48,10 @@ void	init_struct_set(t_struct *as)
 	as->set.file = 0;
 	as->set.tab = 0;
 	as->set.line = 0;
-	as->set.no = 0;
-	as->set.so = 0;
-	as->set.we = 0;
-	as->set.ea = 0;
+	as->set.text[0] = 0;
+	as->set.text[1] = 0;
+	as->set.text[2] = 0;
+	as->set.text[3] = 0;
 	as->set.floor = -1;
 	as->set.ceiling = -1;
 	as->set.map = 0;
@@ -69,7 +70,7 @@ void	before_drawing(t_struct *as, int ac, char **av)
 		ft_exit(as, "Error\nInvalid number of argument\n");
 	as->vars.mlx = mlx_init();
 	if (!as->vars.mlx)
-		ft_exit(as, "Error\nMalloc error\n");
+		ft_exit(as, "Error\nAn error occured while using mlx\n");
 	parse_cub(as, av[1]);
 	player_spawn(as);
 	ray(as);
@@ -84,11 +85,15 @@ int	main(int ac, char **av)
 
 	before_drawing(&as, ac, av);
 	as.vars.win = mlx_new_window(as.vars.mlx, H_RES, V_RES, "Cub3D");
+	if (!as.vars.win)
+		ft_exit(&as, "Error\nAn error occured while using mlx\n");
 	as.data.img = mlx_new_image(as.vars.mlx, H_RES, V_RES);
+	if (!as.data.img)
+		ft_exit(&as, "Error\nAn error occured while using mlx\n");
 	as.data.addr = mlx_get_data_addr(as.data.img, &as.data.bits_per_pixel,
 			&as.data.line_length, &as.data.endian);
-	if (!as.vars.win || !as.data.img || !as.data.addr)
-		ft_exit(&as, "Error\nMalloc error\n");
+	if (!as.data.addr)
+		ft_exit(&as, "Error\nAn error occured while using mlx\n");
 	mlx_hook(as.vars.win, 2, 0L, key_press, &as.vars);
 	mlx_hook(as.vars.win, 3, 0L, key_release, &as.vars);
 	mlx_hook(as.vars.win, 17, 0L, destroy_win, &as.vars);

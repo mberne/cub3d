@@ -48,10 +48,10 @@ void	ft_exit(t_struct *as, char *str)
 	free(as->set.file);
 	free_split(as->set.tab, number_of_split(as->set.tab));
 	free(as->set.line);
-	free(as->set.no);
-	free(as->set.so);
-	free(as->set.we);
-	free(as->set.ea);
+	free(as->set.text[0]);
+	free(as->set.text[1]);
+	free(as->set.text[2]);
+	free(as->set.text[3]);
 	free_split(as->set.map, number_of_split(as->set.map));
 	free(as->rays.ray);
 	free(as->plane.plane);

@@ -39,10 +39,7 @@ typedef struct s_settings
 	char	*file;
 	char	**tab;
 	char	*line;
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
+	char	*text[4];
 	int		floor;
 	int		ceiling;
 	char	**map;

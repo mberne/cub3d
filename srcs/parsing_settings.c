@@ -43,14 +43,14 @@ void	get_color(t_struct *as)
 
 void	get_texture(t_struct *as)
 {
-	if (!ft_strncmp(as->set.tab[0], "NO", 2) && as->set.no == 0)
-		as->set.no = ft_strdup(as->set.tab[1]);
-	else if (!ft_strncmp(as->set.tab[0], "SO", 2) && as->set.so == 0)
-		as->set.so = ft_strdup(as->set.tab[1]);
-	else if (!ft_strncmp(as->set.tab[0], "WE", 2) && as->set.we == 0)
-		as->set.we = ft_strdup(as->set.tab[1]);
-	else if (!ft_strncmp(as->set.tab[0], "EA", 2) && as->set.ea == 0)
-		as->set.ea = ft_strdup(as->set.tab[1]);
+	if (!ft_strncmp(as->set.tab[0], "NO", 2) && as->set.text[0] == 0)
+		as->set.text[0] = ft_strdup(as->set.tab[1]);
+	else if (!ft_strncmp(as->set.tab[0], "EA", 2) && as->set.text[1] == 0)
+		as->set.text[1] = ft_strdup(as->set.tab[1]);
+	else if (!ft_strncmp(as->set.tab[0], "SO", 2) && as->set.text[2] == 0)
+		as->set.text[2] = ft_strdup(as->set.tab[1]);
+	else if (!ft_strncmp(as->set.tab[0], "WE", 2) && as->set.text[3] == 0)
+		as->set.text[3] = ft_strdup(as->set.tab[1]);
 	else
 		ft_exit(as, "Error\nInvalid textures\n");
 }
