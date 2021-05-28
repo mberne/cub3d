@@ -124,7 +124,7 @@ typedef struct s_struct
 	t_planes	plane;
 	t_player	player;
 	t_key		key;
-	t_textures	*texture;
+	t_textures	texture[4];
 }	t_struct;
 
 int				main(int ac, char **av);

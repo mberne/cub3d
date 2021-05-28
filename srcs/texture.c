@@ -5,9 +5,6 @@ void	create_textures(t_struct *as)
 	int	i;
 
 	i = 0;
-	as->texture = malloc(sizeof(t_textures) * 4);
-	if (!as->texture)
-		ft_exit(as, "Error\nMalloc error\n");
 	as->texture[0].data.img = mlx_xpm_file_to_image(as->vars.mlx, as->set.no,
 			&as->texture[0].width, &as->texture[0].height);
 	as->texture[1].data.img = mlx_xpm_file_to_image(as->vars.mlx, as->set.ea,

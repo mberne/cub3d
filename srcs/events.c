@@ -55,21 +55,21 @@ void	ft_exit(t_struct *as, char *str)
 	free_split(as->set.map, number_of_split(as->set.map));
 	free(as->rays.ray);
 	free(as->plane.plane);
-	free(as->rays.inter);
 	while (i < 4)
 	{
-		if (as->texture)
+		if (as->texture[i].data.img)
 			mlx_destroy_image(as->vars.mlx, as->texture[i].data.img);
 		i++;
 	}
-	free(as->texture);
-	mlx_destroy_image(as->vars.mlx, as->data.img);
+	if (as->data.img)
+		mlx_destroy_image(as->vars.mlx, as->data.img);
 	exit(-1);
 }
 
 int	destroy_win(t_struct *as)
 {
-	mlx_destroy_window(as->vars.mlx, as->vars.win);
+	if (as->vars.win)
+		mlx_destroy_window(as->vars.mlx, as->vars.win);
 	ft_exit(as, "");
 	return (0);
 }

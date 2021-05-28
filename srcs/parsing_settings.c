@@ -90,11 +90,14 @@ void	get_settings(t_struct *as)
 		if (*as->set.line)
 		{
 			as->set.tab = ft_split(as->set.line, ' ');
+			if (!as->set.tab)
+				ft_exit(as, "Error\nMalloc error\n");
 			parsing(as, fd);
-			free(as->set.line);
 			free_split(as->set.tab, number_of_split(as->set.tab));
 			as->set.tab = 0;
 		}
+		free(as->set.line);
+		as->set.line = 0;
 	}
 	if (close(fd) == -1)
 		ft_exit(as, "Error\nFile failed to close\n");

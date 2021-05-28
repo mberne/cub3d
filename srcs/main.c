@@ -22,6 +22,9 @@ void	parse_cub(t_struct *as, char *file_name)
 
 void	init_struct(t_struct *as)
 {
+	int	i;
+
+	i = 0;
 	as->plane.num_plane = 0;
 	as->plane.num_wall = 0;
 	as->rays.num_r = 0;
@@ -31,6 +34,12 @@ void	init_struct(t_struct *as)
 	as->key.back = 0;
 	as->key.left = 0;
 	as->key.right = 0;
+	while (i < 4)
+	{
+		as->texture[i].data.img = 0;
+		i++;
+	}
+	as->data.img = 0;
 }
 
 void	init_struct_set(t_struct *as)
@@ -54,14 +63,14 @@ void	init_struct_set(t_struct *as)
 
 void	before_drawing(t_struct *as, int ac, char **av)
 {
+	init_struct_set(as);
+	init_struct(as);
 	if (ac != 2)
 		ft_exit(as, "Error\nInvalid number of argument\n");
 	as->vars.mlx = mlx_init();
 	if (!as->vars.mlx)
 		ft_exit(as, "Error\nMalloc error\n");
-	init_struct_set(as);
 	parse_cub(as, av[1]);
-	init_struct(as);
 	player_spawn(as);
 	ray(as);
 	init_plane(as);
@@ -85,4 +94,5 @@ int	main(int ac, char **av)
 	mlx_hook(as.vars.win, 17, 0L, destroy_win, &as.vars);
 	mlx_loop_hook(as.vars.mlx, draw, &as);
 	mlx_loop(as.vars.mlx);
+	return (0);
 }
