@@ -90,6 +90,7 @@ int	draw(t_struct *as)
 	put_floor_and_ceiling(as);
 	find_inter_wall(as);
 	draw_wall(as);
+	draw_minimap(as);
 	mlx_put_image_to_window(as->vars.mlx, as->vars.win, as->data.img, 0, 0);
 	mlx_do_sync(as->vars.mlx);
 	free(as->rays.inter);

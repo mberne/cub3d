@@ -25,8 +25,8 @@ void	player_move(t_struct *as)
 		as->player.rad = as->player.rad + M_PI * 0.015;
 	if (as->key.front)
 	{
-		next_pos.x = as->player.x + sinf(as->player.rad) * 0.1;
-		next_pos.y = as->player.y - cosf(as->player.rad) * 0.1;
+		next_pos.x = as->player.x + sinf(as->player.rad) * 0.075;
+		next_pos.y = as->player.y - cosf(as->player.rad) * 0.075;
 		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
 			as->player.x = next_pos.x;
 		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
@@ -34,8 +34,8 @@ void	player_move(t_struct *as)
 	}
 	if (as->key.back)
 	{
-		next_pos.x = as->player.x - sinf(as->player.rad) * 0.1;
-		next_pos.y = as->player.y + cosf(as->player.rad) * 0.1;
+		next_pos.x = as->player.x - sinf(as->player.rad) * 0.075;
+		next_pos.y = as->player.y + cosf(as->player.rad) * 0.075;
 		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
 			as->player.x = next_pos.x;
 		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
@@ -50,8 +50,8 @@ int	player_move_next(t_struct *as)
 
 	if (as->key.left)
 	{
-		next_pos.x = as->player.x - cosf(as->player.rad) * 0.1;
-		next_pos.y = as->player.y - sinf(as->player.rad) * 0.1;
+		next_pos.x = as->player.x - cosf(as->player.rad) * 0.075;
+		next_pos.y = as->player.y - sinf(as->player.rad) * 0.075;
 		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
 			as->player.x = next_pos.x;
 		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
@@ -59,8 +59,8 @@ int	player_move_next(t_struct *as)
 	}
 	if (as->key.right)
 	{
-		next_pos.x = as->player.x + cosf(as->player.rad) * 0.1;
-		next_pos.y = as->player.y + sinf(as->player.rad) * 0.1;
+		next_pos.x = as->player.x + cosf(as->player.rad) * 0.075;
+		next_pos.y = as->player.y + sinf(as->player.rad) * 0.075;
 		if (as->set.map[(int)as->player.y][(int)next_pos.x] != '1')
 			as->player.x = next_pos.x;
 		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')

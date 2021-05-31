@@ -112,6 +112,16 @@ typedef struct s_textures
 	int		height;
 }	t_textures;
 
+typedef struct s_minimap
+{
+	int	width;
+	int	height;
+	int	w_box;
+	int	h_box;
+	int	x_px;
+	int	y_px;
+}	t_minimap;
+
 typedef struct s_struct
 {
 	t_vars		vars;
@@ -122,6 +132,7 @@ typedef struct s_struct
 	t_player	player;
 	t_key		key;
 	t_textures	texture[4];
+	t_minimap	minimap;
 }	t_struct;
 
 int				main(int ac, char **av);
@@ -171,6 +182,11 @@ int				cast_float_x(t_struct *as, int i, int j, float tmp);
 int				cast_float_y(t_struct *as, int i, int j, float tmp);
 void			draw_wall(t_struct *as);
 void			put_texture(t_struct *as, int *px, t_vector ratio, int *t);
+
+void			init_minimap(t_struct *as);
+void			draw_minimap(t_struct *as);
+void			square(t_struct *as, int color);
+void			draw_player(t_struct *as);
 
 int				my_px_get(t_struct *as, int x, int y, int wall);
 void			my_px_put(t_struct *as, int x, int y, int color);

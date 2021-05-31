@@ -2,7 +2,7 @@ NAME		= cub3D
 
 #Sources
 PATH_SRCS	= srcs/
-SRCS		= $(addprefix $(PATH_SRCS), main.c parsing_settings.c parsing_map.c utils.c events.c draw.c player.c ray.c plane.c wall.c texture.c my_mlx_functions.c)
+SRCS		= $(addprefix $(PATH_SRCS), main.c parsing_settings.c parsing_map.c utils.c events.c draw.c player.c ray.c plane.c wall.c texture.c my_mlx_functions.c minimap.c)
 
 #Includes
 PATH_INC	= includes/

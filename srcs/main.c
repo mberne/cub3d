@@ -76,6 +76,7 @@ void	before_drawing(t_struct *as, int ac, char **av)
 	init_plane(as);
 	make_plane(as);
 	create_textures(as);
+	init_minimap(as);
 }
 
 int	main(int ac, char **av)
