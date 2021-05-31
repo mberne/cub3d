@@ -70,9 +70,9 @@ void	draw_minimap(t_struct *as)
 		while (j <= as->set.mapx)
 		{
 			if (as->set.map[i][j] == '1')
-				square(as, 16777215);
-			else if (as->set.map[i][j] != ' ')
 				square(as, 0);
+			else if (as->set.map[i][j] != ' ')
+				square(as, 16777215);
 			as->minimap.x_px += as->minimap.w_box;
 			j++;
 		}
