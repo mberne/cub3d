@@ -16,12 +16,12 @@ void	draw_player(t_struct *as)
 	int	y;
 
 	i = 0;
-	x = as->player.x * as->minimap.w_box - (as->minimap.w_box / 2) + 2;
-	while (i < as->minimap.w_box - 4)
+	x = as->player.x * as->minimap.w_box - 2;
+	while (i < 5)
 	{
 		j = 0;
-		y = as->player.y * as->minimap.h_box - (as->minimap.h_box / 2) + 2;
-		while (j < as->minimap.h_box - 4)
+		y = as->player.y * as->minimap.h_box - 2;
+		while (j < 5)
 		{
 			my_px_put(as, x, y, 16711680);
 			y++;
@@ -47,7 +47,11 @@ void	square(t_struct *as, int color)
 		x_px = as->minimap.x_px;
 		while (j < as->minimap.w_box)
 		{
-			my_px_put(as, x_px, y_px, color);
+			if (i == 0 || j == 0
+				|| i == as->minimap.h_box - 1 || j == as->minimap.w_box - 1)
+				my_px_put(as, x_px, y_px, 7039851);
+			else
+				my_px_put(as, x_px, y_px, color);
 			x_px++;
 			j++;
 		}

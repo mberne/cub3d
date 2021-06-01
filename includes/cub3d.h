@@ -16,7 +16,7 @@
 # define RIGHT_ARROW 124
 # define ESC 53
 # define FOV 60
-# define H_RES 1000
+# define H_RES 1200
 # define V_RES 1000
 
 typedef struct s_vars
