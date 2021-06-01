@@ -29,7 +29,7 @@ libs:
 			ln -sf mlx/$(LIBMLX) .
 
 %.o:		%.c	$(HEADER)
-			gcc $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I $(PATH_INC)
+			gcc $(CFLAGS) -Imlx -c $< -o ${<:.c=.o} -I $(PATH_INC) -O3
 
 clean:
 			${MAKE} clean -C libft
