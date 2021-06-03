@@ -3,10 +3,7 @@
 int	key_press(int keycode, t_struct *as)
 {
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(as->vars.mlx, as->vars.win);
-		ft_exit(as, "");
-	}
+		ft_exit(as, "Thanks for playing <3");
 	if (keycode == LEFT_ARROW)
 		as->key.t_left = 1;
 	if (keycode == RIGHT_ARROW)
@@ -19,12 +16,15 @@ int	key_press(int keycode, t_struct *as)
 		as->key.left = 1;
 	if (keycode == D)
 		as->key.right = 1;
-	if (keycode == F)
+	if (keycode == F && !as->key.mouse)
 	{
-		if (!as->key.mouse)
-			as->key.mouse = 1;
-		else
-			as->key.mouse = 0;
+		as->key.mouse = 1;
+		mlx_mouse_hide();
+	}
+	else if (keycode == F && as->key.mouse)
+	{
+		mlx_mouse_show();
+		as->key.mouse = 0;
 	}
 	return (0);
 }
@@ -51,7 +51,9 @@ void	ft_exit(t_struct *as, char *str)
 	int	i;
 
 	i = 0;
-	printf("%s", str);
+	printf("\n%s\n", str);
+	if (as->vars.win)
+		mlx_destroy_window(as->vars.mlx, as->vars.win);
 	free(as->set.file);
 	free_split(as->set.tab, number_of_split(as->set.tab));
 	free(as->set.line);
@@ -75,8 +77,6 @@ void	ft_exit(t_struct *as, char *str)
 
 int	destroy_win(t_struct *as)
 {
-	if (as->vars.win)
-		mlx_destroy_window(as->vars.mlx, as->vars.win);
-	ft_exit(as, "");
+	ft_exit(as, "Thanks for playing <3");
 	return (0);
 }

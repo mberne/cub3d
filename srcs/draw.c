@@ -50,36 +50,12 @@ void	draw_wall(t_struct *as)
 		ratio.x = inter.x - (int)inter.x;
 		ratio.y = inter.y - (int)inter.y;
 		ratio.z = 1 - inter.z;
-		if (inter.z > 0 && inter.z < 1)
+		if (inter.z <= 0)
+			my_px_put(as, px[0], px[1], as->set.floor);
+		else if (inter.z > 0 && inter.z < 1)
 			put_texture(as, px, ratio, t);
-		i++;
-	}
-}
-
-void	put_floor_and_ceiling(t_struct *as)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < V_RES / 2)
-	{
-		j = 0;
-		while (j < H_RES)
-		{
-			my_px_put(as, j, i, as->set.ceiling);
-			j++;
-		}
-		i++;
-	}
-	while (i < V_RES)
-	{
-		j = 0;
-		while (j < H_RES)
-		{
-			my_px_put(as, j, i, as->set.floor);
-			j++;
-		}
+		else if (inter.z >= 1)
+			my_px_put(as, px[0], px[1], as->set.ceiling);
 		i++;
 	}
 }
@@ -87,7 +63,6 @@ void	put_floor_and_ceiling(t_struct *as)
 int	draw(t_struct *as)
 {
 	player_move(as);
-	put_floor_and_ceiling(as);
 	find_inter_wall(as);
 	draw_wall(as);
 	draw_minimap(as);

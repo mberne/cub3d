@@ -178,7 +178,6 @@ void			make_plane(t_struct *as);
 void			fill_plane(t_struct *as, char wall, int i);
 
 int				draw(t_struct *as);
-void			put_floor_and_ceiling(t_struct *as);
 void			find_inter_wall(t_struct *as);
 void			find_t_wall(t_struct *as, int i, int j);
 int				cast_float_x(t_struct *as, int i, int j, float tmp);

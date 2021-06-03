@@ -20,9 +20,9 @@ void	player_move(t_struct *as)
 	t_player	next_pos;
 
 	if (as->key.t_left)
-		as->player.rad = as->player.rad - M_PI * 0.015;
+		as->player.rad = as->player.rad - M_PI * 0.010;
 	if (as->key.t_right)
-		as->player.rad = as->player.rad + M_PI * 0.015;
+		as->player.rad = as->player.rad + M_PI * 0.010;
 	if (as->key.front)
 	{
 		next_pos.x = as->player.x + sinf(as->player.rad) * 0.075;
@@ -76,15 +76,12 @@ int	player_mouse_move(t_struct *as)
 
 	if (as->key.mouse)
 	{
-		mlx_mouse_hide();
 		mlx_mouse_get_pos(as->vars.win, &x, &y);
 		if (x < H_RES / 2)
-			as->player.rad = as->player.rad - M_PI * 0.015;
+			as->player.rad = as->player.rad - M_PI * 0.010;
 		if (x > H_RES / 2)
-			as->player.rad = as->player.rad + M_PI * 0.015;
+			as->player.rad = as->player.rad + M_PI * 0.010;
 		mlx_mouse_move(as->vars.win, H_RES / 2, V_RES / 2);
 	}
-	else
-		mlx_mouse_show();
 	return (0);
 }
