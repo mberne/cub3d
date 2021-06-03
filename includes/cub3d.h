@@ -12,6 +12,7 @@
 # define S 1
 # define A 0
 # define D 2
+# define F 3
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
 # define ESC 53
@@ -103,6 +104,7 @@ typedef struct s_key
 	int	back;
 	int	left;
 	int	right;
+	int	mouse;
 }	t_key;
 
 typedef struct s_textures
@@ -163,7 +165,8 @@ void			player_spawn(t_struct *as);
 int				key_press(int keycode, t_struct *as);
 int				key_release(int keycode, t_struct *as);
 void			player_move(t_struct *as);
-int				player_move_next(t_struct *as);
+void			player_move_next(t_struct *as);
+int				player_mouse_move(t_struct *as);
 void			create_textures(t_struct *as);
 
 void			ray(t_struct *as);

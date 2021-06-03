@@ -19,6 +19,13 @@ int	key_press(int keycode, t_struct *as)
 		as->key.left = 1;
 	if (keycode == D)
 		as->key.right = 1;
+	if (keycode == F)
+	{
+		if (!as->key.mouse)
+			as->key.mouse = 1;
+		else
+			as->key.mouse = 0;
+	}
 	return (0);
 }
 

@@ -44,7 +44,7 @@ void	player_move(t_struct *as)
 	player_move_next(as);
 }
 
-int	player_move_next(t_struct *as)
+void	player_move_next(t_struct *as)
 {
 	t_player	next_pos;
 
@@ -66,5 +66,25 @@ int	player_move_next(t_struct *as)
 		if (as->set.map[(int)next_pos.y][(int)as->player.x] != '1')
 			as->player.y = next_pos.y;
 	}
+	player_mouse_move(as);
+}
+
+int	player_mouse_move(t_struct *as)
+{
+	int	x;
+	int	y;
+
+	if (as->key.mouse)
+	{
+		mlx_mouse_hide();
+		mlx_mouse_get_pos(as->vars.win, &x, &y);
+		if (x < H_RES / 2)
+			as->player.rad = as->player.rad - M_PI * 0.015;
+		if (x > H_RES / 2)
+			as->player.rad = as->player.rad + M_PI * 0.015;
+		mlx_mouse_move(as->vars.win, H_RES / 2, V_RES / 2);
+	}
+	else
+		mlx_mouse_show();
 	return (0);
 }

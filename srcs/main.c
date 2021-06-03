@@ -34,6 +34,7 @@ void	init_struct(t_struct *as)
 	as->key.back = 0;
 	as->key.left = 0;
 	as->key.right = 0;
+	as->key.mouse = 0;
 	while (i < 4)
 	{
 		as->texture[i].data.img = 0;
