@@ -28,11 +28,24 @@ void	put_texture(t_struct *as, int *px, t_vector ratio, int *t)
 	}
 }
 
+t_vector	calc_inter(t_struct *as, int *px)
+{
+	t_vector	inter;
+
+	inter.x = as->player.x + as->rays.inter[px[0]].new_ray.x
+		* as->rays.inter[px[0]].t;
+	inter.y = as->player.y + as->rays.inter[px[0]].new_ray.y
+		* as->rays.inter[px[0]].t;
+	inter.z = as->player.z + (as->rays.inter[px[0]].new_ray.z
+			- (as->rays.rv * (px[1]))) * as->rays.inter[px[0]].t;
+	return (inter);
+}
+
 void	draw_wall(t_struct *as)
 {
 	int			i;
-	t_vector	inter;
 	t_vector	ratio;
+	t_vector	inter;
 	int			px[2];
 	int			t[2];
 
@@ -41,12 +54,7 @@ void	draw_wall(t_struct *as)
 	{
 		px[0] = i % H_RES;
 		px[1] = i / H_RES;
-		inter.x = as->player.x + as->rays.inter[px[0]].new_ray.x
-			* as->rays.inter[px[0]].t;
-		inter.y = as->player.y + as->rays.inter[px[0]].new_ray.y
-			* as->rays.inter[px[0]].t;
-		inter.z = as->player.z + (as->rays.inter[px[0]].new_ray.z
-				- (as->rays.rv * (px[1]))) * as->rays.inter[px[0]].t;
+		inter = calc_inter(as, px);
 		ratio.x = inter.x - (int)inter.x;
 		ratio.y = inter.y - (int)inter.y;
 		ratio.z = 1 - inter.z;

@@ -183,6 +183,7 @@ void			find_t_wall(t_struct *as, int i, int j);
 int				cast_float_x(t_struct *as, int i, int j, float tmp);
 int				cast_float_y(t_struct *as, int i, int j, float tmp);
 void			draw_wall(t_struct *as);
+t_vector		calc_inter(t_struct *as, int *px);
 void			put_texture(t_struct *as, int *px, t_vector ratio, int *t);
 
 void			init_minimap(t_struct *as);
