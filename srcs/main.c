@@ -22,49 +22,15 @@ void	parse_cub(t_struct *as, char *file_name)
 
 void	init_struct(t_struct *as)
 {
-	int	i;
-
-	i = 0;
-	as->plane.num_plane = 0;
-	as->plane.num_wall = 0;
-	as->rays.num_r = 0;
-	as->key.t_left = 0;
-	as->key.t_right = 0;
-	as->key.front = 0;
-	as->key.back = 0;
-	as->key.left = 0;
-	as->key.right = 0;
-	as->key.mouse = 0;
-	while (i < 4)
-	{
-		as->texture[i].data.img = 0;
-		i++;
-	}
-	as->data.img = 0;
-}
-
-void	init_struct_set(t_struct *as)
-{
-	as->set.file = 0;
-	as->set.tab = 0;
-	as->set.line = 0;
-	as->set.text[0] = 0;
-	as->set.text[1] = 0;
-	as->set.text[2] = 0;
-	as->set.text[3] = 0;
+	ft_bzero(as, 1);
 	as->set.floor = -1;
 	as->set.ceiling = -1;
-	as->set.map = 0;
-	as->set.mapx = 0;
-	as->set.mapy = 0;
 	as->set.pposition[0] = -1;
 	as->set.pposition[1] = -1;
-	as->set.porientation = 0;
 }
 
 void	before_drawing(t_struct *as, int ac, char **av)
 {
-	init_struct_set(as);
 	init_struct(as);
 	if (ac != 2)
 		ft_exit(as, "Error\nInvalid number of argument\n");

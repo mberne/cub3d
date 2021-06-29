@@ -33,20 +33,6 @@ int	check_arg(t_settings *set, int i)
 	return (0);
 }
 
-int	ft_isnumber(char *s)
-{
-	int	i;
-	int	j;
-
-	i = ft_strlen(s);
-	j = 0;
-	while (ft_isdigit(s[j]))
-		j++;
-	if (i == j)
-		return (1);
-	return (0);
-}
-
 int	ft_count(char const *s, char c)
 {
 	int	i;

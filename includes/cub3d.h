@@ -17,8 +17,8 @@
 # define RIGHT_ARROW 124
 # define ESC 53
 # define FOV 60
-# define H_RES 1250
-# define V_RES 1250
+# define H_RES 1000
+# define V_RES 1000
 
 typedef struct s_vars
 {
@@ -139,7 +139,6 @@ typedef struct s_struct
 
 int				main(int ac, char **av);
 void			before_drawing(t_struct *as, int ac, char **av);
-void			init_struct_set(t_struct *as);
 void			init_struct(t_struct *as);
 int				destroy_win(t_struct *as);
 void			ft_exit(t_struct *as, char *str);

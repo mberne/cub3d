@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mberne <mberne@student.42lyon.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/23 15:33:45 by mberne            #+#    #+#             */
-/*   Updated: 2021/03/05 13:20:18 by mberne           ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
 # define BUFFER_SIZE 50
@@ -73,8 +61,10 @@ void			*ft_memset(void *b, int c, size_t len);
 /*
 **NUMBER
 */
+int				ft_isnumber(char *s);
 int				ft_atoi(const char *str);
 char			*ft_itoa(int n);
+int				ft_atoi_base(char *str, char *base);
 
 /*
 **PUT
