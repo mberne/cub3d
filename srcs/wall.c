@@ -53,7 +53,7 @@ void	find_inter_wall(t_struct *as)
 	as->rays.inter = malloc(sizeof(t_intersection) * H_RES);
 	if (!as->rays.inter)
 		ft_exit(as, "Error\nMalloc error\n");
-	while (i <= H_RES)
+	while (i < H_RES)
 	{
 		matrix(as, i);
 		j = 0;

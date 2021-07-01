@@ -22,7 +22,7 @@ void	parse_cub(t_struct *as, char *file_name)
 
 void	init_struct(t_struct *as)
 {
-	ft_bzero(as, 1);
+	ft_bzero(as, sizeof(t_struct));
 	as->set.floor = -1;
 	as->set.ceiling = -1;
 	as->set.pposition[0] = -1;

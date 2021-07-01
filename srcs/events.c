@@ -51,7 +51,7 @@ void	ft_exit(t_struct *as, char *str)
 	int	i;
 
 	i = 0;
-	printf("\n%s\n", str);
+	printf("\n%s", str);
 	if (as->vars.win)
 		mlx_destroy_window(as->vars.mlx, as->vars.win);
 	free(as->set.file);
