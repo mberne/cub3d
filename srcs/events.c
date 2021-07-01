@@ -3,7 +3,7 @@
 int	key_press(int keycode, t_struct *as)
 {
 	if (keycode == ESC)
-		ft_exit(as, "Thanks for playing <3");
+		ft_exit(as, "Thanks for playing <3\n");
 	if (keycode == LEFT_ARROW)
 		as->key.t_left = 1;
 	if (keycode == RIGHT_ARROW)
@@ -77,6 +77,6 @@ void	ft_exit(t_struct *as, char *str)
 
 int	destroy_win(t_struct *as)
 {
-	ft_exit(as, "Thanks for playing <3");
+	ft_exit(as, "Thanks for playing <3\n");
 	return (0);
 }
